@@ -1,6 +1,5 @@
 "use strict";
 
-
 function isNumber(value: unknown): boolean {
     return ((typeof value === 'number') && (isFinite(value)));
 }
@@ -19,11 +18,11 @@ class ParserStream {
         this.value = value;
     }
 
-    public advance(): void {
+    public commit(): void {
         this.start = this.end;
     }
 
-    public retry(): void {
+    public rollback(): void {
         this.end = this.start;
     }
 
@@ -64,6 +63,45 @@ class BaseParser {
         }
     }
 
+    protected is_symbol(): boolean {
+        let result: boolean = false;
+        const char: string = this.stream.char();
+        switch (char) {
+            case ".":
+            case "[":
+            case "]":
+            case "'":
+            case '"':
+            case "+":
+            case "-":
+            case "*":
+            case "/":
+            case "%":
+            case "~":
+            case "&":
+            case "|":
+            case "^":
+            case ">":
+            case "<":
+            case "!":
+            case "=":
+            case "`":
+            case "(":
+            case ")":
+            case "{":
+            case "}":
+            case "?":
+            case ":":
+            case ";":
+            case ",":
+                break;
+            default:
+                this.stream.next();
+                result = true;
+        }
+        return result;
+    }
+
     // digit ::= ( 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 )
     protected is_digit(): boolean {
         const code: number = this.stream.charCode();
@@ -77,7 +115,7 @@ class BaseParser {
 
     // number ::= digit *
     protected parse_number(): boolean {
-        this.stream.advance();
+        this.stream.commit();
         let result: boolean = false;
         for (; ;) {
             if (!this.is_digit()) {
@@ -99,13 +137,7 @@ class AttributeParser extends BaseParser {
     protected is_reading(): boolean {
         const code: number = this.stream.charCode();
         const char: string = this.stream.char();
-        if (((0x3040 <= code) && (code <= 0x309F)) || // Hiragana
-            ((0x30A0 <= code) && (code <= 0x30FF)) || // Katakana
-            ((0x2E80 <= code) && (code <= 0x2FDF)) || // CJK部首補助＋康熙部首
-            ((0x3400 <= code) && (code <= 0x4DBF)) || // CJK統合漢字拡張A
-            ((0x4E00 <= code) && (code <= 0x9FFF)) || // CJK統合漢字
-            ((0xF900 <= code) && (code <= 0xFAFF)) || // CJK互換漢字
-            ((0x20000 <= code) && (code <= 0x2FFFF)) || // CJK統合漢字拡張B〜F＋CJK互換漢字
+        if (((0x3040 <= code) && (code <= 0x2FFFF)) || //
             ((65 <= code) && (code <= 90)) || ((97 <= code) && (code <= 122)) || // Alphabet
             (char === "_") || (char === "$")) {
             this.stream.next();
@@ -119,13 +151,7 @@ class AttributeParser extends BaseParser {
     protected is_trailing(): boolean {
         const code: number = this.stream.charCode();
         const char: string = this.stream.char();
-        if (((0x3040 <= code) && (code <= 0x309F)) || // Hiragana
-            ((0x30A0 <= code) && (code <= 0x30FF)) || // Katakana
-            ((0x2E80 <= code) && (code <= 0x2FDF)) || // CJK部首補助＋康熙部首
-            ((0x3400 <= code) && (code <= 0x4DBF)) || // CJK統合漢字拡張A
-            ((0x4E00 <= code) && (code <= 0x9FFF)) || // CJK統合漢字
-            ((0xF900 <= code) && (code <= 0xFAFF)) || // CJK互換漢字
-            ((0x20000 <= code) && (code <= 0x2FFFF)) || // CJK統合漢字拡張B〜F＋CJK互換漢字
+        if (((0x3040 <= code) && (code <= 0x2FFFF)) || //
             ((65 <= code) && (code <= 90)) || ((97 <= code) && (code <= 122)) || // Alphabet
             ((48 <= code) && (code <= 57)) || // Number
             (char === "_") || (char === "$")) {
@@ -138,7 +164,7 @@ class AttributeParser extends BaseParser {
 
     // name ::= reading [ trailing ]
     protected parse_name(): boolean {
-        this.stream.advance();
+        this.stream.commit();
         let result: boolean = false;
         for (; ;) {
             if (!this.is_reading()) {
@@ -162,7 +188,7 @@ class AttributeParser extends BaseParser {
 
     // string = "'" mame "'" | '"' mame '"'
     protected parse_string(): boolean {
-        this.stream.advance();
+        this.stream.commit();
         let result: boolean = false;
         if (this.is_char("'") || this.is_char('"')) {
             if (this.parse_name()) {
@@ -174,7 +200,7 @@ class AttributeParser extends BaseParser {
 
     // attr ::= "." name | '[' string | number ']'
     protected parse_attr(): boolean {
-        this.stream.advance();
+        this.stream.commit();
         let result: boolean = false;
         if (this.is_char(".")) {
             result = this.parse_name();
@@ -184,13 +210,13 @@ class AttributeParser extends BaseParser {
                     if (this.is_char("]")) {
                         result = true;
                     } else {
-                        this.stream.retry();
+                        this.stream.rollback();
                     }
                 } else {
-                    this.stream.retry();
+                    this.stream.rollback();
                 }
             } else {
-                this.stream.retry();
+                this.stream.rollback();
             }
         }
         return result;
@@ -198,19 +224,19 @@ class AttributeParser extends BaseParser {
 
     // attrs ::= attr *
     protected parse_attrs(): void {
-        this.stream.advance();
+        this.stream.commit();
         for (; ;) {
             if (!this.parse_attr()) {
-                this.stream.retry();
+                this.stream.rollback();
                 break;
             }
         }
     }
 
-    // path ::= name [ attrs ]
+    // path ::= attr [ attrs ]
     protected parse_path(): void {
-        this.stream.advance();
-        if (this.parse_name()) {
+        this.stream.commit();
+        if (this.parse_attr()) {
             this.parse_attrs();
         }
     }
@@ -220,9 +246,12 @@ class AttributeParser extends BaseParser {
     }
 }
 
+
+
 abstract class BaseHandler {
     abstract symbol(type: string, stream: ParserStream): void;
 }
+
 
 class ValueHandler extends BaseHandler {
 
