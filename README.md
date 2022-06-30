@@ -23,3 +23,5 @@ console.log(attrpath.traverse(value, '.Child._太郎[1].$pet'));
 > undefined
 
 ```
+<img src="https://raw.githubusercontent.com/7thCode/attrpath/0281b0c1d1984b451394de4a0f4d15c075338401/AttributeParser.svg" alt="" title="">
+
