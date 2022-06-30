@@ -1,0 +1,28 @@
+{
+  "name": "attrpath",
+  "version": "0.0.4",
+  "description": "Attribute Path Traverser",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "dist/test.js",
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:7thCode/attrpath.git"
+  },
+  "keywords": [
+    "Attribute",
+    "Path"
+  ],
+  "author": "7thCode",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^4.7.4"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0"
+  }
+}
