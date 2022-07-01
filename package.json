@@ -1,7 +1,7 @@
 {
   "name": "attrpath",
-  "version": "0.0.4",
-  "description": "Attribute Path Traverser",
+  "version": "0.0.5",
+  "description": "Attribute Path Traverser.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
