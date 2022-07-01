@@ -19,32 +19,45 @@ const value = {
     }
 };
 
-console.log(attrpath.traverse(value, '.Child._太郎[0].$pet'));
-console.log(attrpath.traverse(value, '.Child["_太郎"][0].$pet'));
-console.log(attrpath.traverse(value, '.Child["_太郎"][0]["$pet"]'));
-console.log(attrpath.traverse(value, '["Child"]["_太郎"][0]["$pet"]'));
-console.log(attrpath.traverse(value, ".Child['_太郎'][0].$pet"));
-console.log(attrpath.traverse(value, ".Child['_太郎'][0]['$pet']"));
-console.log(attrpath.traverse(value, "['Child']['_太郎'][0]['$pet']"));
-console.log(attrpath.traverse(value, '.Child._太郎[0].$pet'));
-console.log(attrpath.traverse(value, '["Child"]._太郎[0].$pet'));
+function Test(v:any, s:string, r: unknown):string {
+    let result = ""
+    const value = attrpath.traverse(v, s);
+    if (value === r) {
+        result = "pass";
+    } else {
+        result = "error"
+    }
+    return result;
+}
 
-console.log(attrpath.traverse(value, '.Child1._太郎[0].$pet'));
-console.log(attrpath.traverse(value, '.Child1["_太郎"][0].$pet'));
-console.log(attrpath.traverse(value, '.Child1["_太郎"][0]["$pet"]'));
-console.log(attrpath.traverse(value, '["Child1"]["_太郎"][0]["$pet"]'));
-console.log(attrpath.traverse(value, ".Child1['_太郎'][0].$pet"));
-console.log(attrpath.traverse(value, ".Child1['_太郎'][0]['$pet']"));
-console.log(attrpath.traverse(value, "['Child1']['_太郎'][0]['$pet']"));
-console.log(attrpath.traverse(value, '.Child1._太郎[0].$pet'));
-console.log(attrpath.traverse(value, '["Child1"]._太郎[0].$pet'));
 
-console.log(attrpath.traverse(value, '.Child._太郎[1].$pet'));
-console.log(attrpath.traverse(value, '.Child["_太郎"][1].$pet'));
-console.log(attrpath.traverse(value, '.Child["_太郎"][1]["$pet"]'));
-console.log(attrpath.traverse(value, '["Child"]["_太郎"][1]["$pet"]'));
-console.log(attrpath.traverse(value, ".Child['_太郎'][1].$pet"));
-console.log(attrpath.traverse(value, ".Child['_太郎'][1]['$pet']"));
-console.log(attrpath.traverse(value, "['Child']['_太郎'][1]['$pet']"));
-console.log(attrpath.traverse(value, '.Child._太郎[1].$pet'));
-console.log(attrpath.traverse(value, '["Child"]._太郎[1].$pet'));
+
+console.log(Test(value, '.Child._太郎[0].$pet', "pochi."));
+console.log(Test(value, '.Child["_太郎"][0].$pet', "pochi."));
+console.log(Test(value, '.Child["_太郎"][0]["$pet"]', "pochi."));
+console.log(Test(value, '["Child"]["_太郎"][0]["$pet"]', "pochi."));
+console.log(Test(value, ".Child['_太郎'][0].$pet", "pochi."));
+console.log(Test(value, ".Child['_太郎'][0]['$pet']", "pochi."));
+console.log(Test(value, "['Child']['_太郎'][0]['$pet']", "pochi."));
+console.log(Test(value, '.Child._太郎[0].$pet', "pochi."));
+console.log(Test(value, '["Child"]._太郎[0].$pet', "pochi."));
+
+console.log(Test(value, '.Child1._太郎[0].$pet', undefined));
+console.log(Test(value, '.Child1["_太郎"][0].$pet', undefined));
+console.log(Test(value, '.Child1["_太郎"][0]["$pet"]', undefined));
+console.log(Test(value, '["Child1"]["_太郎"][0]["$pet"]', undefined));
+console.log(Test(value, ".Child1['_太郎'][0].$pet", undefined));
+console.log(Test(value, ".Child1['_太郎'][0]['$pet']", undefined));
+console.log(Test(value, "['Child1']['_太郎'][0]['$pet']", undefined));
+console.log(Test(value, '.Child1._太郎[0].$pet', undefined));
+console.log(Test(value, '["Child1"]._太郎[0].$pet', undefined));
+
+console.log(Test(value, '.Child._太郎[1].$pet',undefined));
+console.log(Test(value, '.Child["_太郎"][1].$pet',undefined));
+console.log(Test(value, '.Child["_太郎"][1]["$pet"]',undefined));
+console.log(Test(value, '["Child"]["_太郎"][1]["$pet"]',undefined));
+console.log(Test(value, ".Child['_太郎'][1].$pet",undefined));
+console.log(Test(value, ".Child['_太郎'][1]['$pet']",undefined));
+console.log(Test(value, "['Child']['_太郎'][1]['$pet']",undefined));
+console.log(Test(value, '.Child._太郎[1].$pet',undefined));
+console.log(Test(value, '["Child"]._太郎[1].$pet',undefined));
