@@ -313,14 +313,8 @@ class AttributeParser extends BaseParser {
                 if (this.parse_string() || this.parse_number()) {
                     if (this.is_char("]")) {
                         result = true;
-                    } else {
-             //           this.stream.rollback();
                     }
-                } else {
-             //       this.stream.rollback();
                 }
-            } else {
-          //      this.stream.rollback();
             }
         }
         return result;
@@ -330,14 +324,17 @@ class AttributeParser extends BaseParser {
      * parse_attrs
      * attrs ::= attr *
      */
-    protected parse_attrs(): void {
+    protected parse_attrs(): boolean {
+        let result: boolean = false;
         this.stream.commit();
         for (; ;) {
-            if (!this.parse_attr()) {
-                this.stream.rollback();
+            if (this.parse_attr()) {
+                result = true;
+            } else {
                 break;
             }
         }
+        return result;
     }
 
     /**
