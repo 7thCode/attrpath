@@ -126,13 +126,9 @@ abstract class BaseParser {
     protected is_s(): boolean {
         let result: boolean = false;
         const code: number = this.stream.charCode();
-        for (; ;) {
-            if (((code === 32) || (code === 9))) {
-                this.stream.next();
-                result = true;
-            } else {
-                break;
-            }
+        while (((code === 32) || (code === 9))) {
+            this.stream.next();
+            result = true;
         }
         return result;
     }
@@ -213,17 +209,11 @@ abstract class BaseParser {
     protected parse_number(): boolean {
         let result: boolean = false;
         this.stream.commit();
-        for (; ;) {
-            if (this.is_digit()) {
-                this.stream.next();
-                result = true;
-            } else {
-                break;
-            }
+        while (this.is_digit()) {
+            this.stream.next();
+            result = true;
         }
-
         this.handler.symbol("index", this.stream);
-
         return result;
     }
 }
@@ -262,25 +252,15 @@ class AttributeParser extends BaseParser {
     protected parse_name(): boolean {
         let result: boolean = false;
         this.stream.commit();
-        for (; ;) {
-            if (this.is_reading()) {
-                this.stream.next();
-                result = true;
-            } else {
-                break;
-            }
+        while (this.is_reading()) {
+            this.stream.next();
+            result = true;
         }
-        for (; ;) {
-            if (this.is_trailing()) {
-                this.stream.next();
-                result = true;
-            } else {
-                break;
-            }
+        while (this.is_trailing()) {
+            this.stream.next();
+            result = true;
         }
-
         this.handler.symbol("name", this.stream);
-
         return result;
     }
 
@@ -327,12 +307,8 @@ class AttributeParser extends BaseParser {
     protected parse_attrs(): boolean {
         let result: boolean = false;
         this.stream.commit();
-        for (; ;) {
-            if (this.parse_attr()) {
-                result = true;
-            } else {
-                break;
-            }
+        while (this.parse_attr()) {
+            result = true;
         }
         return result;
     }
