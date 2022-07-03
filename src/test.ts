@@ -29,6 +29,34 @@ test('.children.john.hobby[0].name', () => {
     expect(attrpath.traverse(value, '.children.john.hobby[0].name')).toBe("Cycling");
 });
 
+test('.children.john.hobby[1].name', () => {
+    expect(attrpath.traverse(value, '.children.john.hobby[1].name')).toBe("Dance");
+});
+
+test('.children.john.pet[0].type', () => {
+    expect(attrpath.traverse(value, '.children.john.pet[0].type')).toBe("dog");
+});
+
+test('.children.john.pet[0].name', () => {
+    expect(attrpath.traverse(value, '.children.john.pet[0].name')).toBe("Max");
+});
+
+test('.children.tom.hobby[0].name', () => {
+    expect(attrpath.traverse(value, '.children.tom.hobby[0].name')).toBe("Squash");
+});
+
+test('.children.tom.pet[0].type', () => {
+    expect(attrpath.traverse(value, '.children.tom.pet[0].type')).toBe("cat");
+});
+
+test('.children.tom.pet[0].name', () => {
+    expect(attrpath.traverse(value, '.children.tom.pet[0].name')).toBe("Chloe");
+})
+
+test('.children.john.hobby["0"].name', () => {
+    expect(attrpath.traverse(value, '.children.john.hobby["0"].name')).toBe(undefined);
+});
+
 test('.children["john"].hobby[0].name', () => {
     expect(attrpath.traverse(value, '.children["john"].hobby[0].name')).toBe("Cycling");
 });
@@ -59,6 +87,10 @@ test('.children.john.hobby[1].name', () => {
 
 test('.children.john.hobby[1].name', () => {
     expect(attrpath.is_valid('.children["john"].hobby[1].name')).toBe(true);
+});
+
+test('.children.john.hobby["1"].name', () => {
+    expect(attrpath.is_valid('.children["john"].hobby["1"].name')).toBe(false);
 });
 
 /**
@@ -94,7 +126,6 @@ class TestParser extends testparser.AttributeParser {
         return super.parse_number();
     }
 
-
     public is_reading(): boolean {
         return super.is_reading();
     }
@@ -129,11 +160,9 @@ test('      ', () => {
     expect(new TestParser(null, new teststream.ParserStream(" ")).parse_s()).toBe(true);
 });
 
-
 test('A', () => {
     expect(new TestParser(null, new teststream.ParserStream("")).is_terminal()).toBe(true);
 });
-
 
 test('A', () => {
     expect(new TestParser(null, new teststream.ParserStream("A")).is_char("A")).toBe(true);
@@ -164,7 +193,8 @@ test('z', () => {
 });
 
 test('0x2FFFF', () => {
-    expect(new TestParser(null, new teststream.ParserStream('￿')).is_reading()).toBe(true);
+    const c = String.fromCharCode(0x2FFFF);
+    expect(new TestParser(null, new teststream.ParserStream(c)).is_reading()).toBe(true);
 });
 
 test('0', () => {
@@ -187,11 +217,12 @@ test('A', () => {
 });
 
 test('z', () => {
-    expect(new TestParser(null, new teststream.ParserStream('z')).is_reading()).toBe(true);
+    expect(new TestParser(null, new teststream.ParserStream('z')).is_trailing()).toBe(true);
 });
 
 test('0x2FFFF', () => {
-    expect(new TestParser(null, new teststream.ParserStream('￿')).is_reading()).toBe(true);
+    const c = String.fromCharCode(0x2FFFF);
+    expect(new TestParser(null, new teststream.ParserStream(c)).is_trailing()).toBe(true);
 });
 
 test('0', () => {
@@ -199,11 +230,11 @@ test('0', () => {
 });
 
 test('_', () => {
-    expect(new TestParser(null, new teststream.ParserStream("_")).is_reading()).toBe(true);
+    expect(new TestParser(null, new teststream.ParserStream("_")).is_trailing()).toBe(true);
 });
 
 test('$', () => {
-    expect(new TestParser(null, new teststream.ParserStream("$")).is_reading()).toBe(true);
+    expect(new TestParser(null, new teststream.ParserStream("$")).is_trailing()).toBe(true);
 });
 
 
@@ -238,24 +269,22 @@ test('"ABCDE"', () => {
 test(".ABCDE", () => {
     expect(new TestParser(null, new teststream.ParserStream(".ABCDE")).parse_attr()).toBe(true);
 });
+
 test("[0]", () => {
     expect(new TestParser(null, new teststream.ParserStream("[0]")).parse_attr()).toBe(true);
 });
+
 test("['ABC']", () => {
     expect(new TestParser(null, new teststream.ParserStream("['ABC']")).parse_attr()).toBe(true);
 });
+
 test('["ABC"]', () => {
     expect(new TestParser(null, new teststream.ParserStream('["ABC"]')).parse_attr()).toBe(true);
 });
 
-//console.log(String.fromCharCode(122));
-//console.log(String.fromCharCode(0x2FFFF));
-
-
 /**
  * path ::= attr *
  */
-
 test(".ABCDE", () => {
     expect(new TestParser(null, new teststream.ParserStream(".ABCDE")).parse_path()).toBe(true);
 });
