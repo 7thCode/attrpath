@@ -334,14 +334,22 @@ test('123456', () => {
 
 
 /**
- * trailing ::= ( alpha | "_" | "$"  ) *
+ * reading ::= ( alpha | "_" | "$"  ) *
  */
 test('A', () => {
     expect(new TestParser(null, new teststream.ParserStream("A")).is_reading()).toBe(true);
 });
 
-test('1', () => {
-    expect(new TestParser(null, new teststream.ParserStream("1")).is_reading()).toBe(false);
+test('z', () => {
+    expect(new TestParser(null, new teststream.ParserStream('z')).is_reading()).toBe(true);
+});
+
+test('0x2FFFF', () => {
+    expect(new TestParser(null, new teststream.ParserStream('￿')).is_reading()).toBe(true);
+});
+
+test('0', () => {
+    expect(new TestParser(null, new teststream.ParserStream("0")).is_reading()).toBe(false);
 });
 
 test('_', () => {
@@ -359,7 +367,15 @@ test('A', () => {
     expect(new TestParser(null, new teststream.ParserStream("A")).is_trailing()).toBe(true);
 });
 
-test('1', () => {
+test('z', () => {
+    expect(new TestParser(null, new teststream.ParserStream('z')).is_reading()).toBe(true);
+});
+
+test('0x2FFFF', () => {
+    expect(new TestParser(null, new teststream.ParserStream('￿')).is_reading()).toBe(true);
+});
+
+test('0', () => {
     expect(new TestParser(null, new teststream.ParserStream("0")).is_trailing()).toBe(true);
 });
 
@@ -412,6 +428,10 @@ test("['ABC']", () => {
 test('["ABC"]', () => {
     expect(new TestParser(null, new teststream.ParserStream('["ABC"]')).parse_attr()).toBe(true);
 });
+
+//console.log(String.fromCharCode(122));
+//console.log(String.fromCharCode(0x2FFFF));
+
 
 /**
  * path ::= attr *
