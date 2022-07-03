@@ -30,62 +30,61 @@ function Test(v: any, s: string, r: unknown): string {
     return result;
 }
 
+console.log(Test(value, '.Child._太郎[0].$pet', "pochi."));
+console.log(Test(value, '.Child["_太郎"][0].$pet', "pochi."));
+console.log(Test(value, '.Child["_太郎"][0]["$pet"]', "pochi."));
+console.log(Test(value, '["Child"]["_太郎"][0]["$pet"]', "pochi."));
+console.log(Test(value, ".Child['_太郎'][0].$pet", "pochi."));
+console.log(Test(value, ".Child['_太郎'][0]['$pet']", "pochi."));
+console.log(Test(value, "['Child']['_太郎'][0]['$pet']", "pochi."));
+console.log(Test(value, '.Child._太郎[0].$pet', "pochi."));
+console.log(Test(value, '["Child"]._太郎[0].$pet', "pochi."));
 
-// console.log(Test(value, '.Child._太郎[0].$pet', "pochi."));
-// console.log(Test(value, '.Child["_太郎"][0].$pet', "pochi."));
-// console.log(Test(value, '.Child["_太郎"][0]["$pet"]', "pochi."));
-// console.log(Test(value, '["Child"]["_太郎"][0]["$pet"]', "pochi."));
-// console.log(Test(value, ".Child['_太郎'][0].$pet", "pochi."));
-// console.log(Test(value, ".Child['_太郎'][0]['$pet']", "pochi."));
-// console.log(Test(value, "['Child']['_太郎'][0]['$pet']", "pochi."));
-// console.log(Test(value, '.Child._太郎[0].$pet', "pochi."));
-// console.log(Test(value, '["Child"]._太郎[0].$pet', "pochi."));
+console.log(Test(value, '.Child1._太郎[0].$pet', undefined));
+console.log(Test(value, '.Child1["_太郎"][0].$pet', undefined));
+console.log(Test(value, '.Child1["_太郎"][0]["$pet"]', undefined));
+console.log(Test(value, '["Child1"]["_太郎"][0]["$pet"]', undefined));
+console.log(Test(value, ".Child1['_太郎'][0].$pet", undefined));
+console.log(Test(value, ".Child1['_太郎'][0]['$pet']", undefined));
+console.log(Test(value, "['Child1']['_太郎'][0]['$pet']", undefined));
+console.log(Test(value, '.Child1._太郎[0].$pet', undefined));
+console.log(Test(value, '["Child1"]._太郎[0].$pet', undefined));
+
+console.log(Test(value, '.Child._太郎[1].$pet', undefined));
+console.log(Test(value, '.Child["_太郎"][1].$pet', undefined));
+console.log(Test(value, '.Child["_太郎"][1]["$pet"]', undefined));
+console.log(Test(value, '["Child"]["_太郎"][1]["$pet"]', undefined));
+console.log(Test(value, ".Child['_太郎'][1].$pet", undefined));
+console.log(Test(value, ".Child['_太郎'][1]['$pet']", undefined));
+console.log(Test(value, "['Child']['_太郎'][1]['$pet']", undefined));
+console.log(Test(value, '.Child._太郎[1].$pet', undefined));
+console.log(Test(value, '["Child"]._太郎[1].$pet', undefined));
+
+console.log(Test(value, '.Child.._太郎[1].$pet', undefined));
+console.log(Test(value, '.Child._太郎["1"].$pet', undefined));
+console.log(Test(value, '.Child["_太郎"][1]["$pet"]', undefined));
+console.log(Test(value, '["Child"]["_太郎"][1]["$pet"]', undefined));
+console.log(Test(value, ".Child['_太郎'][1].$pet", undefined));
+console.log(Test(value, ".Child['_太郎'][1]['$pet']", undefined));
+console.log(Test(value, "['Child']['_太郎'][1]['$pet']", undefined));
+console.log(Test(value, '.Child._太郎[1].$pet', undefined));
+console.log(Test(value, '["Child"]._太郎[1].$pet', undefined));
+
+//function Test2(s: string): boolean {
+//    return attrpath.is_valid(s);
+//}
+
+
+// console.log(Test2( '.a.b'));
+// console.log(Test2( '.a.b.c'));
+// console.log(Test2( '.a..b'));
 //
-// console.log(Test(value, '.Child1._太郎[0].$pet', undefined));
-// console.log(Test(value, '.Child1["_太郎"][0].$pet', undefined));
-// console.log(Test(value, '.Child1["_太郎"][0]["$pet"]', undefined));
-// console.log(Test(value, '["Child1"]["_太郎"][0]["$pet"]', undefined));
-// console.log(Test(value, ".Child1['_太郎'][0].$pet", undefined));
-// console.log(Test(value, ".Child1['_太郎'][0]['$pet']", undefined));
-// console.log(Test(value, "['Child1']['_太郎'][0]['$pet']", undefined));
-// console.log(Test(value, '.Child1._太郎[0].$pet', undefined));
-// console.log(Test(value, '["Child1"]._太郎[0].$pet', undefined));
+// console.log(Test2( '.Child._太郎[0].$pet'));
+// console.log(Test2( '.Child.1太郎[0].$pet'));
 //
-// console.log(Test(value, '.Child._太郎[1].$pet', undefined));
-// console.log(Test(value, '.Child["_太郎"][1].$pet', undefined));
-// console.log(Test(value, '.Child["_太郎"][1]["$pet"]', undefined));
-// console.log(Test(value, '["Child"]["_太郎"][1]["$pet"]', undefined));
-// console.log(Test(value, ".Child['_太郎'][1].$pet", undefined));
-// console.log(Test(value, ".Child['_太郎'][1]['$pet']", undefined));
-// console.log(Test(value, "['Child']['_太郎'][1]['$pet']", undefined));
-// console.log(Test(value, '.Child._太郎[1].$pet', undefined));
-// console.log(Test(value, '["Child"]._太郎[1].$pet', undefined));
-//
-// console.log(Test(value, '.Child.._太郎[1].$pet', undefined));
-// console.log(Test(value, '.Child._太郎["1"].$pet', undefined));
-// console.log(Test(value, '.Child["_太郎"][1]["$pet"]', undefined));
-// console.log(Test(value, '["Child"]["_太郎"][1]["$pet"]', undefined));
-// console.log(Test(value, ".Child['_太郎'][1].$pet", undefined));
-// console.log(Test(value, ".Child['_太郎'][1]['$pet']", undefined));
-// console.log(Test(value, "['Child']['_太郎'][1]['$pet']", undefined));
-// console.log(Test(value, '.Child._太郎[1].$pet', undefined));
-// console.log(Test(value, '["Child"]._太郎[1].$pet', undefined));
-
-function Test2(s: string): boolean {
-    return attrpath.is_valid(s);
-}
-
-
-console.log(Test2( '.a.b'));
-console.log(Test2( '.a.b.c'));
-console.log(Test2( '.a..b'));
-
-console.log(Test2( '.Child._太郎[0].$pet'));
-console.log(Test2( '.Child.1太郎[0].$pet'));
-
-console.log(Test2( '.Child.._太郎[0]..$pet'));
-console.log(Test2( 'Child._太郎[0].$pet'));
-
+// console.log(Test2( '.Child.._太郎[0]..$pet'));
+// console.log(Test2( 'Child._太郎[0].$pet'));
+/*
 const large = {
     _id: {$oid: "61ee3509004f8b4447b4d89d"},
     enabled: true,
@@ -314,7 +313,7 @@ const large = {
     create: {$date: {$numberLong: "1643033497524"}},
     modify: {$date: {$numberLong: "1643033497524"}},
 }
-
+*/
 // console.log(Test(large, '._id.$oid', '61ee3509004f8b4447b4d89d'));
 // console.log(Test(large, '.sm.腰の開き.impact.frame', 102));
 // console.log(Test(large, '.sm.腰の開き..impact.frame', undefined));
