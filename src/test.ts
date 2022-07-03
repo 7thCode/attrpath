@@ -12,235 +12,54 @@ test('[]', () => {
     expect(testbase.isContainer([])).toBe(true);
 });
 
-
 const value = {
-    Child: {
-        _太郎: [
-            {$pet: "pochi."}
-        ],
-        花子: {y: 1}
+    children: {
+        john: {
+            hobby: [{name: "Cycling"}, {name: "Dance"}],
+            pet: [{type: "dog", name: "Max"}]
+        },
+        tom: {
+            hobby: [{name: "Squash"}],
+            pet: [{type: "cat", name: "Chloe"}]
+        }
     }
 };
 
-test('.Child._太郎[0].$pet', () => {
-    expect(attrpath.traverse(value, '.Child._太郎[0].$pet')).toBe("pochi.");
+test('.children.john.hobby[0].name', () => {
+    expect(attrpath.traverse(value, '.children.john.hobby[0].name')).toBe("Cycling");
 });
 
-test('.Child["_太郎"][0].$pet', () => {
-    expect(attrpath.traverse(value, '.Child["_太郎"][0].$pet')).toBe("pochi.");
+test('.children["john"].hobby[0].name', () => {
+    expect(attrpath.traverse(value, '.children["john"].hobby[0].name')).toBe("Cycling");
 });
 
-test('.Child["_太郎"][0]["$pet"]', () => {
-    expect(attrpath.traverse(value, '.Child["_太郎"][0]["$pet"]')).toBe("pochi.");
+test('.children["john"].hobby[0]["name"]', () => {
+    expect(attrpath.traverse(value, '.children["john"].hobby[0]["name"]')).toBe("Cycling");
 });
 
-test('["Child"]["_太郎"][0]["$pet"]', () => {
-    expect(attrpath.traverse(value, '["Child"]["_太郎"][0]["$pet"]')).toBe("pochi.");
+test('["children"]["john"].hobby[0].name', () => {
+    expect(attrpath.traverse(value, '["children"]["john"].hobby[0].name')).toBe("Cycling");
 });
 
-test(".Child['_太郎'][0].$pet", () => {
-    expect(attrpath.traverse(value, ".Child['_太郎'][0].$pet")).toBe("pochi.");
+test('.children["john"].hobby[0].name', () => {
+    expect(attrpath.traverse(value, '.children["john"].hobby[0].name')).toBe("Cycling");
 });
 
-test(".Child['_太郎'][0]['$pet']", () => {
-    expect(attrpath.traverse(value, ".Child['_太郎'][0]['$pet']")).toBe("pochi.");
+test('["children"]["john"]["hobby"][0]["name"]', () => {
+    expect(attrpath.traverse(value, '["children"]["john"]["hobby"][0]["name"]')).toBe("Cycling");
 });
 
-test("['Child']['_太郎'][0]['$pet']", () => {
-    expect(attrpath.traverse(value, "['Child']['_太郎'][0]['$pet']")).toBe("pochi.");
+test('["children"]["john"]["hobby"][0].["name"]', () => {
+    expect(attrpath.traverse(value, '["children"]["john"]["hobby"][0].["name"]')).toBe(undefined);
 });
 
-test('.Child._太郎[0].$pet', () => {
-    expect(attrpath.traverse(value, '.Child._太郎[0].$pet')).toBe("pochi.");
+test('.children.john.hobby[1].name', () => {
+    expect(attrpath.traverse(value, '.children["john"].hobby[1].name')).toBe("Dance");
 });
 
-test('["Child"]._太郎[0].$pet', () => {
-    expect(attrpath.traverse(value, '["Child"]._太郎[0].$pet')).toBe("pochi.");
+test('.children.john.hobby[1].name', () => {
+    expect(attrpath.is_valid('.children["john"].hobby[1].name')).toBe(true);
 });
-
-test('Test10', () => {
-    expect(attrpath.traverse(value, '.Child1._太郎[0].$pet')).toBe(undefined);
-});
-test('.Child1["_太郎"][0].$pet', () => {
-    expect(attrpath.traverse(value, '.Child1["_太郎"][0].$pet')).toBe(undefined);
-});
-test('.Child1["_太郎"][0]["$pet"]', () => {
-    expect(attrpath.traverse(value, '.Child1["_太郎"][0]["$pet"]')).toBe(undefined);
-});
-test('["Child1"]["_太郎"][0]["$pet"]', () => {
-    expect(attrpath.traverse(value, '["Child1"]["_太郎"][0]["$pet"]')).toBe(undefined);
-});
-test(".Child1['_太郎'][0].$pet", () => {
-    expect(attrpath.traverse(value, ".Child1['_太郎'][0].$pet")).toBe(undefined);
-});
-test(".Child1['_太郎'][0]['$pet']", () => {
-    expect(attrpath.traverse(value, ".Child1['_太郎'][0]['$pet']")).toBe(undefined);
-});
-test("['Child1']['_太郎'][0]['$pet']", () => {
-    expect(attrpath.traverse(value, "['Child1']['_太郎'][0]['$pet']")).toBe(undefined);
-});
-test('.Child1._太郎[0].$pet', () => {
-    expect(attrpath.traverse(value, '.Child1._太郎[0].$pet')).toBe(undefined);
-});
-test('["Child1"]._太郎[0].$pet', () => {
-    expect(attrpath.traverse(value, '["Child1"]._太郎[0].$pet')).toBe(undefined);
-});
-test('.Child._太郎[1].$pet', () => {
-    expect(attrpath.traverse(value, '.Child._太郎[1].$pet')).toBe(undefined);
-});
-test('.Child["_太郎"][1].$pet', () => {
-    expect(attrpath.traverse(value, '.Child["_太郎"][1].$pet')).toBe(undefined);
-});
-test('.Child["_太郎"][1]["$pet"]', () => {
-    expect(attrpath.traverse(value, '.Child["_太郎"][1]["$pet"]')).toBe(undefined);
-});
-test('["Child"]["_太郎"][1]["$pet"]', () => {
-    expect(attrpath.traverse(value, '["Child"]["_太郎"][1]["$pet"]')).toBe(undefined);
-});
-test(".Child['_太郎'][1].$pet", () => {
-    expect(attrpath.traverse(value, ".Child['_太郎'][1].$pet")).toBe(undefined);
-});
-test(".Child['_太郎'][1]['$pet']", () => {
-    expect(attrpath.traverse(value, ".Child['_太郎'][1]['$pet']")).toBe(undefined);
-});
-test("['Child']['_太郎'][1]['$pet']", () => {
-    expect(attrpath.traverse(value, "['Child']['_太郎'][1]['$pet']")).toBe(undefined);
-});
-test('.Child._太郎[1].$pet', () => {
-    expect(attrpath.traverse(value, '.Child._太郎[1].$pet')).toBe(undefined);
-});
-test('["Child"]._太郎[1].$pet', () => {
-    expect(attrpath.traverse(value, '["Child"]._太郎[1].$pet')).toBe(undefined);
-});
-test('.Child.._太郎[1].$pet', () => {
-    expect(attrpath.traverse(value, '.Child.._太郎[1].$pet')).toBe(undefined);
-});
-test('.Child._太郎["1"].$pet', () => {
-    expect(attrpath.traverse(value, '.Child._太郎["1"].$pet')).toBe(undefined);
-});
-test('.Child["_太郎"][1]["$pet"]', () => {
-    expect(attrpath.traverse(value, '.Child["_太郎"][1]["$pet"]')).toBe(undefined);
-});
-test('["Child"]["_太郎"][1]["$pet"]', () => {
-    expect(attrpath.traverse(value, '["Child"]["_太郎"][1]["$pet"]')).toBe(undefined);
-});
-test(".Child['_太郎'][1].$pet", () => {
-    expect(attrpath.traverse(value, ".Child['_太郎'][1].$pet")).toBe(undefined);
-});
-test(".Child['_太郎'][1]['$pet']", () => {
-    expect(attrpath.traverse(value, ".Child['_太郎'][1]['$pet']")).toBe(undefined);
-});
-test("['Child']['_太郎'][1]['$pet']", () => {
-    expect(attrpath.traverse(value, "['Child']['_太郎'][1]['$pet']")).toBe(undefined);
-});
-test('.Child._太郎[1].$pet', () => {
-    expect(attrpath.traverse(value, '.Child._太郎[1].$pet')).toBe(undefined);
-});
-test('["Child"]._太郎[1].$pet', () => {
-    expect(attrpath.traverse(value, '["Child"]._太郎[1].$pet')).toBe(undefined);
-});
-
-test('.Child._太郎[0].$pet', () => {
-    expect(attrpath.is_valid('.Child._太郎[0].$pet')).toBe(true);
-});
-
-test('.Child["_太郎"][0].$pet', () => {
-    expect(attrpath.is_valid('.Child["_太郎"][0].$pet')).toBe(true);
-});
-
-test('.Child["_太郎"][0]["$pet"]', () => {
-    expect(attrpath.is_valid('.Child["_太郎"][0]["$pet"]')).toBe(true);
-});
-
-test('["Child"]["_太郎"][0]["$pet"]', () => {
-    expect(attrpath.is_valid('["Child"]["_太郎"][0]["$pet"]')).toBe(true);
-});
-
-test(".Child['_太郎'][0].$pet", () => {
-    expect(attrpath.is_valid(".Child['_太郎'][0].$pet")).toBe(true);
-});
-
-test(".Child['_太郎'][0]['$pet']", () => {
-    expect(attrpath.is_valid(".Child['_太郎'][0]['$pet']")).toBe(true);
-});
-
-test("['Child']['_太郎'][0]['$pet']", () => {
-    expect(attrpath.is_valid("['Child']['_太郎'][0]['$pet']")).toBe(true);
-});
-
-test('.Child._太郎[0].$pet', () => {
-    expect(attrpath.is_valid('.Child._太郎[0].$pet')).toBe(true);
-});
-
-test('["Child"]._太郎[0].$pet', () => {
-    expect(attrpath.is_valid('["Child"]._太郎[0].$pet')).toBe(true);
-});
-
-test('.Child1._太郎[0].$pet', () => {
-    expect(attrpath.is_valid('.Child1._太郎[0].$pet')).toBe(true);
-});
-
-test('.Child1["_太郎"][0].$pet', () => {
-    expect(attrpath.is_valid('.Child1["_太郎"][0].$pet')).toBe(true);
-});
-
-test('.Child1["_太郎"][0]["$pet"]', () => {
-    expect(attrpath.is_valid('.Child1["_太郎"][0]["$pet"]')).toBe(true);
-});
-
-test('["Child1"]["_太郎"][0]["$pet"]', () => {
-    expect(attrpath.is_valid('["Child1"]["_太郎"][0]["$pet"]')).toBe(true);
-});
-
-test(".Child1['_太郎'][0].$pet", () => {
-    expect(attrpath.is_valid(".Child1['_太郎'][0].$pet")).toBe(true);
-});
-
-test(".Child1['_太郎'][0]['$pet']", () => {
-    expect(attrpath.is_valid(".Child1['_太郎'][0]['$pet']")).toBe(true);
-});
-
-test("['Child1']['_太郎'][0]['$pet']", () => {
-    expect(attrpath.is_valid("['Child1']['_太郎'][0]['$pet']")).toBe(true);
-});
-
-test('.Child1._太郎[0].$pet', () => {
-    expect(attrpath.is_valid('.Child1._太郎[0].$pet')).toBe(true);
-});
-
-test('["Child1"]._太郎[0].$pet', () => {
-    expect(attrpath.is_valid('["Child1"]._太郎[0].$pet')).toBe(true);
-});
-
-
-test('.Child._太郎[0]..$pet', () => {
-    expect(attrpath.is_valid('.Child._太郎[0]..$pet')).toBe(false);
-});
-
-test('.Child["_太郎"][0.$pet', () => {
-    expect(attrpath.is_valid('.Child["_太郎"][0.$pet')).toBe(false);
-});
-
-test('.Child["_太郎"][0].["$pet"]', () => {
-    expect(attrpath.is_valid('.Child["_太郎"][0].["$pet"]')).toBe(false);
-});
-
-test('["Child"]["_太郎"].[0]["pet"]', () => {
-    expect(attrpath.is_valid('["Child"]["_太郎"].[0]["pet"]')).toBe(false);
-});
-
-test('["Child"].["_太郎"].[0]["pet"]', () => {
-    expect(attrpath.is_valid('["Child"].["_太郎"].[0]["pet"]')).toBe(false);
-});
-
-test('["Child"].["_太郎"].["0"]["pet"]', () => {
-    expect(attrpath.is_valid('["Child"].["_太郎"].["0"]["pet"]')).toBe(false);
-});
-
-test('["Child"]["_太郎"][0]["1pet"]', () => {
-    expect(attrpath.is_valid('["Child"]["_太郎"][0]["1pet"]')).toBe(false);
-});
-
 
 /**
  * for test
@@ -392,7 +211,7 @@ test('$', () => {
  * name ::= reading [ trailing ]
  */
 test('ABCDE', () => {
-  expect(new TestParser(null, new teststream.ParserStream("ABCDE")).parse_name()).toBe(true);
+    expect(new TestParser(null, new teststream.ParserStream("ABCDE")).parse_name()).toBe(true);
 });
 
 /**
