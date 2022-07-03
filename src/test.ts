@@ -376,7 +376,14 @@ test('$', () => {
  * name ::= reading [ trailing ]
  */
 test('ABCDE', () => {
-    expect(new TestParser(null, new teststream.ParserStream("ABCDE")).parse_name()).toBe(true);
+  expect(new TestParser(null, new teststream.ParserStream("ABCDE")).parse_name()).toBe(true);
+});
+
+/**
+ * name ::= reading [ trailing ]
+ */
+test('1BCDE', () => {
+    expect(new TestParser(null, new teststream.ParserStream("1BCDE")).parse_name()).toBe(false);
 });
 
 /**
@@ -409,6 +416,15 @@ test('["ABC"]', () => {
 /**
  * path ::= attr *
  */
+
+test(".ABCDE", () => {
+    expect(new TestParser(null, new teststream.ParserStream(".ABCDE")).parse_path()).toBe(true);
+});
+
 test(".ABCDE.XYZ", () => {
     expect(new TestParser(null, new teststream.ParserStream(".ABCDE.XYZ")).parse_path()).toBe(true);
+});
+
+test(".ABCDE.XYZ[0]", () => {
+    expect(new TestParser(null, new teststream.ParserStream(".ABCDE.XYZ[0]")).parse_path()).toBe(true);
 });

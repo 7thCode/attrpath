@@ -183,11 +183,12 @@ class AttributeParser extends BaseParser {
         if (this.is_reading()) {
             this.stream.next();
             result = true;
+            while (this.is_trailing()) {
+                this.stream.next();
+                result = true;
+            }
         }
-        while (this.is_trailing()) {
-            this.stream.next();
-            result = true;
-        }
+
         if (this.handler) {
             this.handler.symbol("name", this.stream);
         }
