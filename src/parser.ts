@@ -26,15 +26,23 @@ abstract class BaseParser {
 
     /**
      * is_s
+     * s ::=  | \t
+     */
+    protected is_s(): boolean {
+        const code: number = this.stream.charCode();
+        return (code === 32) || (code === 9);
+    }
+
+    /**
+     * is_s
      *
      * S ::= ( " " | tab ) *
      *
      * @remarks Spaces or Tabs
      */
-    protected is_s(): boolean {
+    protected parse_s(): boolean {
         let result: boolean = false;
-        const code: number = this.stream.charCode();
-        while (((code === 32) || (code === 9))) {
+        while (this.is_s()) {
             this.stream.next();
             result = true;
         }
@@ -104,10 +112,9 @@ abstract class BaseParser {
             case ":":
             case ";":
             case ",":
-                break;
-            default:
                 this.stream.next();
                 result = true;
+                break;
         }
         return result;
     }

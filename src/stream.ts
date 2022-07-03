@@ -30,15 +30,6 @@ class ParserStream {
     }
 
     /**
-     　* rollback
-     　*
-     　* @remarks パース済み終端を決定時点まで復元
-     　*/
-    public rollback(): void {
-        this.end = this.start;
-    }
-
-    /**
      　* next
      　*
      　* @remarks パース済み終端を一文字進める

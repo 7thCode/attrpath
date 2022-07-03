@@ -1,5 +1,18 @@
 const attrpath = require("./index");
 
+const testbase: any = require("./base");
+const testparser: any = require("./parser");
+const teststream: any = require("./stream");
+
+test('1', () => {
+    expect(testbase.isNumber(1)).toBe(true);
+});
+
+test('[]', () => {
+    expect(testbase.isContainer([])).toBe(true);
+});
+
+
 const value = {
     Child: {
         _太郎: [
@@ -9,224 +22,393 @@ const value = {
     }
 };
 
-test('Test1', () => {
+test('.Child._太郎[0].$pet', () => {
     expect(attrpath.traverse(value, '.Child._太郎[0].$pet')).toBe("pochi.");
 });
 
-test('Test2', () => {
+test('.Child["_太郎"][0].$pet', () => {
     expect(attrpath.traverse(value, '.Child["_太郎"][0].$pet')).toBe("pochi.");
 });
 
-test('Test3', () => {
+test('.Child["_太郎"][0]["$pet"]', () => {
     expect(attrpath.traverse(value, '.Child["_太郎"][0]["$pet"]')).toBe("pochi.");
 });
 
-test('Test4', () => {
+test('["Child"]["_太郎"][0]["$pet"]', () => {
     expect(attrpath.traverse(value, '["Child"]["_太郎"][0]["$pet"]')).toBe("pochi.");
 });
 
-test('Test5', () => {
+test(".Child['_太郎'][0].$pet", () => {
     expect(attrpath.traverse(value, ".Child['_太郎'][0].$pet")).toBe("pochi.");
 });
 
-test('Test6', () => {
+test(".Child['_太郎'][0]['$pet']", () => {
     expect(attrpath.traverse(value, ".Child['_太郎'][0]['$pet']")).toBe("pochi.");
 });
 
-test('Test7', () => {
+test("['Child']['_太郎'][0]['$pet']", () => {
     expect(attrpath.traverse(value, "['Child']['_太郎'][0]['$pet']")).toBe("pochi.");
 });
 
-test('Test8', () => {
+test('.Child._太郎[0].$pet', () => {
     expect(attrpath.traverse(value, '.Child._太郎[0].$pet')).toBe("pochi.");
 });
 
-test('Test9', () => {
+test('["Child"]._太郎[0].$pet', () => {
     expect(attrpath.traverse(value, '["Child"]._太郎[0].$pet')).toBe("pochi.");
 });
 
 test('Test10', () => {
     expect(attrpath.traverse(value, '.Child1._太郎[0].$pet')).toBe(undefined);
 });
-test('Test11', () => {
+test('.Child1["_太郎"][0].$pet', () => {
     expect(attrpath.traverse(value, '.Child1["_太郎"][0].$pet')).toBe(undefined);
 });
-test('Test12', () => {
+test('.Child1["_太郎"][0]["$pet"]', () => {
     expect(attrpath.traverse(value, '.Child1["_太郎"][0]["$pet"]')).toBe(undefined);
 });
-test('Test13', () => {
+test('["Child1"]["_太郎"][0]["$pet"]', () => {
     expect(attrpath.traverse(value, '["Child1"]["_太郎"][0]["$pet"]')).toBe(undefined);
 });
-test('Test14', () => {
+test(".Child1['_太郎'][0].$pet", () => {
     expect(attrpath.traverse(value, ".Child1['_太郎'][0].$pet")).toBe(undefined);
 });
-test('Test15', () => {
+test(".Child1['_太郎'][0]['$pet']", () => {
     expect(attrpath.traverse(value, ".Child1['_太郎'][0]['$pet']")).toBe(undefined);
 });
-test('Test16', () => {
+test("['Child1']['_太郎'][0]['$pet']", () => {
     expect(attrpath.traverse(value, "['Child1']['_太郎'][0]['$pet']")).toBe(undefined);
 });
-test('Test17', () => {
+test('.Child1._太郎[0].$pet', () => {
     expect(attrpath.traverse(value, '.Child1._太郎[0].$pet')).toBe(undefined);
 });
-test('Test18', () => {
+test('["Child1"]._太郎[0].$pet', () => {
     expect(attrpath.traverse(value, '["Child1"]._太郎[0].$pet')).toBe(undefined);
 });
-test('Test19', () => {
+test('.Child._太郎[1].$pet', () => {
     expect(attrpath.traverse(value, '.Child._太郎[1].$pet')).toBe(undefined);
 });
-test('Test20', () => {
+test('.Child["_太郎"][1].$pet', () => {
     expect(attrpath.traverse(value, '.Child["_太郎"][1].$pet')).toBe(undefined);
 });
-test('Test21', () => {
+test('.Child["_太郎"][1]["$pet"]', () => {
     expect(attrpath.traverse(value, '.Child["_太郎"][1]["$pet"]')).toBe(undefined);
 });
-test('Test22', () => {
+test('["Child"]["_太郎"][1]["$pet"]', () => {
     expect(attrpath.traverse(value, '["Child"]["_太郎"][1]["$pet"]')).toBe(undefined);
 });
-test('Test23', () => {
+test(".Child['_太郎'][1].$pet", () => {
     expect(attrpath.traverse(value, ".Child['_太郎'][1].$pet")).toBe(undefined);
 });
-test('Test24', () => {
+test(".Child['_太郎'][1]['$pet']", () => {
     expect(attrpath.traverse(value, ".Child['_太郎'][1]['$pet']")).toBe(undefined);
 });
-test('Test25', () => {
+test("['Child']['_太郎'][1]['$pet']", () => {
     expect(attrpath.traverse(value, "['Child']['_太郎'][1]['$pet']")).toBe(undefined);
 });
-test('Test26', () => {
+test('.Child._太郎[1].$pet', () => {
     expect(attrpath.traverse(value, '.Child._太郎[1].$pet')).toBe(undefined);
 });
-test('Test27', () => {
+test('["Child"]._太郎[1].$pet', () => {
     expect(attrpath.traverse(value, '["Child"]._太郎[1].$pet')).toBe(undefined);
 });
-test('Test28', () => {
+test('.Child.._太郎[1].$pet', () => {
     expect(attrpath.traverse(value, '.Child.._太郎[1].$pet')).toBe(undefined);
 });
-test('Test29', () => {
+test('.Child._太郎["1"].$pet', () => {
     expect(attrpath.traverse(value, '.Child._太郎["1"].$pet')).toBe(undefined);
 });
-test('Test30', () => {
+test('.Child["_太郎"][1]["$pet"]', () => {
     expect(attrpath.traverse(value, '.Child["_太郎"][1]["$pet"]')).toBe(undefined);
 });
-test('Test31', () => {
+test('["Child"]["_太郎"][1]["$pet"]', () => {
     expect(attrpath.traverse(value, '["Child"]["_太郎"][1]["$pet"]')).toBe(undefined);
 });
-test('Test32', () => {
+test(".Child['_太郎'][1].$pet", () => {
     expect(attrpath.traverse(value, ".Child['_太郎'][1].$pet")).toBe(undefined);
 });
-test('Test33', () => {
+test(".Child['_太郎'][1]['$pet']", () => {
     expect(attrpath.traverse(value, ".Child['_太郎'][1]['$pet']")).toBe(undefined);
 });
-test('Test34', () => {
+test("['Child']['_太郎'][1]['$pet']", () => {
     expect(attrpath.traverse(value, "['Child']['_太郎'][1]['$pet']")).toBe(undefined);
 });
-test('Test35', () => {
+test('.Child._太郎[1].$pet', () => {
     expect(attrpath.traverse(value, '.Child._太郎[1].$pet')).toBe(undefined);
 });
-test('Test36', () => {
+test('["Child"]._太郎[1].$pet', () => {
     expect(attrpath.traverse(value, '["Child"]._太郎[1].$pet')).toBe(undefined);
 });
 
-test('Test37', () => {
+test('.Child._太郎[0].$pet', () => {
     expect(attrpath.is_valid('.Child._太郎[0].$pet')).toBe(true);
 });
 
-test('Test38', () => {
+test('.Child["_太郎"][0].$pet', () => {
     expect(attrpath.is_valid('.Child["_太郎"][0].$pet')).toBe(true);
 });
 
-test('Test39', () => {
+test('.Child["_太郎"][0]["$pet"]', () => {
     expect(attrpath.is_valid('.Child["_太郎"][0]["$pet"]')).toBe(true);
 });
 
-test('Test40', () => {
+test('["Child"]["_太郎"][0]["$pet"]', () => {
     expect(attrpath.is_valid('["Child"]["_太郎"][0]["$pet"]')).toBe(true);
 });
 
-test('Test41', () => {
+test(".Child['_太郎'][0].$pet", () => {
     expect(attrpath.is_valid(".Child['_太郎'][0].$pet")).toBe(true);
 });
 
-test('Test42', () => {
+test(".Child['_太郎'][0]['$pet']", () => {
     expect(attrpath.is_valid(".Child['_太郎'][0]['$pet']")).toBe(true);
 });
 
-test('Test43', () => {
+test("['Child']['_太郎'][0]['$pet']", () => {
     expect(attrpath.is_valid("['Child']['_太郎'][0]['$pet']")).toBe(true);
 });
 
-test('Test44', () => {
+test('.Child._太郎[0].$pet', () => {
     expect(attrpath.is_valid('.Child._太郎[0].$pet')).toBe(true);
 });
 
-test('Test45', () => {
+test('["Child"]._太郎[0].$pet', () => {
     expect(attrpath.is_valid('["Child"]._太郎[0].$pet')).toBe(true);
 });
 
-test('Test46', () => {
+test('.Child1._太郎[0].$pet', () => {
     expect(attrpath.is_valid('.Child1._太郎[0].$pet')).toBe(true);
 });
 
-test('Test47', () => {
+test('.Child1["_太郎"][0].$pet', () => {
     expect(attrpath.is_valid('.Child1["_太郎"][0].$pet')).toBe(true);
 });
-test('Test48', () => {
+
+test('.Child1["_太郎"][0]["$pet"]', () => {
     expect(attrpath.is_valid('.Child1["_太郎"][0]["$pet"]')).toBe(true);
 });
 
-test('Test49', () => {
+test('["Child1"]["_太郎"][0]["$pet"]', () => {
     expect(attrpath.is_valid('["Child1"]["_太郎"][0]["$pet"]')).toBe(true);
 });
 
-test('Test50', () => {
+test(".Child1['_太郎'][0].$pet", () => {
     expect(attrpath.is_valid(".Child1['_太郎'][0].$pet")).toBe(true);
 });
 
-test('Test51', () => {
+test(".Child1['_太郎'][0]['$pet']", () => {
     expect(attrpath.is_valid(".Child1['_太郎'][0]['$pet']")).toBe(true);
 });
-test('Test52', () => {
+
+test("['Child1']['_太郎'][0]['$pet']", () => {
     expect(attrpath.is_valid("['Child1']['_太郎'][0]['$pet']")).toBe(true);
 });
 
-test('Test53', () => {
+test('.Child1._太郎[0].$pet', () => {
     expect(attrpath.is_valid('.Child1._太郎[0].$pet')).toBe(true);
 });
 
-test('Test54', () => {
+test('["Child1"]._太郎[0].$pet', () => {
     expect(attrpath.is_valid('["Child1"]._太郎[0].$pet')).toBe(true);
 });
 
 
-
-
-
-
-test('Test37', () => {
+test('.Child._太郎[0]..$pet', () => {
     expect(attrpath.is_valid('.Child._太郎[0]..$pet')).toBe(false);
 });
 
-test('Test38', () => {
+test('.Child["_太郎"][0.$pet', () => {
     expect(attrpath.is_valid('.Child["_太郎"][0.$pet')).toBe(false);
 });
 
-test('Test39', () => {
+test('.Child["_太郎"][0].["$pet"]', () => {
     expect(attrpath.is_valid('.Child["_太郎"][0].["$pet"]')).toBe(false);
 });
 
-test('Test40', () => {
+test('["Child"]["_太郎"].[0]["pet"]', () => {
     expect(attrpath.is_valid('["Child"]["_太郎"].[0]["pet"]')).toBe(false);
 });
 
-test('Test41', () => {
+test('["Child"].["_太郎"].[0]["pet"]', () => {
     expect(attrpath.is_valid('["Child"].["_太郎"].[0]["pet"]')).toBe(false);
 });
 
-test('Test42', () => {
+test('["Child"].["_太郎"].["0"]["pet"]', () => {
     expect(attrpath.is_valid('["Child"].["_太郎"].["0"]["pet"]')).toBe(false);
 });
 
-test('Test42', () => {
+test('["Child"]["_太郎"][0]["1pet"]', () => {
     expect(attrpath.is_valid('["Child"]["_太郎"][0]["1pet"]')).toBe(false);
 });
 
+
+/**
+ * for test
+ */
+class TestParser extends testparser.AttributeParser {
+
+    constructor(handler: BaseHandler | null, stream: ParserStream) {
+        super(handler, stream);
+    }
+
+    public is_s(): boolean {
+        return super.is_s();
+    }
+
+    public is_terminal(): boolean {
+        return super.is_terminal();
+    }
+
+    public is_char(c: string): boolean {
+        return super.is_char(c);
+    }
+
+    public is_symbol(): boolean {
+        return super.is_symbol();
+    }
+
+    public is_digit(): boolean {
+        return super.is_digit();
+    }
+
+    public parse_number(): boolean {
+        return super.parse_number();
+    }
+
+
+    public is_reading(): boolean {
+        return super.is_reading();
+    }
+
+    public is_trailing(): boolean {
+        return super.is_trailing();
+    }
+
+    public parse_name(): boolean {
+        return super.parse_name();
+    }
+
+    public parse_string(): boolean {
+        return super.parse_string();
+    }
+
+    public parse_attr(): boolean {
+        return super.parse_attr();
+    }
+
+    public parse_path(): boolean {
+        return super.parse_path();
+    }
+
+}
+
+test(' ', () => {
+    expect(new TestParser(null, new teststream.ParserStream(" ")).is_s()).toBe(true);
+});
+
+test('      ', () => {
+    expect(new TestParser(null, new teststream.ParserStream(" ")).parse_s()).toBe(true);
+});
+
+
+test('A', () => {
+    expect(new TestParser(null, new teststream.ParserStream("")).is_terminal()).toBe(true);
+});
+
+
+test('A', () => {
+    expect(new TestParser(null, new teststream.ParserStream("A")).is_char("A")).toBe(true);
+});
+
+test('.', () => {
+    expect(new TestParser(null, new teststream.ParserStream(".")).is_symbol()).toBe(true);
+});
+
+test('0', () => {
+    expect(new TestParser(null, new teststream.ParserStream("0")).is_digit()).toBe(true);
+});
+
+test('123456', () => {
+    expect(new TestParser(null, new teststream.ParserStream("123456")).parse_number()).toBe(true);
+});
+
+
+/**
+ * trailing ::= ( alpha | "_" | "$"  ) *
+ */
+test('A', () => {
+    expect(new TestParser(null, new teststream.ParserStream("A")).is_reading()).toBe(true);
+});
+
+test('1', () => {
+    expect(new TestParser(null, new teststream.ParserStream("1")).is_reading()).toBe(false);
+});
+
+test('_', () => {
+    expect(new TestParser(null, new teststream.ParserStream("_")).is_reading()).toBe(true);
+});
+
+test('$', () => {
+    expect(new TestParser(null, new teststream.ParserStream("$")).is_reading()).toBe(true);
+});
+
+/**
+ * trailing ::= ( alpha | "_" | "$" | digit ) *
+ */
+test('A', () => {
+    expect(new TestParser(null, new teststream.ParserStream("A")).is_trailing()).toBe(true);
+});
+
+test('1', () => {
+    expect(new TestParser(null, new teststream.ParserStream("0")).is_trailing()).toBe(true);
+});
+
+test('_', () => {
+    expect(new TestParser(null, new teststream.ParserStream("_")).is_reading()).toBe(true);
+});
+
+test('$', () => {
+    expect(new TestParser(null, new teststream.ParserStream("$")).is_reading()).toBe(true);
+});
+
+
+/**
+ * name ::= reading [ trailing ]
+ */
+test('ABCDE', () => {
+    expect(new TestParser(null, new teststream.ParserStream("ABCDE")).parse_name()).toBe(true);
+});
+
+/**
+ * string = "'" mame "'" | '"' mame '"'
+ */
+test("'ABCDE'", () => {
+    expect(new TestParser(null, new teststream.ParserStream("'ABCDE'")).parse_string()).toBe(true);
+});
+
+test('"ABCDE"', () => {
+    expect(new TestParser(null, new teststream.ParserStream('"ABCDE"')).parse_string()).toBe(true);
+});
+
+/**
+ * attr ::= "." name | '[' string | number ']'
+ */
+test(".ABCDE", () => {
+    expect(new TestParser(null, new teststream.ParserStream(".ABCDE")).parse_attr()).toBe(true);
+});
+test("[0]", () => {
+    expect(new TestParser(null, new teststream.ParserStream("[0]")).parse_attr()).toBe(true);
+});
+test("['ABC']", () => {
+    expect(new TestParser(null, new teststream.ParserStream("['ABC']")).parse_attr()).toBe(true);
+});
+test('["ABC"]', () => {
+    expect(new TestParser(null, new teststream.ParserStream('["ABC"]')).parse_attr()).toBe(true);
+});
+
+/**
+ * path ::= attr *
+ */
+test(".ABCDE.XYZ", () => {
+    expect(new TestParser(null, new teststream.ParserStream(".ABCDE.XYZ")).parse_path()).toBe(true);
+});
