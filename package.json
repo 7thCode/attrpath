@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "dist/test.js",
+    "test": "node dist/test.js",
     "build": "tsc",
     "prepare": "npm run build"
   },
