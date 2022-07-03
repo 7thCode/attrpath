@@ -173,7 +173,7 @@ class AttributeParser extends BaseParser {
     protected parse_name(): boolean {
         let result: boolean = false;
         this.stream.commit();
-        while (this.is_reading()) {
+        if (this.is_reading()) {
             this.stream.next();
             result = true;
         }
@@ -195,12 +195,12 @@ class AttributeParser extends BaseParser {
         let result: boolean = false;
         this.stream.commit();
         if (this.is_char("'") || this.is_char('"')) {
-               this.stream.next();
+            this.stream.next();
             if (this.parse_name()) {
-               if((this.is_char("'") || this.is_char('"'))) {
-                   this.stream.next();
-                   result = true;
-               }
+                if ((this.is_char("'") || this.is_char('"'))) {
+                    this.stream.next();
+                    result = true;
+                }
             }
         }
         return result;
@@ -238,11 +238,7 @@ class AttributeParser extends BaseParser {
         let result: boolean = false;
         this.stream.commit();
         while (this.parse_attr()) {
-                    if (this.is_terminal()) {
-            result = true;
-        } else {
-            result = false;
-        }
+            result = (this.is_terminal());
         }
         return result;
     }
