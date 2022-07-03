@@ -75,11 +75,16 @@ function Test2(s: string): boolean {
     return attrpath.is_valid(s);
 }
 
-// console.log(Test2( '.Child._太郎[0].$pet'));
-// console.log(Test2( '.Child.._太郎[0]..$pet'));
-console.log(Test2( '.a[0].b'));
-// console.log(Test2( '.Child.1太郎[0].$pet'));
-// console.log(Test2( 'Child._太郎[0].$pet'));
+
+console.log(Test2( '.a.b'));
+console.log(Test2( '.a.b.c'));
+console.log(Test2( '.a..b'));
+
+console.log(Test2( '.Child._太郎[0].$pet'));
+console.log(Test2( '.Child.1太郎[0].$pet'));
+
+console.log(Test2( '.Child.._太郎[0]..$pet'));
+console.log(Test2( 'Child._太郎[0].$pet'));
 
 const large = {
     _id: {$oid: "61ee3509004f8b4447b4d89d"},

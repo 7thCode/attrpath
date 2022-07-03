@@ -73,6 +73,15 @@ class ParserStream {
     public current(): string {
         return this.value.substring(this.start, this.end);
     }
+
+    /**
+     * is_terminal
+     *
+     * @remarks 終端か？
+     */
+    public is_terminal(): boolean {
+        return (this.value.length <= this.end);
+    }
 }
 
 module.exports = {ParserStream};

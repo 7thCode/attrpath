@@ -48,11 +48,22 @@ abstract class BaseParser {
      *
      * @remarks 文字を比較
      */
+    protected is_terminal(): boolean {
+        return this.stream.is_terminal();
+    }
+
+    /**
+     * is_char
+     *
+     * @param c
+     *
+     * @remarks 文字を比較
+     */
     protected is_char(c: string): boolean {
         let result: boolean = false;
         const char: string = this.stream.char();
         if (char === c) {
-            this.stream.next();
+
             result = true;
         }
         return result;
@@ -184,8 +195,12 @@ class AttributeParser extends BaseParser {
         let result: boolean = false;
         this.stream.commit();
         if (this.is_char("'") || this.is_char('"')) {
+               this.stream.next();
             if (this.parse_name()) {
-                result = (this.is_char("'") || this.is_char('"'));
+               if((this.is_char("'") || this.is_char('"'))) {
+                   this.stream.next();
+                   result = true;
+               }
             }
         }
         return result;
@@ -199,11 +214,14 @@ class AttributeParser extends BaseParser {
         let result: boolean = false;
         this.stream.commit();
         if (this.is_char(".")) {
+            this.stream.next();
             result = this.parse_name();
         } else {
             if (this.is_char("[")) {
+                this.stream.next();
                 if (this.parse_string() || this.parse_number()) {
                     if (this.is_char("]")) {
+                        this.stream.next();
                         result = true;
                     }
                 }
@@ -213,27 +231,18 @@ class AttributeParser extends BaseParser {
     }
 
     /**
-     * parse_attrs
-     * attrs ::= attr *
-     */
-    protected parse_attrs(): boolean {
-        let result: boolean = false;
-        this.stream.commit();
-        while (this.parse_attr()) {
-            result = true;
-        }
-        return result;
-    }
-
-    /**
      * parse_path
-     * path ::= attr [ attrs ]
+     * path ::= attr *
      */
     public parse_path(): boolean {
         let result: boolean = false;
         this.stream.commit();
-        if (this.parse_attr()) {
-            result = this.parse_attrs();
+        while (this.parse_attr()) {
+                    if (this.is_terminal()) {
+            result = true;
+        } else {
+            result = false;
+        }
         }
         return result;
     }
