@@ -71,7 +71,7 @@ abstract class BaseParser {
         let result: boolean = false;
         const char: string = this.stream.char();
         if (char === c) {
-
+            this.stream.next();
             result = true;
         }
         return result;
@@ -134,14 +134,14 @@ abstract class BaseParser {
      */
     protected parse_number(): boolean {
         let result: boolean = false;
-        this.stream.commit();
+        this.stream.restore_point();
         while (this.is_digit()) {
             this.stream.next();
             result = true;
         }
-        if (this.handler) {
-            this.handler.symbol("index", this.stream);
-        }
+        //    if (this.handler) {
+        //        this.handler.symbol("index", this.stream.current());
+        //    }
         return result;
     }
 }
@@ -179,7 +179,7 @@ class AttributeParser extends BaseParser {
      */
     protected parse_name(): boolean {
         let result: boolean = false;
-        this.stream.commit();
+        this.stream.restore_point();
         if (this.is_reading()) {
             this.stream.next();
             result = true;
@@ -188,9 +188,8 @@ class AttributeParser extends BaseParser {
                 result = true;
             }
         }
-
         if (this.handler) {
-            this.handler.symbol("name", this.stream);
+            this.handler.symbol("name", this.stream.current());
         }
         return result;
     }
@@ -201,12 +200,10 @@ class AttributeParser extends BaseParser {
      */
     protected parse_string(): boolean {
         let result: boolean = false;
-        this.stream.commit();
+        this.stream.restore_point();
         if (this.is_char("'") || this.is_char('"')) {
-            this.stream.next();
             if (this.parse_name()) {
                 if ((this.is_char("'") || this.is_char('"'))) {
-                    this.stream.next();
                     result = true;
                 }
             }
@@ -220,18 +217,19 @@ class AttributeParser extends BaseParser {
      */
     protected parse_attr(): boolean {
         let result: boolean = false;
-        this.stream.commit();
+        this.stream.restore_point();
         if (this.is_char(".")) {
-            this.stream.next();
             result = this.parse_name();
-        } else {
-            if (this.is_char("[")) {
-                this.stream.next();
-                if (this.parse_string() || this.parse_number()) {
-                    if (this.is_char("]")) {
-                        this.stream.next();
-                        result = true;
+        } else if (this.is_char("[")) {
+            if (this.parse_string()) {
+                result = this.is_char("]");
+            } else if (this.parse_number()) {
+                const word = this.stream.current();
+                if (this.is_char("]")) {
+                    if (this.handler) {
+                        this.handler.symbol("index", word);
                     }
+                    result = true;
                 }
             }
         }
@@ -244,7 +242,7 @@ class AttributeParser extends BaseParser {
      */
     public parse_path(): boolean {
         let result: boolean = false;
-        this.stream.commit();
+        this.stream.restore_point();
         while (this.parse_attr()) {
             result = (this.is_terminal());
         }

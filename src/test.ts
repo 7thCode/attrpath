@@ -8,8 +8,20 @@ test('1', () => {
     expect(testbase.isNumber(1)).toBe(true);
 });
 
+test('{}', () => {
+    expect(testbase.isContainer({})).toBe(true);
+});
+
+test('{a:1}', () => {
+    expect(testbase.isContainer({a: 1})).toBe(true);
+});
+
 test('[]', () => {
     expect(testbase.isContainer([])).toBe(true);
+});
+
+test('[1]', () => {
+    expect(testbase.isContainer([1])).toBe(true);
 });
 
 const value = {
@@ -27,6 +39,10 @@ const value = {
 
 test('.children.john.hobby[0].name', () => {
     expect(attrpath.traverse(value, '.children.john.hobby[0].name')).toBe("Cycling");
+});
+
+test('.children.john.hobby[0a].name', () => {
+    expect(attrpath.traverse(value, '.children.john.hobby[0a].name')).toBe(undefined);
 });
 
 test('.children.john.hobby[1].name', () => {
@@ -81,12 +97,20 @@ test('["children"]["john"]["hobby"][0].["name"]', () => {
     expect(attrpath.traverse(value, '["children"]["john"]["hobby"][0].["name"]')).toBe(undefined);
 });
 
+test('["children"]["john"]["hobby"][0]["name"]', () => {
+    expect(attrpath.traverse(value, '["children"]["john"]["hobby"][0]["name"]')).toBe("Cycling");
+});
+
 test('.children.john.hobby[1].name', () => {
     expect(attrpath.traverse(value, '.children["john"].hobby[1].name')).toBe("Dance");
 });
 
 test('.children.john.hobby[1].name', () => {
     expect(attrpath.is_valid('.children["john"].hobby[1].name')).toBe(true);
+});
+
+test('.children.john.hobby[1a].name', () => {
+    expect(attrpath.is_valid('.children["john"].hobby[1a].name')).toBe(false);
 });
 
 test('.children.john.hobby["1"].name', () => {
@@ -180,10 +204,7 @@ test('123456', () => {
     expect(new TestParser(null, new teststream.ParserStream("123456")).parse_number()).toBe(true);
 });
 
-
-/**
- * reading ::= ( alpha | "_" | "$"  ) *
- */
+// reading ::= ( alpha | "_" | "$"  ) *
 test('A', () => {
     expect(new TestParser(null, new teststream.ParserStream("A")).is_reading()).toBe(true);
 });
@@ -209,9 +230,7 @@ test('$', () => {
     expect(new TestParser(null, new teststream.ParserStream("$")).is_reading()).toBe(true);
 });
 
-/**
- * trailing ::= ( alpha | "_" | "$" | digit ) *
- */
+// trailing ::= ( alpha | "_" | "$" | digit ) *
 test('A', () => {
     expect(new TestParser(null, new teststream.ParserStream("A")).is_trailing()).toBe(true);
 });
@@ -237,24 +256,17 @@ test('$', () => {
     expect(new TestParser(null, new teststream.ParserStream("$")).is_trailing()).toBe(true);
 });
 
-
-/**
- * name ::= reading [ trailing ]
- */
+// name ::= reading [ trailing ]
 test('ABCDE', () => {
     expect(new TestParser(null, new teststream.ParserStream("ABCDE")).parse_name()).toBe(true);
 });
 
-/**
- * name ::= reading [ trailing ]
- */
+// name ::= reading [ trailing ]
 test('1BCDE', () => {
     expect(new TestParser(null, new teststream.ParserStream("1BCDE")).parse_name()).toBe(false);
 });
 
-/**
- * string = "'" mame "'" | '"' mame '"'
- */
+// string = "'" mame "'" | '"' mame '"'
 test("'ABCDE'", () => {
     expect(new TestParser(null, new teststream.ParserStream("'ABCDE'")).parse_string()).toBe(true);
 });
@@ -263,9 +275,8 @@ test('"ABCDE"', () => {
     expect(new TestParser(null, new teststream.ParserStream('"ABCDE"')).parse_string()).toBe(true);
 });
 
-/**
- * attr ::= "." name | '[' string | number ']'
- */
+
+// attr ::= "." name | '[' string | number ']'
 test(".ABCDE", () => {
     expect(new TestParser(null, new teststream.ParserStream(".ABCDE")).parse_attr()).toBe(true);
 });
@@ -282,9 +293,8 @@ test('["ABC"]', () => {
     expect(new TestParser(null, new teststream.ParserStream('["ABC"]')).parse_attr()).toBe(true);
 });
 
-/**
- * path ::= attr *
- */
+
+// path ::= attr *
 test(".ABCDE", () => {
     expect(new TestParser(null, new teststream.ParserStream(".ABCDE")).parse_path()).toBe(true);
 });

@@ -27,9 +27,12 @@ class AttrPath {
      *
      */
     static traverse(obj: any, path: string): any {
+        let result = undefined;
         const _handler: ValueHandler = new handler.ValueHandler(obj);
-        new parser.AttributeParser(_handler, new stream.ParserStream(path)).parse_path();
-        return _handler.value;
+        if (new parser.AttributeParser(_handler, new stream.ParserStream(path)).parse_path()) {
+            result = _handler.value;
+        }
+        return result;
     }
 
     /**

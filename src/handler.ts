@@ -13,7 +13,7 @@ const base: any = require("./base");
  * @remarks
  */
 abstract class BaseHandler {
-    abstract symbol(type: string, stream: ParserStream): void;
+    abstract symbol(type: string, word:string): void;
 }
 
 /**
@@ -40,17 +40,17 @@ class ValueHandler extends BaseHandler {
      * ParserがSymbolを発見した
      *
      * @param type - Symbol Type
-     * @param stream - ソースストリーム
+     * @param word - 単語
      * @returns void
      *
      */
-    public symbol(type: string, stream: ParserStream): void {
+    public symbol(type: string, word: string): void {
         switch (type) {
             case "index":
-                this.value = this.sibling(this.value, stream.current());
+                this.value = ValueHandler.sibling(this.value, word);
                 break;
             case "name":
-                this.value = this.child(this.value, stream.current());
+                this.value = ValueHandler.child(this.value, word);
                 break;
         }
     }
@@ -66,10 +66,10 @@ class ValueHandler extends BaseHandler {
      * @returns 配列要素
      *
      */
-    public sibling(array: any[], index: string): any {
+    private static sibling(array: any[], index: string): any {
         let result: any = undefined;
         if (Array.isArray(array)) {
-            return array[Number(index)];
+            result = array[Number(index)];
         }
         return result;
     }
@@ -85,7 +85,7 @@ class ValueHandler extends BaseHandler {
      * @returns 配列要素
      *
      */
-    public child(obj: any, attr: string): any {
+    private static child(obj: any, attr: string): any {
         let result: any = undefined;
         if (base.isContainer(obj)) {
             if (attr in obj) {

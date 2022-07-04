@@ -25,8 +25,17 @@ class ParserStream {
      　*
      　* @remarks パース済み終端を決定
      　*/
-    public commit(): void {
+    public restore_point(): void {
         this.start = this.end;
+    }
+
+         /**
+     * back
+     *
+     * @remarks commitまで戻す
+     */
+    public restore(): void {
+      this.end = this.start;
     }
 
     /**
