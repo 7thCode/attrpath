@@ -13,7 +13,7 @@ const base: any = require("./base");
  * @remarks
  */
 abstract class BaseHandler {
-    abstract symbol(type: string, word:string): void;
+    abstract symbol(type: string, word: string): void;
 }
 
 /**
@@ -28,9 +28,9 @@ class ValueHandler extends BaseHandler {
      *
      * @remarks
      */
-    constructor(value: any) {
+    constructor(root_value: any) {
         super();
-        this.value = value;
+        this.value = root_value;
     }
 
     /**
@@ -46,6 +46,12 @@ class ValueHandler extends BaseHandler {
      */
     public symbol(type: string, word: string): void {
         switch (type) {
+            case "operator":
+                console.log("operator " + word);
+                break;
+            case "number":
+                console.log("number " + word);
+                break;
             case "index":
                 this.value = ValueHandler.sibling(this.value, word);
                 break;

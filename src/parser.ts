@@ -29,7 +29,7 @@ abstract class BaseParser {
      * s ::=  | \t
      */
     protected is_s(): boolean {
-        const code: number = this.stream.charCode();
+        const code: number = this.stream.charCode;
         return (code === 32) || (code === 9);
     }
 
@@ -50,14 +50,12 @@ abstract class BaseParser {
     }
 
     /**
-     * is_char
+     * is_terminal
      *
-     * @param c
-     *
-     * @remarks 文字を比較
+     * @remarks 終端
      */
     protected is_terminal(): boolean {
-        return this.stream.is_terminal();
+        return this.stream.is_terminal;
     }
 
     /**
@@ -69,7 +67,7 @@ abstract class BaseParser {
      */
     protected is_char(c: string): boolean {
         let result: boolean = false;
-        const char: string = this.stream.char();
+        const char: string = this.stream.char;
         if (char === c) {
             this.stream.next();
             result = true;
@@ -83,7 +81,7 @@ abstract class BaseParser {
      */
     protected is_symbol(): boolean {
         let result: boolean = false;
-        const char: string = this.stream.char();
+        const char: string = this.stream.char;
         switch (char) {
             case ".":
             case "[":
@@ -124,7 +122,7 @@ abstract class BaseParser {
      * digit ::= ( 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 )
      */
     protected is_digit(): boolean {
-        const code: number = this.stream.charCode();
+        const code: number = this.stream.charCode;
         return ((48 <= code) && (code <= 57));
     }
 
@@ -139,23 +137,121 @@ abstract class BaseParser {
             this.stream.next();
             result = true;
         }
-        //    if (this.handler) {
-        //        this.handler.symbol("index", this.stream.current());
-        //    }
+
+        if (this.handler) {
+            this.handler.symbol("number", this.stream.current);
+        }
+
         return result;
     }
 }
 
+class FormulaParser extends BaseParser {
+
+    /**
+     *
+     * @remarks
+     */
+    constructor(handler: BaseHandler | null, stream: ParserStream) {
+        super(handler, stream);
+    }
+
+    // expr ::= term { S { "+" | "-" } S term } *
+    protected is_expr(): boolean {
+        let result = false;
+        this.stream.restore_point();
+        this.parse_s();
+        if (this.is_term()) {
+            result = true;
+            while (true) {
+                const char = this.stream.char;
+                if (this.is_char("+") || this.is_char("-")) {
+                    if (this.handler) {
+                        this.handler.symbol("operator", char);
+                    }
+                    if (this.is_term()) {
+                        result = true;
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    // term ::= factor { S { "*" | "/" } S factor } *
+    protected is_term(): boolean {
+        let result = false;
+        this.stream.restore_point();
+        this.parse_s();
+        if (this.is_factor()) {
+            result = true;
+            while (true) {
+                const char = this.stream.char;
+                if (this.is_char("*") || this.is_char("/")) {
+                    if (this.handler) {
+                        this.handler.symbol("operator", char);
+                    }
+                    if (this.is_factor()) {
+                        result = true;
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    // factor ::= "(" S expr S ")" | number
+    protected is_factor(): boolean {
+        let result = false;
+        this.stream.restore_point();
+        this.parse_s();
+        const char = this.stream.char;
+        if (this.is_char("(")) {
+            if (this.handler) {
+                this.handler.symbol("operator", char);
+            }
+            if (this.is_expr()) {
+                const char = this.stream.char;
+                if (this.is_char(")")) {
+                    if (this.handler) {
+                        this.handler.symbol("operator", char);
+                    }
+                    this.parse_s();
+                    result = true;
+                }
+            }
+        } else if (this.parse_number()) {
+            this.parse_s();
+            result = true;
+        }
+
+        return result;
+    }
+
+}
+
 /**
  */
-class AttributeParser extends BaseParser {
+class AttributeParser extends FormulaParser {
+
+    /**
+     *
+     * @remarks
+     */
+    constructor(handler: BaseHandler | null, stream: ParserStream) {
+        super(handler, stream);
+    }
 
     /**
      * is_reading
      * reading ::= ( alpha | "_" | "$" ) *
      */
     protected is_reading(): boolean {
-        const code: number = this.stream.charCode();
+        const code: number = this.stream.charCode;
         return (((0x3040 <= code) && (code <= 0x2FFFF)) || //
             ((65 <= code) && (code <= 90)) || ((97 <= code) && (code <= 122)) || // Alphabet
             (code === 95) || (code === 36)); // _ $
@@ -166,7 +262,7 @@ class AttributeParser extends BaseParser {
      * trailing ::= ( alpha | "_" | "$" | digit ) *
      */
     protected is_trailing(): boolean {
-        const code: number = this.stream.charCode();
+        const code: number = this.stream.charCode;
         return (((0x3040 <= code) && (code <= 0x2FFFF)) || //
             ((65 <= code) && (code <= 90)) || ((97 <= code) && (code <= 122)) || // Alphabet
             ((48 <= code) && (code <= 57)) || // Number
@@ -189,7 +285,7 @@ class AttributeParser extends BaseParser {
             }
         }
         if (this.handler) {
-            this.handler.symbol("name", this.stream.current());
+            this.handler.symbol("name", this.stream.current);
         }
         return result;
     }
@@ -224,7 +320,7 @@ class AttributeParser extends BaseParser {
             if (this.parse_string()) {
                 result = this.is_char("]");
             } else if (this.parse_number()) {
-                const word = this.stream.current();
+                const word = this.stream.current;
                 if (this.is_char("]")) {
                     if (this.handler) {
                         this.handler.symbol("index", word);
@@ -252,4 +348,4 @@ class AttributeParser extends BaseParser {
 }
 
 
-module.exports = {BaseParser, AttributeParser};
+module.exports = {BaseParser, AttributeParser, FormulaParser};

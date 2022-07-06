@@ -1,8 +1,11 @@
+// import handler from "./handler";
+
 const attrpath = require("./index");
 
 const testbase: any = require("./base");
 const testparser: any = require("./parser");
 const teststream: any = require("./stream");
+const testhandler: any = require("./handler");
 
 test('1', () => {
     expect(testbase.isNumber(1)).toBe(true);
@@ -36,6 +39,28 @@ const value = {
         }
     }
 };
+
+
+
+test('.children', () => {
+    const a = {"john":{"hobby":[{"name":"Cycling"},{"name":"Dance"}],"pet":[{"type":"dog","name":"Max"}]},"tom":{"hobby":[{"name":"Squash"}],"pet":[{"type":"cat","name":"Chloe"}]}};
+    expect(attrpath.traverse(value, '.children')).toStrictEqual(a);
+});
+
+test('.children.john', () => {
+    const a = {"hobby":[{"name":"Cycling"},{"name":"Dance"}],"pet":[{"type":"dog","name":"Max"}]};
+    expect(attrpath.traverse(value, '.children.john')).toStrictEqual(a);
+});
+
+test('.children.john.hobby', () => {
+    const a = [{"name":"Cycling"},{"name":"Dance"}];
+    expect(attrpath.traverse(value, '.children.john.hobby')).toStrictEqual(a);
+});
+
+test('.children.john.hobby[0]', () => {
+    const a = {"name":"Cycling"};
+    expect(attrpath.traverse(value, '.children.john.hobby[0]')).toStrictEqual(a);
+});
 
 test('.children.john.hobby[0].name', () => {
     expect(attrpath.traverse(value, '.children.john.hobby[0].name')).toBe("Cycling");
@@ -174,6 +199,21 @@ class TestParser extends testparser.AttributeParser {
         return super.parse_path();
     }
 
+    // expr ::= term { { "+" | "-" } term } *
+    public is_expr(): boolean {
+        return super.is_expr();
+    }
+
+    // term ::= factor { { "*" | "/" } factor } *
+    public is_term(): boolean {
+        return super.is_term();
+    }
+
+    // factor ::= "(" expr ")" | number
+    public is_factor(): boolean {
+        return super.is_factor();
+    }
+
 }
 
 test(' ', () => {
@@ -275,7 +315,6 @@ test('"ABCDE"', () => {
     expect(new TestParser(null, new teststream.ParserStream('"ABCDE"')).parse_string()).toBe(true);
 });
 
-
 // attr ::= "." name | '[' string | number ']'
 test(".ABCDE", () => {
     expect(new TestParser(null, new teststream.ParserStream(".ABCDE")).parse_attr()).toBe(true);
@@ -305,4 +344,55 @@ test(".ABCDE.XYZ", () => {
 
 test(".ABCDE.XYZ[0]", () => {
     expect(new TestParser(null, new teststream.ParserStream(".ABCDE.XYZ[0]")).parse_path()).toBe(true);
+});
+
+
+
+const _handler: ValueHandler = new testhandler.ValueHandler({});
+test("1", () => {
+    expect(new TestParser(_handler, new teststream.ParserStream("1")).is_factor()).toBe(true);
+});
+
+test("1+1", () => {
+    expect(new TestParser(_handler, new teststream.ParserStream("1+1")).is_factor()).toBe(true);
+});
+
+test("1-1", () => {
+    expect(new TestParser(_handler, new teststream.ParserStream("1-1")).is_factor()).toBe(true);
+});
+
+test("1*1", () => {
+    expect(new TestParser(_handler, new teststream.ParserStream("1*1")).is_factor()).toBe(true);
+});
+
+test("1/1", () => {
+    expect(new TestParser(_handler, new teststream.ParserStream("1/1")).is_factor()).toBe(true);
+});
+
+test("(1+1)", () => {
+    expect(new TestParser(_handler, new teststream.ParserStream("(1+1)")).is_factor()).toBe(true);
+});
+
+test("(1+1+1)", () => {
+    expect(new TestParser(_handler, new teststream.ParserStream("(1+1+1)")).is_factor()).toBe(true);
+});
+
+test("(1+1-1)", () => {
+    expect(new TestParser(_handler, new teststream.ParserStream("(1+1-1)")).is_factor()).toBe(true);
+});
+
+test("(1+(1-1))", () => {
+    expect(new TestParser(_handler, new teststream.ParserStream("(1+(1-1))")).is_factor()).toBe(true);
+});
+
+test("(1+(1-1))/1", () => {
+    expect(new TestParser(_handler, new teststream.ParserStream("(1+(1-1))/1")).is_factor()).toBe(true);
+});
+
+test("(1+(1-1)", () => {
+    expect(new TestParser(_handler, new teststream.ParserStream("(1+(1-1)")).is_factor()).toBe(false);
+});
+
+test(" ( 1 + ( 1 - 1 ) ) / 1 ", () => {
+    expect(new TestParser(_handler, new teststream.ParserStream(" ( 1 + ( 1 - 1 ) ) / 1 ")).is_factor()).toBe(true);
 });
