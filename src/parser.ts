@@ -6,8 +6,8 @@
 
 "use strict";
 
-import { BaseHandler } from './handler';
-import { ParserStream } from './stream';
+import {BaseHandler} from './handler';
+import {ParserStream} from './stream';
 
 /**
  * BaseParser
@@ -149,7 +149,7 @@ export abstract class BaseParser {
     }
 }
 
-class FormulaParser extends BaseParser {
+export class FormulaParser extends BaseParser {
 
     /**
      *
@@ -239,7 +239,7 @@ class FormulaParser extends BaseParser {
 
 /**
  */
-class AttributeParser extends FormulaParser {
+export class AttributeParser extends FormulaParser {
 
     /**
      *
@@ -350,5 +350,4 @@ class AttributeParser extends FormulaParser {
 
 }
 
-
-module.exports = {BaseParser, AttributeParser, FormulaParser};
+module.exports = {BaseParser, FormulaParser, AttributeParser}

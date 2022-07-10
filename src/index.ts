@@ -6,11 +6,11 @@
 
 "use strict";
 
-const parser: any = require("./parser");
-const stream: any = require("./stream");
-const handler: any = require("./handler");
+import {AttributeParser, FormulaParser} from './parser';
+import {ParserStream} from './stream';
+import {BaseHandler, ValueHandler} from './handler';
 
-import { ValueHandler } from './handler';
+export {AttributeParser, FormulaParser, ParserStream, BaseHandler, ValueHandler};
 
 /**
  * Helper
@@ -30,8 +30,8 @@ export class AttrPath {
      */
     static traverse(obj: any, path: string): any {
         let result = undefined;
-        const _handler: ValueHandler = new handler.ValueHandler(obj);
-        if (new parser.AttributeParser(_handler, new stream.ParserStream(path)).parse_path()) {
+        const _handler: ValueHandler = new ValueHandler(obj);
+        if (new AttributeParser(_handler, new ParserStream(path)).parse_path()) {
             result = _handler.value;
         }
         return result;
@@ -48,9 +48,8 @@ export class AttrPath {
      *
      */
     static is_valid(path: string): any {
-        return new parser.AttributeParser(null, new stream.ParserStream(path)).parse_path();
+        return new AttributeParser(null, new ParserStream(path)).parse_path();
     }
 }
 
-module.exports = AttrPath;
-
+module.exports = {AttrPath, AttributeParser, ValueHandler, ParserStream}

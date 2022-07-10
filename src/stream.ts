@@ -4,7 +4,7 @@
  * opensource.org/licenses/mit-license.php
  */
 
-
+"use strict";
 
 /**
  */
@@ -83,4 +83,5 @@ export class ParserStream {
 
 }
 
-module.exports = {ParserStream};
+
+module.exports = {ParserStream}
