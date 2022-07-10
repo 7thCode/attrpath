@@ -6,7 +6,7 @@
 
 "use strict";
 
-const base: any = require("./base");
+import {isContainer} from "./base";
 
 /**
  * BaseHandler
@@ -47,10 +47,10 @@ export class ValueHandler extends BaseHandler {
     public symbol(type: string, word: string): void {
         switch (type) {
             case "operator":
-                console.log("operator " + word);
+     //           console.log("operator " + word);
                 break;
             case "number":
-                console.log("number " + word);
+    //            console.log("number " + word);
                 break;
             case "index":
                 this.value = ValueHandler.sibling(this.value, word);
@@ -93,7 +93,7 @@ export class ValueHandler extends BaseHandler {
      */
     private static child(obj: any, attr: string): any {
         let result: any = undefined;
-        if (base.isContainer(obj)) {
+        if (isContainer(obj)) {
             if (attr in obj) {
                 result = obj[attr];
             }
@@ -103,5 +103,4 @@ export class ValueHandler extends BaseHandler {
 
 }
 
-module.exports = {ValueHandler, BaseHandler};
-
+module.exports = {BaseHandler,ValueHandler}
