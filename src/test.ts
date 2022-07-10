@@ -16,7 +16,6 @@ test('base', () => {
     expect(isContainer([1])).toBe(true);
 });
 
-
 import {AttributeParser, FormulaParser, ParserStream, BaseHandler, ValueHandler} from './index';
 
 /**

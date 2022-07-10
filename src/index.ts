@@ -6,11 +6,11 @@
 
 "use strict";
 
-import {AttributeParser,FormulaParser} from './parser';
+import {AttributeParser, FormulaParser} from './parser';
 import {ParserStream} from './stream';
-import {BaseHandler,ValueHandler} from './handler';
+import {BaseHandler, ValueHandler} from './handler';
 
-export { AttributeParser,FormulaParser,ParserStream,BaseHandler,ValueHandler };
+export {AttributeParser, FormulaParser, ParserStream, BaseHandler, ValueHandler};
 
 /**
  * Helper
@@ -52,4 +52,4 @@ export class AttrPath {
     }
 }
 
-module.exports = {AttrPath,AttributeParser,ValueHandler,ParserStream}
+module.exports = {AttrPath, AttributeParser, ValueHandler, ParserStream}

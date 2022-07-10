@@ -3,7 +3,7 @@
 ### Safely traverse the javascript attribute tree using a text path representation.
 ### You can also check the existence of the path.
 ```js
-const attrpath: any = require("attrpath");
+const {AttrPath}: any = require("attrpath");
 
 const value = {
     children: {
@@ -18,19 +18,19 @@ const value = {
     }
 };
 
-console.log(attrpath.traverse(value, '.children.john.hobby[0].name'));
+console.log(AttrPath.traverse(value, '.children.john.hobby[0].name'))
 
 > "Max"
 
-console.log(attrpath.traverse(value, '.children.john.hobby[1].name'));
+console.log(AttrPath.traverse(value, '.children.john.hobby[1].name'))
 
 > undefined
 
-console.log(attrpath.is_valid('.children.john.hobby[0].name'));
+console.log(AttrPath.is_valid('.children.john.hobby[0].name'))
 
 > true
 
-console.log(attrpath.is_valid('.children.john.hobby[0]..name'));
+console.log(AttrPath.is_valid('.children.john.hobby[0]..name'))
 
 > false
 
