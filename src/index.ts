@@ -6,9 +6,11 @@
 
 "use strict";
 
-import {AttributeParser} from './parser';
+import {AttributeParser,FormulaParser} from './parser';
 import {ParserStream} from './stream';
-import {ValueHandler} from './handler';
+import {BaseHandler,ValueHandler} from './handler';
+
+export { AttributeParser,FormulaParser,ParserStream,BaseHandler,ValueHandler };
 
 /**
  * Helper
