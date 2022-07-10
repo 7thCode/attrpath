@@ -12,7 +12,7 @@ const base: any = require("./base");
  * BaseHandler
  * @remarks
  */
-abstract class BaseHandler {
+export abstract class BaseHandler {
     abstract symbol(type: string, word: string): void;
 }
 
@@ -20,7 +20,7 @@ abstract class BaseHandler {
  * ValueHandler
  * @remarks
  */
-class ValueHandler extends BaseHandler {
+export class ValueHandler extends BaseHandler {
 
     public value: any = null;
 

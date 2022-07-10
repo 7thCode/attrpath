@@ -4,9 +4,11 @@
  * opensource.org/licenses/mit-license.php
  */
 
+
+
 /**
  */
-class ParserStream {
+export class ParserStream {
 
     private start: number = 0;
     private end: number = 0;

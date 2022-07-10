@@ -1,5 +1,7 @@
 // import handler from "./handler";
 
+import handler from "./handler";
+
 const attrpath = require("./index");
 
 const testbase: any = require("./base");
@@ -39,8 +41,6 @@ const value = {
         }
     }
 };
-
-
 
 test('.children', () => {
     const a = {"john":{"hobby":[{"name":"Cycling"},{"name":"Dance"}],"pet":[{"type":"dog","name":"Max"}]},"tom":{"hobby":[{"name":"Squash"}],"pet":[{"type":"cat","name":"Chloe"}]}};
@@ -395,4 +395,25 @@ test("(1+(1-1)", () => {
 
 test(" ( 1 + ( 1 - 1 ) ) / 1 ", () => {
     expect(new TestParser(_handler, new teststream.ParserStream(" ( 1 + ( 1 - 1 ) ) / 1 ")).is_factor()).toBe(true);
+});
+
+
+import { AttrPath } from '.';
+import { ValueHandler } from './handler';
+
+
+
+    function traverse(obj: any, path: string) {
+        let result = undefined;
+        const _handler: ValueHandler = new handler.ValueHandler(obj);
+        if (new parser.AttributeParser(_handler, new stream.ParserStream(path)).parse_path()) {
+            result = _handler.value;
+        }
+        return result;
+    }
+
+
+test('.children.john.hobby', () => {
+    const a = [{"name":"Cycling"},{"name":"Dance"}];
+    expect(AttrPath.traverse(value, '.children.john.hobby')).toStrictEqual(a);
 });

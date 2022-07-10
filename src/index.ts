@@ -10,10 +10,12 @@ const parser: any = require("./parser");
 const stream: any = require("./stream");
 const handler: any = require("./handler");
 
+import { ValueHandler } from './handler';
+
 /**
  * Helper
  */
-class AttrPath {
+export class AttrPath {
 
     /**
      * traverse

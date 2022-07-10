@@ -6,11 +6,14 @@
 
 "use strict";
 
+import { BaseHandler } from './handler';
+import { ParserStream } from './stream';
+
 /**
  * BaseParser
  * @remarks
  */
-abstract class BaseParser {
+export abstract class BaseParser {
 
     protected stream: ParserStream;
     protected handler: BaseHandler | null;

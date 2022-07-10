@@ -1,8 +1,8 @@
 # attrpath
-Attribute Path Traverser.
-
+## Object Attribute Path Traverser.
+### Safely traverse the javascript attribute tree using a text path representation.
+### You can also check the existence of the path.
 ```js
-
 const attrpath: any = require("attrpath");
 
 const value = {
@@ -20,7 +20,7 @@ const value = {
 
 console.log(attrpath.traverse(value, '.children.john.hobby[0].name'));
 
-> pochi.
+> "Max"
 
 console.log(attrpath.traverse(value, '.children.john.hobby[1].name'));
 
