@@ -84,4 +84,4 @@ export class ParserStream {
 }
 
 
-module.exports = {ParserStream}
+// module.exports = {ParserStream}

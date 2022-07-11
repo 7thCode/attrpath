@@ -52,4 +52,4 @@ export class AttrPath {
     }
 }
 
-module.exports = {AttrPath, AttributeParser, ValueHandler, ParserStream}
+// module.exports = {AttrPath, AttributeParser, ValueHandler, ParserStream}
