@@ -1,10 +1,41 @@
-# attrpath
+| index | [DEMO] | [in detail] |
+|-------|--------|----|
 
-### Object Attribute Path Traverser.
+# AttrPath
+[![npm version](https://badge.fury.io/js/attrpath.svg)](https://badge.fury.io/js/attrpath)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![7thCode](https://circleci.com/gh/7thCode/attrpath.svg?style=shield)](<LINK>)
+![node.js.yml](https://github.com/7thCode/attrpath/actions/workflows/node.js.yml/badge.svg)
 
-#### **Safely** traverse the javascript attribute tree using a text path representation.
 
-#### You can also check the existence of the path.
+<img src="https://raw.githubusercontent.com/7thCode/attrpath/0281b0c1d1984b451394de4a0f4d15c075338401/AttributeParser.svg" alt="" title="">
+
+Object Attribute Path Traverser.
+**Safely** traverse the javascript attribute tree using a text path representation.
+You can also check the existence of the path.
+
+# Motivation
+
+# DEMO
+
+"AttrPath"の魅力が直感的に伝えわるデモ動画や図解を載せる
+
+# Features
+
+"AttrPath"のセールスポイントや差別化などを説明する
+
+# Requirement
+
+
+
+# Installation
+
+```bash
+npm install atttrpath
+```
+
+# Usage
+
 
 ```js
 const {AttrPath}: any = require("attrpath");
@@ -113,5 +144,22 @@ const {AttributeParser, ValueHandler, ParserStream} = require('./index');
     isValid('.children["john"].hobby[1].name');
 ```
 
-<img src="https://raw.githubusercontent.com/7thCode/attrpath/0281b0c1d1984b451394de4a0f4d15c075338401/AttributeParser.svg" alt="" title="">
+
+# Note
+
+注意点などがあれば書く
+
+# Author
+
+* 作成者
+* 所属
+* E-mail
+
+# License
+
+"AttrPath" is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
+
+
+
+
 
