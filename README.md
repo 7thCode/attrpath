@@ -1,6 +1,9 @@
 | index | [DEMO] | [in detail] |
 |-------|--------|----|
 
+[DEMO]: docs/demo.md
+[in detail]: docs/detail.md
+
 # AttrPath
 [![npm version](https://badge.fury.io/js/attrpath.svg)](https://badge.fury.io/js/attrpath)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
