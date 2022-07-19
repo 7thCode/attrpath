@@ -16,17 +16,9 @@ You can also check the existence of the path.
 
 # Motivation
 
-# DEMO
-
-"AttrPath"の魅力が直感的に伝えわるデモ動画や図解を載せる
-
 # Features
 
-"AttrPath"のセールスポイントや差別化などを説明する
-
 # Requirement
-
-
 
 # Installation
 
@@ -144,16 +136,9 @@ const {AttributeParser, ValueHandler, ParserStream} = require('./index');
     isValid('.children["john"].hobby[1].name');
 ```
 
-
 # Note
 
-注意点などがあれば書く
-
 # Author
-
-* 作成者
-* 所属
-* E-mail
 
 # License
 
