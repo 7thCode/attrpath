@@ -19,9 +19,17 @@ You can also check the existence of the path.
 
 # Motivation
 
+
+
+
 # Features
 
+
+
+
 # Requirement
+
+node v10.0.0
 
 # Installation
 
@@ -31,7 +39,23 @@ npm install atttrpath
 
 # Usage
 
+### API
+```js
+const {AttrPath}: any = require("attrpath");
 
+// or
+
+import {AttrPath} from 'attrpath';
+
+
+// traverse value. 
+AttrPath.traverse(object: any, path: string): any;
+
+// path is valid?
+AttrPath.is_valid(path: string): boolean;
+```
+
+### Exsample
 ```js
 const {AttrPath}: any = require("attrpath");
 
@@ -65,7 +89,7 @@ console.log(AttrPath.is_valid('.children.john.hobby[0]..name'))
 > false
 
 ```
-Example Data
+### Example Data
 ```ts
     const value = {
         children: {
@@ -80,7 +104,7 @@ Example Data
         }
     };
 ```
-ESModule
+### ESModule
 ```ts
 import {AttrPath} from 'attrpath';
 
@@ -88,7 +112,7 @@ import {AttrPath} from 'attrpath';
 
     AttrPath.is_valid('.children["john"].hobby[1].name')
 ```
-ESModule(custom)
+### ESModule(custom)
 ```ts
 import {AttributeParser, FormulaParser, ParserStream, BaseHandler, ValueHandler} from './index';
 
@@ -110,13 +134,13 @@ import {AttributeParser, FormulaParser, ParserStream, BaseHandler, ValueHandler}
 
     isValid('.children["john"].hobby[1].name')
 ```
-CommonJS
+### CommonJS
 ```ts
 const {AttrPath} = require('./index');
 
     AttrPath.traverse(value, '.children');
 ```
-CommonJS(custom)
+### CommonJS(custom)
 ```ts
 const {AttributeParser, ValueHandler, ParserStream} = require('./index');
 
@@ -141,7 +165,11 @@ const {AttributeParser, ValueHandler, ParserStream} = require('./index');
 
 # Note
 
+
+
 # Author
+
+info@seventh-code.com
 
 # License
 
