@@ -163,6 +163,9 @@ describe('attrpath', () => {
         expect(new FormParser(_handler, new ParserStream("(1+(1-1)")).is_factor()).toBe(false);
         expect(new FormParser(_handler, new ParserStream(" ( 1 + ( 1 - 1 ) ) / 1 ")).is_factor()).toBe(true);
     });
+
+
+
 });
 
 /*
@@ -172,6 +175,7 @@ describe('attrpath', () => {
 * */
 describe('attrpath(ESModule)', () => {
     it('ESModule', () => {
+
 
         const value = {
             children: {

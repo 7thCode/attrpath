@@ -1,6 +1,7 @@
-| index | [DEMO] | [in detail] |
-|-------|--------|----|
+| [README] | [DEMO] | [in detail] |
+|----------|--------|-------------|
 
+[README]: README.md
 [DEMO]: docs/demo.md
 [in detail]: docs/detail.md
 
@@ -19,8 +20,39 @@ You can also check the existence of the path.
 
 # Motivation
 
+For example, I didn't like to write the following code every time...　humm...
+```js
 
+const value = {
+    children: {
+        john: {hobby: [{name: "Cycling"}, {name: "Dance"}], pet: [{type: "dog", name: "Max"}]},
+        tom: {hobby: [{name: "Squash"}], pet: [{type: "cat", name: "Chloe"}]}
+    }
+};
 
+var answer = undefined;
+if (value.children) {
+    if (value.children.john) {
+        if (value.children.john.hobby) {
+            if (Array.isArray(value.children.john.hobby)) {
+                if (value.children.john.hobby.length >= 2) {
+                    if (value.children.john.hobby[1].name) {
+                        answer = value.children.john.hobby[1].name;
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+The ugly thing above is nice if you can write it like this, right?
+
+```js
+const {AttrPath}: any = require("attrpath");
+
+var answer = AttrPath.traverse(value, ".children.john.hobby[1].name");
+```
 
 # Features
 
@@ -42,16 +74,29 @@ npm install atttrpath
 ### API
 ```js
 const {AttrPath}: any = require("attrpath");
-
 // or
-
 import {AttrPath} from 'attrpath';
+```
 
+### traverse value. 
 
-// traverse value. 
+#### params
+    object: any   Target Object.
+    path: string  Traverse path.　The beginning of the path is always ".".
+
+#### result: any　　　Objects obtained as a result of traverse.
+
+```
 AttrPath.traverse(object: any, path: string): any;
+```
+### path is valid?
 
-// path is valid?
+#### params
+    path: string  Traverse path.
+
+#### result: boolean　　path is grammatically correct?　
+
+```
 AttrPath.is_valid(path: string): boolean;
 ```
 
@@ -109,63 +154,21 @@ console.log(AttrPath.is_valid('.children.john.hobby[0]..name'))
 import {AttrPath} from 'attrpath';
 
     AttrPath.traverse(value, '.children')
-
     AttrPath.is_valid('.children["john"].hobby[1].name')
 ```
-### ESModule(custom)
-```ts
-import {AttributeParser, FormulaParser, ParserStream, BaseHandler, ValueHandler} from './index';
 
-    function Traverse(obj: any, path: string): any {
-        let result = undefined;
-        const _handler = new ValueHandler(obj);
-        if (new AttributeParser(_handler, new ParserStream(path)).parse_path()) {
-            result = _handler.value;
-        }
-        return result;
-    }
-
-    Traverse(value, '.children')
-
-
-    function isValid(path: string): any {
-        return new AttributeParser(null, new ParserStream(path)).parse_path();
-    }
-
-    isValid('.children["john"].hobby[1].name')
-```
 ### CommonJS
 ```ts
-const {AttrPath} = require('./index');
+const {AttrPath} = require('attrpath');
 
     AttrPath.traverse(value, '.children');
+    AttrPath.is_valid('.children["john"].hobby[1].name')
 ```
-### CommonJS(custom)
-```ts
-const {AttributeParser, ValueHandler, ParserStream} = require('./index');
 
-    function Traverse(obj: any, path: string): any {
-        let result = undefined;
-        const _handler = new ValueHandler(obj);
-        if (new AttributeParser(_handler, new ParserStream(path)).parse_path()) {
-            result = _handler.value;
-        }
-        return result;
-    }
-
-    Traverse(value, '.children');
-
-    
-    function isValid(path: string): any {
-        return new AttributeParser(null, new ParserStream(path)).parse_path();
-    }
-
-    isValid('.children["john"].hobby[1].name');
-```
 
 # Note
 
-
+See demo.md for unclear cases.
 
 # Author
 

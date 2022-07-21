@@ -22,7 +22,16 @@ export abstract class BaseHandler {
  */
 export class ValueHandler extends BaseHandler {
 
-    public value: any = null;
+    private _value: any = null;
+
+     /**
+     * value
+     *
+     * Data
+     */
+    public get value(): any {
+        return this._value;
+    }
 
     /**
      *
@@ -30,7 +39,7 @@ export class ValueHandler extends BaseHandler {
      */
     constructor(root_value: any) {
         super();
-        this.value = root_value;
+        this._value = root_value;
     }
 
     /**
@@ -53,10 +62,10 @@ export class ValueHandler extends BaseHandler {
                 //            console.log("number " + word);
                 break;
             case "index":
-                this.value = ValueHandler.sibling(this.value, word);
+                this._value = ValueHandler.sibling(this._value, word);
                 break;
             case "name":
-                this.value = ValueHandler.child(this.value, word);
+                this._value = ValueHandler.child(this._value, word);
                 break;
         }
     }
