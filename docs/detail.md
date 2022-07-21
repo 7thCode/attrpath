@@ -1,10 +1,5 @@
 | [README] | [DEMO] | [in detail] |
 |----------|--------|-------------|
-
-[README]: ../README.md
-[DEMO]: demo.md
-[in detail]: detail.md
-
 # Detail
 
 AttrPath is internally built using the following classes, and the classes themselves can be used.
@@ -281,3 +276,7 @@ const {AttributeParser, ValueHandler, ParserStream} = require('attrpath');
     Pseudo_isValid('.children["john"].hobby[1].name');
 ```
 
+
+[README]: ../README.md
+[DEMO]: demo.md
+[in detail]: detail.md

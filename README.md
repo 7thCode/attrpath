@@ -1,16 +1,10 @@
 | [README] | [DEMO] | [in detail] |
 |----------|--------|-------------|
-
-[README]: README.md
-[DEMO]: docs/demo.md
-[in detail]: docs/detail.md
-
 # AttrPath
 [![npm version](https://badge.fury.io/js/attrpath.svg)](https://badge.fury.io/js/attrpath)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![7thCode](https://circleci.com/gh/7thCode/attrpath.svg?style=shield)](<LINK>)
 ![node.js.yml](https://github.com/7thCode/attrpath/actions/workflows/node.js.yml/badge.svg)
-
 
 <img src="https://raw.githubusercontent.com/7thCode/attrpath/0281b0c1d1984b451394de4a0f4d15c075338401/AttributeParser.svg" alt="" title="">
 
@@ -80,23 +74,27 @@ import {AttrPath} from 'attrpath';
 
 ### traverse value. 
 
-#### params
+params
+```ts
     object: any   Target Object.
     path: string  Traverse path.　The beginning of the path is always ".".
+                   ex.  ".cat.eye.left",  ".dog['leg'][1].pad"  
 
-#### result: any　　　Objects obtained as a result of traverse.
-
+    result: any　　　Objects obtained as a result of traverse.
 ```
+```ts
 AttrPath.traverse(object: any, path: string): any;
 ```
 ### path is valid?
 
-#### params
+params
+```ts
     path: string  Traverse path.
 
-#### result: boolean　　path is grammatically correct?　
-
+    result: boolean　　path is grammatically correct?　
 ```
+
+```ts
 AttrPath.is_valid(path: string): boolean;
 ```
 
@@ -179,6 +177,8 @@ info@seventh-code.com
 "AttrPath" is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 
 
-
+[README]: README.md
+[DEMO]: docs/demo.md
+[in detail]: docs/detail.md
 
 

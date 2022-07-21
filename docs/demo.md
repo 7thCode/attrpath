@@ -1,12 +1,6 @@
 | [README] | [DEMO] | [in detail] |
 |----------|--------|-------------|
 
-[README]: ../README.md
-[DEMO]: demo.md
-[in detail]: detail.md
-
-
-
 ```ts
 
 "use strict";
@@ -24,10 +18,9 @@ describe('base', () => {
         expect(isContainer([1])).toBe(true);
     });
 });
+```
 
-/**
- * for test
- */
+```ts
 describe('attrpath', () => {
     it("AttributeParser", () => {
 
@@ -138,7 +131,9 @@ describe('attrpath', () => {
         expect(new TestParser(null, new ParserStream(".ABCDE.XYZ[0]")).parse_path()).toBe(true);
     });
 });
+```
 
+```ts
 /*
 *
 * ESModules
@@ -186,7 +181,9 @@ describe('attrpath(ESModule)', () => {
         expect(AttrPath.is_valid('.children["john"].hobby["1"].name')).toBe(false);
     });
 });
+```
 
+```ts
 /*
 *
 * ESModules
@@ -248,7 +245,9 @@ describe('attrpath(ESModule)', () => {
 
     });
 });
+```
 
+```ts
 /*
 *
 * CommonJS
@@ -295,7 +294,9 @@ describe('attrpath(CommonJS)', () => {
         expect(AttrPath.traverse(value, '.children["john"].hobby[1].name')).toBe("Dance");
     });
 });
+```
 
+```ts
 /*
 *
 * CommonJS
@@ -359,3 +360,7 @@ describe('attrpath(CommonJS)', () => {
     });
 });
 ```
+
+[README]: ../README.md
+[DEMO]: demo.md
+[in detail]: detail.md
