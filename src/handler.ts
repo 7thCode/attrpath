@@ -81,7 +81,7 @@ export class ValueHandler extends BaseHandler {
      * @returns 配列要素
      *
      */
-    private static sibling(array: any[], index: string): any {
+    protected static sibling(array: any[], index: string): any {
         let result: any = undefined;
         if (Array.isArray(array)) {
             result = array[Number(index)];
@@ -100,7 +100,7 @@ export class ValueHandler extends BaseHandler {
      * @returns 配列要素
      *
      */
-    private static child(obj: any, attr: string): any {
+    protected static child(obj: any, attr: string): any {
         let result: any = undefined;
         if (isContainer(obj)) {
             if (attr in obj) {
@@ -111,5 +111,3 @@ export class ValueHandler extends BaseHandler {
     }
 
 }
-
-// module.exports = {BaseHandler, ValueHandler}

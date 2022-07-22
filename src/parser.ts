@@ -349,5 +349,3 @@ export class AttributeParser extends FormulaParser {
     }
 
 }
-
-// module.exports = {BaseParser, FormulaParser, AttributeParser}

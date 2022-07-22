@@ -1,10 +1,13 @@
 | [README] | [DEMO] | [in detail] |
 |----------|--------|-------------|
-# AttrPath
+
 [![npm version](https://badge.fury.io/js/attrpath.svg)](https://badge.fury.io/js/attrpath)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![7thCode](https://circleci.com/gh/7thCode/attrpath.svg?style=shield)](<LINK>)
+![npm type definitions](https://img.shields.io/npm/types/attrpath)
+![GitHub](https://img.shields.io/github/license/7thcode/attrpath)
+[![7thCode](https://circleci.com/gh/7thCode/attrpath.svg?style=shield)]()
 ![node.js.yml](https://github.com/7thCode/attrpath/actions/workflows/node.js.yml/badge.svg)
+![GitHub last commit](https://img.shields.io/github/last-commit/7thcode/attrpath)
+# AttrPath
 
 <img src="https://raw.githubusercontent.com/7thCode/attrpath/0281b0c1d1984b451394de4a0f4d15c075338401/AttributeParser.svg" alt="" title="">
 
@@ -55,7 +58,7 @@ var answer = AttrPath.traverse(value, ".children.john.hobby[1].name");
 
 # Requirement
 
-node v10.0.0
+node v12.0.0
 
 # Installation
 

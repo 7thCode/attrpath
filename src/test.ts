@@ -24,6 +24,81 @@ describe('base', () => {
  * for test
  */
 describe('attrpath', () => {
+
+    it("ValueHandler", () => {
+
+        class TestHandler extends ValueHandler {
+            public static sibling(array: any[], index: string): any {
+                return ValueHandler.sibling(array, index);
+            }
+
+            public static child(obj: any, index: string): any {
+                return ValueHandler.child(obj, index);
+            }
+        }
+
+        expect(TestHandler.sibling([1, 2, 3, 4, 5], '2')).toStrictEqual(3);
+        expect(TestHandler.child({a: 1, b: 2, c: 3}, 'b')).toStrictEqual(2);
+
+        const handler = new ValueHandler({a: "1"});
+        expect(handler.value).toStrictEqual({a: "1"});
+    });
+
+    it("ParserStream", () => {
+
+        const stream = new ParserStream("0123456789");
+        expect(stream.char).toBe("0");
+        expect(stream.charCode).toBe(48);
+
+        stream.next();
+
+        expect(stream.char).toBe("1");
+        expect(stream.charCode).toBe(49);
+
+        stream.restore_point();
+        stream.next();
+        stream.next();
+        stream.next();
+
+        expect(stream.current).toBe("123");
+
+        stream.restore_point();
+        stream.next();
+        stream.next();
+        stream.next();
+
+        expect(stream.current).toBe("456");
+
+        stream.restore();
+        stream.next();
+        stream.next();
+        stream.next();
+
+        expect(stream.current).toBe("456");
+
+        expect(stream.is_terminal).toBe(false);
+
+        stream.next();
+        stream.next();
+
+        expect(stream.is_terminal).toBe(false);
+
+        stream.next();
+
+        expect(stream.is_terminal).toBe(true);
+
+        expect(stream.current).toBe("456789");
+
+        stream.next();
+
+        expect(stream.is_terminal).toBe(true);
+
+        stream.next();
+
+        expect(stream.current).toBe("456789");
+
+    });
+
     it("AttributeParser", () => {
 
         class TestParser extends AttributeParser {
@@ -164,8 +239,6 @@ describe('attrpath', () => {
         expect(new FormParser(_handler, new ParserStream(" ( 1 + ( 1 - 1 ) ) / 1 ")).is_factor()).toBe(true);
     });
 
-
-
 });
 
 /*
@@ -175,7 +248,6 @@ describe('attrpath', () => {
 * */
 describe('attrpath(ESModule)', () => {
     it('ESModule', () => {
-
 
         const value = {
             children: {
