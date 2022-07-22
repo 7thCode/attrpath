@@ -1,19 +1,25 @@
-| [README] | [DEMO] | [in detail] |
-|----------|--------|-------------|
 
+<div style="text-align: center;">
+<div style="font-size: 30px; font-weight:900">AttrPath</div>
+<img style="height:200px" src="https://raw.githubusercontent.com/7thCode/attrpath/0281b0c1d1984b451394de4a0f4d15c075338401/AttributeParser.svg" alt="" title="">
+
+Object Attribute Path Traverser.
+**Safely** traverse the javascript attribute tree using a text path representation.
+You can also check the existence of the path.
+
+![GitHub package.json version](https://img.shields.io/github/package-json/v/7thcode/attrpath?color=deepgreen)
 [![npm version](https://badge.fury.io/js/attrpath.svg)](https://badge.fury.io/js/attrpath)
 ![npm type definitions](https://img.shields.io/npm/types/attrpath)
 ![GitHub](https://img.shields.io/github/license/7thcode/attrpath)
 [![7thCode](https://circleci.com/gh/7thCode/attrpath.svg?style=shield)]()
 ![node.js.yml](https://github.com/7thCode/attrpath/actions/workflows/node.js.yml/badge.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/7thcode/attrpath)
-# AttrPath
 
-<img src="https://raw.githubusercontent.com/7thCode/attrpath/0281b0c1d1984b451394de4a0f4d15c075338401/AttributeParser.svg" alt="" title="">
+ [README]　[DEMO]　[in detail]
 
-Object Attribute Path Traverser.
-**Safely** traverse the javascript attribute tree using a text path representation.
-You can also check the existence of the path.
+</div>
+
+***
 
 # Motivation
 
