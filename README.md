@@ -1,6 +1,5 @@
-
 <div style="text-align: center;">
-<div style="font-size: 30px; font-weight:900">AttrPath</div>
+<h1>AttrPath</h1>
 <img style="height:200px" src="https://raw.githubusercontent.com/7thCode/attrpath/0281b0c1d1984b451394de4a0f4d15c075338401/AttributeParser.svg" alt="" title="">
 
 Object Attribute Path Traverser.
