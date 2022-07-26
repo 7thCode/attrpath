@@ -57,14 +57,8 @@ var answer = AttrPath.traverse(value, ".children.john.hobby[1].name");
 ```
 
 # Features
-
-
-
-
-# Requirement
-
-node v12.0.0
-
+Safely traverse the object path using the given path string.
+Also, an array may be included in the middle of the path.
 # Installation
 
 ```bash
@@ -72,16 +66,13 @@ npm install atttrpath
 ```
 
 # Usage
-
 ### API
 ```js
 const {AttrPath}: any = require("attrpath");
 // or
 import {AttrPath} from 'attrpath';
 ```
-
-### traverse value. 
-
+### traverse value.
 params
 ```ts
     object: any   Target Object.
@@ -94,7 +85,6 @@ params
 AttrPath.traverse(object: any, path: string): any;
 ```
 ### path is valid?
-
 params
 ```ts
     path: string  Traverse path.
@@ -171,17 +161,11 @@ const {AttrPath} = require('attrpath');
     AttrPath.is_valid('.children["john"].hobby[1].name')
 ```
 
-
 # Note
-
 See demo.md for unclear cases.
-
 # Author
-
 info@seventh-code.com
-
 # License
-
 "AttrPath" is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 
 
