@@ -77,7 +77,7 @@ params
 ```ts
     object: any   Target Object.
     path: string  Traverse path.　The beginning of the path is always ".".
-                   ex.  ".cat.eye.left",  ".dog['leg'][1].pad"  
+                   e.g.  ".cat.eye.left",  ".dog['leg'][1].pad"  
 
     result: any　　　Objects obtained as a result of traverse.
 ```
