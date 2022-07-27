@@ -1,5 +1,4 @@
-| [README] | [DEMO] | [in detail] |
-|----------|--------|-------------|
+ [README]　[DEMO]　[in detail]　[compodoc]
 
 ```ts
 import {isNumber, isContainer} from "./base";
@@ -425,3 +424,4 @@ describe('attrpath', () => {
 [README]: ../README.md
 [DEMO]: demo.md
 [in detail]: detail.md
+[compodoc]: compodoc/index.html

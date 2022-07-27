@@ -14,7 +14,7 @@ You can also check the existence of the path.
 ![node.js.yml](https://github.com/7thCode/attrpath/actions/workflows/node.js.yml/badge.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/7thcode/attrpath)
 
- [README]　[DEMO]　[in detail]
+ [README]　[DEMO]　[in detail]　[compodoc]
 
 </div>
 
@@ -172,5 +172,5 @@ info@seventh-code.com
 [README]: README.md
 [DEMO]: docs/demo.md
 [in detail]: docs/detail.md
-
+[compodoc]: docs/compodoc/index.html
 

@@ -6,9 +6,8 @@
 
 "use strict";
 
-import {isNumber, isContainer} from "./base";
-import {AttributeParser, FormulaParser, ParserStream, BaseHandler, ValueHandler} from './index';
-import {AttrPath} from './index';
+import {isContainer, isNumber} from "./base";
+import {AttributeParser, AttrPath, BaseHandler, FormulaParser, ParserStream, ValueHandler} from './index';
 
 describe('base', () => {
     it('base', () => {

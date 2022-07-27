@@ -1,5 +1,5 @@
-| [README] | [DEMO] | [in detail] |
-|----------|--------|-------------|
+ [README]　[DEMO]　[in detail]　[compodoc]
+
 # Detail
 
 AttrPath is internally built using the following classes, and the classes themselves can be used.
@@ -280,3 +280,4 @@ const {AttributeParser, ValueHandler, ParserStream} = require('attrpath');
 [README]: ../README.md
 [DEMO]: demo.md
 [in detail]: detail.md
+[compodoc]: compodoc/index.html
