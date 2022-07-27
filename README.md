@@ -1,4 +1,4 @@
-<div  align="center">
+<div align="center">
 <h1>AttrPath</h1>
 <img style="height:200px" src="https://raw.githubusercontent.com/7thCode/attrpath/0281b0c1d1984b451394de4a0f4d15c075338401/AttributeParser.svg" alt="" title="">
 
@@ -14,7 +14,7 @@ You can also check the existence of the path.
 ![node.js.yml](https://github.com/7thCode/attrpath/actions/workflows/node.js.yml/badge.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/7thcode/attrpath)
 
- [README]　[DEMO]　[in detail]　[compodoc]
+ [README]　[DEMO]　[in detail]
 
 </div>
 
@@ -168,9 +168,7 @@ info@seventh-code.com
 # License
 "AttrPath" is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 
-
 [README]: README.md
 [DEMO]: docs/demo.md
 [in detail]: docs/detail.md
-[compodoc]: docs/compodoc/index.html
 

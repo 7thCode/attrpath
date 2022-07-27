@@ -1,4 +1,4 @@
- [README]　[DEMO]　[in detail]　[compodoc]
+ [README]　[DEMO]　[in detail]
 
 # Detail
 
@@ -275,9 +275,6 @@ const {AttributeParser, ValueHandler, ParserStream} = require('attrpath');
 
     Pseudo_isValid('.children["john"].hobby[1].name');
 ```
-
-
 [README]: ../README.md
 [DEMO]: demo.md
 [in detail]: detail.md
-[compodoc]: compodoc/index.html
