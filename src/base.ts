@@ -10,10 +10,10 @@
  * isNumber
  *
  * @remarks
- * 値が数か
+ * is Number?
  *
- * @param value - 値
- * @returns 数か
+ * @param value - unknown value.
+ * @returns True/False
  */
 export function isNumber(value: unknown): boolean {
     return ((typeof value === 'number') && (isFinite(value)));
@@ -23,11 +23,11 @@ export function isNumber(value: unknown): boolean {
  * isObject
  *
  * @remarks
- * 値がオブジェクトか.
- * [],{}はオブジェクト。
+ * is Object or Array.
+ * [] or {} is True.
  *
- * @param value - 値
- * @returns オブジェクトか
+ * @param value - unknown value.
+ * @returns True/False
  */
 export function isContainer(value: unknown): boolean {
     return ((value !== null) && (typeof value === 'object'));

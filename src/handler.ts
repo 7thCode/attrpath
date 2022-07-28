@@ -10,7 +10,9 @@ import {isContainer} from "./base";
 
 /**
  * BaseHandler
+ *
  * @remarks
+ *
  */
 export abstract class BaseHandler {
     abstract symbol(type: string, word: string): void;
@@ -18,7 +20,9 @@ export abstract class BaseHandler {
 
 /**
  * ValueHandler
+ *
  * @remarks
+ *
  */
 export class ValueHandler extends BaseHandler {
 
@@ -46,7 +50,7 @@ export class ValueHandler extends BaseHandler {
      * Symbol Handler
      *
      * @remarks
-     * ParserがSymbolを発見した
+     * Executed when Parser recognizes Token.
      *
      * @param type - Symbol Type
      * @param word - 単語
@@ -74,11 +78,11 @@ export class ValueHandler extends BaseHandler {
      * Sibling
      *
      * @remarks
-     * 配列が発見された
+     * Extract array elements from index
      *
-     * @param array - 配列
-     * @param index - インデックス
-     * @returns 配列要素
+     * @param array - Array
+     * @param index - Index
+     * @returns Array member
      *
      */
     protected static sibling(array: any[], index: string): any {
@@ -93,11 +97,11 @@ export class ValueHandler extends BaseHandler {
      * child
      *
      * @remarks
-     * オブジェクトが発見された
+     * Returns an object member.
      *
-     * @param obj - オブジェクト
-     * @param attr - 識別子
-     * @returns 配列要素
+     * @param obj - Object
+     * @param attr - Attribute Name
+     * @returns Object member
      *
      */
     protected static child(obj: any, attr: string): any {

@@ -159,7 +159,11 @@ export class FormulaParser extends BaseParser {
         super(handler, stream);
     }
 
-    // expr ::= term { S { "+" | "-" } S term } *
+    /**
+     *
+    * expr ::= term { S { "+" | "-" } S term } *
+     * @remarks
+    * */
     protected is_expr(): boolean {
         let result = false;
         this.stream.restore_point();
@@ -183,7 +187,14 @@ export class FormulaParser extends BaseParser {
         return result;
     }
 
-    // term ::= factor { S { "*" | "/" } S factor } *
+    /**
+     * is_term
+     *
+     * @remarks
+    * term ::= factor { S { "*" | "/" } S factor } *
+     *
+     *
+    * */
     protected is_term(): boolean {
         let result = false;
         this.stream.restore_point();
@@ -207,7 +218,13 @@ export class FormulaParser extends BaseParser {
         return result;
     }
 
-    // factor ::= "(" S expr S ")" | number
+    /**
+     * is_factor
+     *
+     * @remarks
+    * factor ::= "(" S expr S ")" | number
+     *
+    * */
     protected is_factor(): boolean {
         let result = false;
         this.stream.restore_point();
@@ -251,7 +268,10 @@ export class AttributeParser extends FormulaParser {
 
     /**
      * is_reading
+     *
+     * @remarks
      * reading ::= ( alpha | "_" | "$" ) *
+     *
      */
     protected is_reading(): boolean {
         const code: number = this.stream.charCode;
@@ -262,7 +282,10 @@ export class AttributeParser extends FormulaParser {
 
     /**
      * is_trailing
+     *
+     * @remarks
      * trailing ::= ( alpha | "_" | "$" | digit ) *
+     *
      */
     protected is_trailing(): boolean {
         const code: number = this.stream.charCode;
@@ -274,7 +297,10 @@ export class AttributeParser extends FormulaParser {
 
     /**
      * parse_name
+     *
+     * @remarks
      * name ::= reading [ trailing ]
+     *
      */
     protected parse_name(): boolean {
         let result: boolean = false;
@@ -295,7 +321,10 @@ export class AttributeParser extends FormulaParser {
 
     /**
      * parse_string
+     *
+     * @remarks
      * string = "'" mame "'" | '"' mame '"'
+     *
      */
     protected parse_string(): boolean {
         let result: boolean = false;
@@ -312,7 +341,10 @@ export class AttributeParser extends FormulaParser {
 
     /**
      * parse_attr
+     *
+     * @remarks
      * attr ::= "." name | '[' string | number ']'
+     *
      */
     protected parse_attr(): boolean {
         let result: boolean = false;
@@ -337,7 +369,10 @@ export class AttributeParser extends FormulaParser {
 
     /**
      * parse_path
+     *
+     * @remarks
      * path ::= attr *
+     *
      */
     public parse_path(): boolean {
         let result: boolean = false;

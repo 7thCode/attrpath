@@ -7,6 +7,10 @@
 "use strict";
 
 /**
+ * ParserStream
+ *
+ *
+ *
  */
 export class ParserStream {
 
@@ -17,7 +21,7 @@ export class ParserStream {
     /**
      * char
      *
-     * @remarks 現状の文字
+     * @remarks current position char
      */
     public get char(): string {
         return this.value.charAt(this.end);
@@ -26,7 +30,7 @@ export class ParserStream {
     /**
      * charCode
      *
-     * @remarks 現状の文字コード
+     * @remarks current position charCode
      */
     public get charCode(): number {
         return this.value.charCodeAt(this.end);
@@ -35,7 +39,8 @@ export class ParserStream {
     /**
      * current
      *
-     * @remarks 現状の文字列
+     * @remarks
+     * String between restore point and current position.
      */
     public get current(): string {
         return this.value.substring(this.start, this.end);
@@ -44,12 +49,16 @@ export class ParserStream {
     /**
      * is_terminal
      *
-     * @remarks 終端か？
+     * @remarks end？
      */
     public get is_terminal(): boolean {
         return (this.value.length <= this.end);
     }
 
+    /*
+    *
+    *
+    * */
     constructor(value: string) {
         this.value = value;
     }
@@ -57,7 +66,7 @@ export class ParserStream {
     /**
      * restore_point
      *
-     * @remarks パース済み終端を決定
+     * @remarks save point.
      */
     public restore_point(): void {
         this.start = this.end;
@@ -66,7 +75,7 @@ export class ParserStream {
     /**
      * restore
      *
-     * @remarks commitまで戻す
+     * @remarks current position restore to restore_point.
      */
     public restore(): void {
         this.end = this.start;
@@ -75,7 +84,7 @@ export class ParserStream {
     /**
      * next
      *
-     * @remarks パース済み終端を一文字進める
+     * @remarks Advance the parsed end by one character
      */
     public next(): void {
         this.end++;

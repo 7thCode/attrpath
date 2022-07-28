@@ -13,7 +13,9 @@ import {BaseHandler, ValueHandler} from './handler';
 export {AttributeParser, FormulaParser, ParserStream, BaseHandler, ValueHandler};
 
 /**
- * Helper
+ * AttrPath
+ *
+ *
  */
 export class AttrPath {
 
@@ -21,11 +23,11 @@ export class AttrPath {
      * traverse
      *
      * @remarks
-     * オブジェクトのアトリビュートをトラバースしてその値を得る
+     * Traverse an object's attributes to get its value.
      *
-     * @param obj - オブジェクト
-     * @param path - パス eg. ".x.Y.z[1]"
-     * @returns 要素
+     * @param obj - Object
+     * @param path - ObjectPath e.g. ".x.Y.z[1]"
+     * @returns The value at the position of the path.
      *
      */
     static traverse(obj: any, path: string): any {
@@ -38,16 +40,16 @@ export class AttrPath {
     }
 
     /**
-     * valid
+     * is_valid
      *
      * @remarks
-     * オブジェクトのアトリビュートをトラバースしてその値を得る
+     * Is the path grammatically correct?
      *
-     * @param path - パス eg. ".x.Y.z[1]"
-     * @returns 要素
+     * @param path - ObjectPath e.g. ".x.Y.z[1]"
+     * @returns true/false
      *
      */
-    static is_valid(path: string): any {
+    static is_valid(path: string): boolean {
         return new AttributeParser(null, new ParserStream(path)).parse_path();
     }
 }
