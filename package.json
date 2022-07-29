@@ -1,5 +1,5 @@
 {
-  "name": "attrpath",
+  "name": "@seventhcode/attrpath",
   "version": "0.1.6",
   "description": "Attribute Path Traverser.",
   "main": "dist/index.js",
