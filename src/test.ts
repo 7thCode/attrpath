@@ -457,5 +457,7 @@ describe('attrpath(CommonJS)', () => {
         expect(isValid('.children["john"].hobby[1].name')).toBe(true);
         expect(isValid('.children["john"].hobby[1a].name')).toBe(false);
         expect(isValid('.children["john"].hobby["1"].name')).toBe(false);
+        expect(isValid('XXXXX')).toBe(false);
+        expect(isValid('.expect(isValid(\'.children["john"].hobby[1].name\')).toBe(true);')).toBe(false);
     });
 });
