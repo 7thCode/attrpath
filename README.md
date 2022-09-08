@@ -74,19 +74,19 @@ import {AttrPath} from 'attrpath';
 ```
 ### traverse value.
 params
-```ts
+```
     object: any   Target Object.
     path: string  Traverse path.　The beginning of the path is always ".".
-                   e.g.  ".cat.eye.left",  ".dog['leg'][1].pad"  
-
+                   e.g.  ".cat.eye.left",  ".dog['leg'][1].pad"
+    default_value - The value to return if there is no corresponding value in the object path. default is "undefined".
     result: any　　　Objects obtained as a result of traverse.
 ```
 ```ts
-AttrPath.traverse(object: any, path: string): any;
+AttrPath.traverse(object: any, path: string [,default_value: any]): any;
 ```
 ### path is valid?
 params
-```ts
+```
     path: string  Traverse path.
 
     result: boolean　　path is grammatically correct?　
