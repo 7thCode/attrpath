@@ -274,6 +274,7 @@ describe('attrpath(ESModule)', () => {
         expect(AttrPath.traverse(value, '.children.tom.pet[0].type')).toBe("cat");
         expect(AttrPath.traverse(value, '.children.tom.pet[0].name')).toBe("Chloe");
         expect(AttrPath.traverse(value, '.children.john.hobby["0"].name')).toBeUndefined();
+        expect(AttrPath.traverse(value, '.children.john.hobby["0"].name', "no name")).toBe("no name");
         expect(AttrPath.traverse(value, '.children["john"].hobby[0].name')).toBe("Cycling");
         expect(AttrPath.traverse(value, '.children["john"].hobby[0]["name"]')).toBe("Cycling");
         expect(AttrPath.traverse(value, '["children"]["john"].hobby[0].name')).toBe("Cycling");
@@ -379,6 +380,7 @@ describe('attrpath(CommonJS)', () => {
         expect(AttrPath.traverse(value, '.children.john.hobby[0]')).toStrictEqual({"name": "Cycling"});
         expect(AttrPath.traverse(value, '.children.john.hobby[0].name')).toBe("Cycling");
         expect(AttrPath.traverse(value, '.children.john.hobby[0a].name')).toBeUndefined();
+        expect(AttrPath.traverse(value, '.children.john.hobby["0"].name', "no name")).toBe("no name");
         expect(AttrPath.traverse(value, '.children.john.hobby[1].name')).toBe("Dance");
         expect(AttrPath.traverse(value, '.children.john.pet[0].type')).toBe("dog");
         expect(AttrPath.traverse(value, '.children.john.pet[0].name')).toBe("Max");

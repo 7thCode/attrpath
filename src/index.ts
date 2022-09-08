@@ -27,11 +27,12 @@ export class AttrPath {
      *
      * @param obj - Object
      * @param path - ObjectPath e.g. ".x.Y.z[1]"
+     * @param default_value - The value to return if there is no corresponding value in the object path. default is "undefined"
      * @returns The value at the position of the path.
      *
      */
-    static traverse(obj: any, path: string): any {
-        let result = undefined;
+    static traverse(obj: any, path: string, default_value: any = undefined): any {
+        let result = default_value;
         const _handler: ValueHandler = new ValueHandler(obj);
         if (new AttributeParser(_handler, new ParserStream(path)).parse_path()) {
             result = _handler.value;
