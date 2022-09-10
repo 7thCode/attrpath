@@ -35,7 +35,9 @@ export class AttrPath {
         let result = default_value;
         const _handler: ValueHandler = new ValueHandler(obj);
         if (new AttributeParser(_handler, new ParserStream(path)).parse_path()) {
-            result = _handler.value;
+            if (_handler.value) {
+                 result = _handler.value;
+            }
         }
         return result;
     }

@@ -340,6 +340,7 @@ describe('attrpath(ESModule)', () => {
             return new AttributeParser(null, new ParserStream(path)).parse_path();
         }
 
+
         expect(Traverse(value, '.children')).toStrictEqual({"john": {"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]}, "tom": {"hobby": [{"name": "Squash"}], "pet": [{"type": "cat", "name": "Chloe"}]}});
         expect(Traverse(value, '.children.john')).toStrictEqual({"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]});
         expect(Traverse(value, '.children.john.hobby')).toStrictEqual([{"name": "Cycling"}, {"name": "Dance"}]);
@@ -429,6 +430,8 @@ describe('attrpath(CommonJS)', () => {
         expect(AttrPath.traverse("1", '.path')).toBeUndefined();
         expect(AttrPath.traverse([1], '.path')).toBeUndefined();
         expect(AttrPath.traverse({}, '.path')).toBeUndefined();
+        expect(AttrPath.traverse({}, '.path',1)).toBe(1);
+        expect(value.children?.john?.hobby[10]?.name).toBeUndefined();
 
         expect(AttrPath.is_valid('.children["john"].hobby[1].name')).toBe(true);
         expect(AttrPath.is_valid('.children["john"].hobby[1a].name')).toBe(false);

@@ -162,6 +162,7 @@ const {AttrPath} = require('attrpath');
 ```
 
 ### Array
+The original value can be an array.
 ```ts
 const {AttrPath} = require('attrpath');
 
@@ -169,6 +170,7 @@ const {AttrPath} = require('attrpath');
 ```
 
 ### Undefined
+Returns Undefined if the original value is not an object.
 ```ts
 const {AttrPath} = require('attrpath');
 
@@ -184,6 +186,14 @@ const {AttrPath} = require('attrpath');
     AttrPath.traverse("1", '.path');
     AttrPath.traverse([1], '.path');
     AttrPath.traverse({}, '.path');
+```
+
+### Default Value
+If the result is Undefined, the default value is returned.
+```ts
+const {AttrPath} = require('attrpath');
+
+    AttrPath.traverse({}, '.path', 1);
 ```
 
 # Note
