@@ -161,6 +161,31 @@ const {AttrPath} = require('attrpath');
     AttrPath.is_valid('.children["john"].hobby[1].name')
 ```
 
+### Array
+```ts
+const {AttrPath} = require('attrpath');
+
+    AttrPath.traverse([1], '[0]');
+```
+
+### Undefined
+```ts
+const {AttrPath} = require('attrpath');
+
+    AttrPath.traverse(null, '.path');
+    AttrPath.traverse(undefined, '.path');
+    AttrPath.traverse(false, '.path');
+    AttrPath.traverse(true, '.path');
+    AttrPath.traverse(NaN, '.path');
+    AttrPath.traverse(Infinity, '.path');
+    AttrPath.traverse(0, '.path');
+    AttrPath.traverse(-1, '.path');
+    AttrPath.traverse("", '.path');
+    AttrPath.traverse("1", '.path');
+    AttrPath.traverse([1], '.path');
+    AttrPath.traverse({}, '.path');
+```
+
 # Note
 See demo.md for unclear cases.
 # Author

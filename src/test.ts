@@ -283,9 +283,26 @@ describe('attrpath(ESModule)', () => {
         expect(AttrPath.traverse(value, '["children"]["john"]["hobby"][0].["name"]')).toBeUndefined();
         expect(AttrPath.traverse(value, '["children"]["john"]["hobby"][0]["name"]')).toBe("Cycling");
         expect(AttrPath.traverse(value, '.children["john"].hobby[1].name')).toBe("Dance");
+        expect(AttrPath.traverse([1], '[0]')).toBe(1);
+        expect(AttrPath.traverse(AttrPath.traverse(value, '.children.john'), '.hobby')).toStrictEqual([{"name": "Cycling"}, {"name": "Dance"}]);
+        expect(AttrPath.traverse(null, '.path')).toBeUndefined();
+        expect(AttrPath.traverse(undefined, '.path')).toBeUndefined();
+        expect(AttrPath.traverse(false, '.path')).toBeUndefined();
+        expect(AttrPath.traverse(true, '.path')).toBeUndefined();
+        expect(AttrPath.traverse(NaN, '.path')).toBeUndefined();
+        expect(AttrPath.traverse(Infinity, '.path')).toBeUndefined();
+        expect(AttrPath.traverse(0, '.path')).toBeUndefined();
+        expect(AttrPath.traverse(-1, '.path')).toBeUndefined();
+        expect(AttrPath.traverse("", '.path')).toBeUndefined();
+        expect(AttrPath.traverse("1", '.path')).toBeUndefined();
+        expect(AttrPath.traverse([1], '.path')).toBeUndefined();
+        expect(AttrPath.traverse({}, '.path')).toBeUndefined();
+
         expect(AttrPath.is_valid('.children["john"].hobby[1].name')).toBe(true);
         expect(AttrPath.is_valid('.children["john"].hobby[1a].name')).toBe(false);
         expect(AttrPath.is_valid('.children["john"].hobby["1"].name')).toBe(false);
+
+
     });
 });
 
@@ -348,6 +365,7 @@ describe('attrpath(ESModule)', () => {
         expect(isValid('.children["john"].hobby[1a].name')).toBe(false);
         expect(isValid('.children["john"].hobby["1"].name')).toBe(false);
 
+
     });
 });
 
@@ -396,6 +414,25 @@ describe('attrpath(CommonJS)', () => {
         expect(AttrPath.traverse(value, '["children"]["john"]["hobby"][0].["name"]')).toBeUndefined();
         expect(AttrPath.traverse(value, '["children"]["john"]["hobby"][0]["name"]')).toBe("Cycling");
         expect(AttrPath.traverse(value, '.children["john"].hobby[1].name')).toBe("Dance");
+        expect(AttrPath.traverse([1], '[0]')).toBe(1);
+        expect(AttrPath.traverse([1], '[1]')).toBeUndefined();
+        expect(AttrPath.traverse(AttrPath.traverse(value, '.children.john'), '.hobby')).toStrictEqual([{"name": "Cycling"}, {"name": "Dance"}]);
+        expect(AttrPath.traverse(null, '.path')).toBeUndefined();
+        expect(AttrPath.traverse(undefined, '.path')).toBeUndefined();
+        expect(AttrPath.traverse(false, '.path')).toBeUndefined();
+        expect(AttrPath.traverse(true, '.path')).toBeUndefined();
+        expect(AttrPath.traverse(NaN, '.path')).toBeUndefined();
+        expect(AttrPath.traverse(Infinity, '.path')).toBeUndefined();
+        expect(AttrPath.traverse(0, '.path')).toBeUndefined();
+        expect(AttrPath.traverse(-1, '.path')).toBeUndefined();
+        expect(AttrPath.traverse("", '.path')).toBeUndefined();
+        expect(AttrPath.traverse("1", '.path')).toBeUndefined();
+        expect(AttrPath.traverse([1], '.path')).toBeUndefined();
+        expect(AttrPath.traverse({}, '.path')).toBeUndefined();
+
+        expect(AttrPath.is_valid('.children["john"].hobby[1].name')).toBe(true);
+        expect(AttrPath.is_valid('.children["john"].hobby[1a].name')).toBe(false);
+        expect(AttrPath.is_valid('.children["john"].hobby["1"].name')).toBe(false);
     });
 });
 
