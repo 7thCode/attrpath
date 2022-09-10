@@ -431,7 +431,7 @@ describe('attrpath(CommonJS)', () => {
         expect(AttrPath.traverse([1], '.path')).toBeUndefined();
         expect(AttrPath.traverse({}, '.path')).toBeUndefined();
         expect(AttrPath.traverse({}, '.path',1)).toBe(1);
-        expect(value.children?.john?.hobby[10]?.name).toBeUndefined();
+        expect(value?.children?.john?.hobby[10]?.name).toBeUndefined();
 
         expect(AttrPath.is_valid('.children["john"].hobby[1].name')).toBe(true);
         expect(AttrPath.is_valid('.children["john"].hobby[1a].name')).toBe(false);

@@ -46,6 +46,11 @@ if (value.children) {
         }
     }
 }
+
+or
+
+answer = value?.children?.john?.hobby[1]?.name;
+
 ```
 
 The ugly thing above is nice if you can write it like this, right?
