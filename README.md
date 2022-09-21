@@ -100,6 +100,13 @@ params
 ```ts
 AttrPath.is_valid(path: string): boolean;
 ```
+### Default Value
+If the result is Undefined, the default value is returned.
+```ts
+const {AttrPath} = require('attrpath');
+
+    AttrPath.traverse({}, '.path', 1);
+```
 
 ### Exsample
 ```js
@@ -193,13 +200,7 @@ const {AttrPath} = require('attrpath');
     AttrPath.traverse({}, '.path');
 ```
 
-### Default Value
-If the result is Undefined, the default value is returned.
-```ts
-const {AttrPath} = require('attrpath');
 
-    AttrPath.traverse({}, '.path', 1);
-```
 
 # Note
 See demo.md for unclear cases.
