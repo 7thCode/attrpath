@@ -20,6 +20,18 @@ export function isNumber(value: unknown): boolean {
 }
 
 /**
+ * isValue
+ *
+ * @remarks
+ * 値がnull,undef以外
+ *
+ * @param value - 値
+ * @returns null,undef以外
+ */
+export function isValue(value: unknown): boolean {
+    return ((value !== null) && (typeof value !== 'undefined'));
+}
+/**
  * isObject
  *
  * @remarks
