@@ -64,12 +64,13 @@ var answer = AttrPath.traverse(value, ".children.john.hobby[1].name");
 # Features
 Safely traverse the object path using the given path string.
 Also, an array may be included in the middle of the path.
+
 # Installation
 
 ```bash
 npm install atttrpath
 ```
-
+No modules depend on it.
 # Usage
 ### API
 ```js
@@ -78,37 +79,54 @@ const {AttrPath}: any = require("attrpath");
 import {AttrPath} from 'attrpath';
 ```
 ### traverse value.
-params
-```
-    object: any   Target Object.
-    path: string  Traverse path.　The beginning of the path is always ".".
-                   e.g.  ".cat.eye.left",  ".dog['leg'][1].pad"
-    default_value - The value to return if there is no corresponding value in the object path. default is "undefined".
-    result: any　　　Objects obtained as a result of traverse.
-```
-```ts
-AttrPath.traverse(object: any, path: string [,default_value: any]): any;
-```
-### path is valid?
-params
-```
-    path: string  Traverse path.
 
-    result: boolean　　path is grammatically correct?　
+```js
+AttrPath.traverse(object, path [,default_value]);
 ```
 
-```ts
-AttrPath.is_valid(path: string): boolean;
+#### params
+
+| params             | meaning                                                 |
+--------------------|---------------------------------------------------------
+| object: any        | Target Object.                                          |
+| path: string       | Traverse path.　The beginning of the path is always ".". |
+| e.g.               | ".cat.eye.left",  ".dog['leg'][1].pad" , etc...         |
+| default_value: any | The value to return if there is no corresponding value in the object path. default is "undefined". |
+
+#### result
+
+| result             | meaning                                                 |
+--------------------|---------------------------------------------------------
+| result: any             | Objects obtained as a result of traverse.                                               |
+
+### path is grammatically valid?
+
+```js
+AttrPath.is_valid(path);
 ```
+
+#### params
+
+| params             | meaning                                                 |
+--------------------|---------------------------------------------------------
+| path: string       | Traverse path.　 |
+
+#### result
+
+| result             | meaning                                                 |
+--------------------|---------------------------------------------------------
+| result: boolean           | path is grammatically correct?                                             |
+
+
 ### Default Value
 If the result is Undefined, the default value is returned.
-```ts
+```js
 const {AttrPath} = require('attrpath');
 
     AttrPath.traverse({}, '.path', 1);
 ```
 
-### Exsample
+### Example
 ```js
 const {AttrPath}: any = require("attrpath");
 
@@ -143,7 +161,7 @@ console.log(AttrPath.is_valid('.children.john.hobby[0]..name'))
 
 ```
 ### Example Data
-```ts
+```js
     const value = {
         children: {
             john: {
@@ -158,15 +176,14 @@ console.log(AttrPath.is_valid('.children.john.hobby[0]..name'))
     };
 ```
 ### ESModule
-```ts
+```js
 import {AttrPath} from 'attrpath';
 
     AttrPath.traverse(value, '.children')
     AttrPath.is_valid('.children["john"].hobby[1].name')
 ```
-
 ### CommonJS
-```ts
+```js
 const {AttrPath} = require('attrpath');
 
     AttrPath.traverse(value, '.children');
@@ -175,7 +192,7 @@ const {AttrPath} = require('attrpath');
 
 ### Array
 The original value can be an array.
-```ts
+```js
 const {AttrPath} = require('attrpath');
 
     AttrPath.traverse([1], '[0]');
@@ -183,7 +200,7 @@ const {AttrPath} = require('attrpath');
 
 ### Undefined
 Returns Undefined if the original value is not an object.
-```ts
+```js
 const {AttrPath} = require('attrpath');
 
     AttrPath.traverse(null, '.path');
@@ -199,9 +216,6 @@ const {AttrPath} = require('attrpath');
     AttrPath.traverse([1], '.path');
     AttrPath.traverse({}, '.path');
 ```
-
-
-
 # Note
 See demo.md for unclear cases.
 # Author
