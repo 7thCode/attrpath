@@ -301,8 +301,18 @@ describe('attrpath(ESModule)', () => {
 		expect(AttrPath.is_valid('.children["john"].hobby[1].name')).toBe(true);
 		expect(AttrPath.is_valid('.children["john"].hobby[1a].name')).toBe(false);
 		expect(AttrPath.is_valid('.children["john"].hobby["1"].name')).toBe(false);
+		expect(AttrPath.is_valid('this.name')).toBe(false);
 
+		class Klass {
+			member:string = "name";
 
+			Member(): any {
+				return AttrPath.traverse(this, '.member');
+			}
+		}
+
+		const klass = new Klass();
+		expect(klass.Member()).toBe("name");
 	});
 });
 
@@ -370,6 +380,7 @@ describe('attrpath(ESModule)', () => {
 		expect(isValid('.children["john"].hobby["1"].name')).toBe(false);
 		expect(Traverse(value, '.children._jack$._hobby$[0].$name')).toBe("Fury");
 		expect(Traverse(value, '.children._jack$.$pet$[0].$name')).toBe("Dread");
+
 	});
 });
 
@@ -439,6 +450,18 @@ describe('attrpath(CommonJS)', () => {
 		expect(AttrPath.is_valid('.children["john"].hobby[1].name')).toBe(true);
 		expect(AttrPath.is_valid('.children["john"].hobby[1a].name')).toBe(false);
 		expect(AttrPath.is_valid('.children["john"].hobby["1"].name')).toBe(false);
+		expect(AttrPath.is_valid('this.name')).toBe(false);
+
+		class Klass {
+			member:string = "name";
+
+			Member(): any {
+				return AttrPath.traverse(this, '.member');
+			}
+		}
+
+		const klass = new Klass();
+		expect(klass.Member()).toBe("name");
 	});
 });
 

@@ -95,9 +95,9 @@ AttrPath.traverse(object, path [,default_value]);
 
 #### result
 
-| result             | meaning                                                 |
---------------------|---------------------------------------------------------
-| result: any             | Objects obtained as a result of traverse.                                               |
+| result      | meaning                                   |
+-------------|-------------------------------------------
+| result: any | Objects obtained as a result of traverse. |
 
 ### path is grammatically valid?
 
@@ -107,15 +107,15 @@ AttrPath.is_valid(path);
 
 #### params
 
-| params             | meaning                                                 |
---------------------|---------------------------------------------------------
-| path: string       | Traverse path.　 |
+| params | meaning         |
+--------------------|-----------------
+| path: string | Traverse path.  |
 
 #### result
 
-| result             | meaning                                                 |
---------------------|---------------------------------------------------------
-| result: boolean           | path is grammatically correct?                                             |
+| result          | meaning                         |
+-----------------|---------------------------------
+| result: boolean | path is grammatically correct?  |
 
 
 ### Default Value
