@@ -1,12 +1,12 @@
  [README]　[DEMO]　[in detail]
 
-```ts
+```js
 import {isNumber, isContainer} from "./base";
 import {AttributeParser, FormulaParser, ParserStream, BaseHandler, ValueHandler} from './index';
 import {AttrPath} from './index';
 ```
-base
-```ts
+#### base
+```js
 describe('base', () => {
     it('base', () => {
         expect(isNumber(1)).toBe(true);
@@ -17,8 +17,8 @@ describe('base', () => {
     });
 });
 ```
-ValueHandler
-```ts
+#### ValueHandler
+```js
 describe('attrpath', () => {
     it("ValueHandler", () => {
 
@@ -40,8 +40,8 @@ describe('attrpath', () => {
     });
 });
 ```
-ParserStream
-```ts
+#### ParserStream
+```js
 describe('attrpath', () => {
     it("ParserStream", () => {
 
@@ -99,8 +99,8 @@ describe('attrpath', () => {
     });
 });
 ```
-AttributeParser
-```ts
+#### AttributeParser
+```js
 describe('attrpath', () => {
     it("AttributeParser", () => {
 
@@ -212,8 +212,8 @@ describe('attrpath', () => {
     });
 });
 ```
-ESModules
-```ts
+#### ESModules
+```js
 describe('attrpath', () => {
     it('ESModule', () => {
         
@@ -257,8 +257,8 @@ describe('attrpath', () => {
     });
 });
 ```
-ESModules Customize
-```ts
+#### ESModules Customize
+```js
 describe('attrpath', () => {
     it('Customize', () => {
 
@@ -316,8 +316,8 @@ describe('attrpath', () => {
     });
 });
 ```
-CommonJS
-```ts
+#### CommonJS
+```js
 describe('attrpath', () => {
     it('CommonJS', () => {
 
@@ -360,8 +360,8 @@ describe('attrpath', () => {
     });
 });
 ```
-CommonJS Customize
-```ts
+#### CommonJS Customize
+```js
 describe('attrpath', () => {
     it('Customize', () => {
 
@@ -420,6 +420,39 @@ describe('attrpath', () => {
     });
 });
 ```
+#### class
+```js
+class Klass {
+	member = "name";
+
+	Member() {
+		return AttrPath.traverse(this, '.member');
+	}
+}
+
+const klass = new Klass();
+console.log(klass.Member());
+
+> "name"
+```
+#### Inheritance
+```js
+class ParentKlass {
+	member = "name";
+}
+
+class SubKlass extends ParentKlass {
+	Member() {
+		return AttrPath.traverse(this, '.member');
+	}
+}
+
+const sub_klass = new SubKlass();
+console.log(sub_klass.Member());
+
+> "name"
+```
+
 [README]: ../README.md
 [DEMO]: demo.md
 [in detail]: detail.md

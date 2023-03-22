@@ -86,17 +86,17 @@ AttrPath.traverse(object, path [,default_value]);
 
 #### params
 
-| params             | meaning                                                 |
---------------------|---------------------------------------------------------
-| object: any        | Target Object.                                          |
-| path: string       | Traverse path.　The beginning of the path is always ".". |
-| e.g.               | ".cat.eye.left",  ".dog['leg'][1].pad" , etc...         |
+| params             | meaning                                                                                            |
+|--------------------|----------------------------------------------------------------------------------------------------|
+| object: any        | Target Object.                                                                                     |
+| path: string       | Traverse path.　The beginning of the path is "." or "[".                                            |
+| e.g.               | ".cat.eye.left",  ".dog['leg'][1].pad" , etc...                                                    |
 | default_value: any | The value to return if there is no corresponding value in the object path. default is "undefined". |
 
 #### result
 
 | result      | meaning                                   |
--------------|-------------------------------------------
+|-------------|-------------------------------------------|
 | result: any | Objects obtained as a result of traverse. |
 
 ### path is grammatically valid?
@@ -107,14 +107,14 @@ AttrPath.is_valid(path);
 
 #### params
 
-| params | meaning         |
---------------------|-----------------
-| path: string | Traverse path.  |
+| params       | meaning        |
+|--------------|----------------|
+| path: string | Traverse path. |
 
 #### result
 
 | result          | meaning                         |
------------------|---------------------------------
+|-----------------|---------------------------------|
 | result: boolean | path is grammatically correct?  |
 
 

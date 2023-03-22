@@ -10,6 +10,7 @@ import {isContainer, isNumber, isValue} from "./base";
 import {AttributeParser, AttrPath, BaseHandler, FormulaParser, ParserStream, ValueHandler} from './index';
 
 describe('base', () => {
+
 	it('base', () => {
 		expect(isNumber(1)).toBe(true);
 		expect(isContainer({})).toBe(true);
@@ -20,6 +21,7 @@ describe('base', () => {
 		expect(isValue(null)).toBe(false);
 		expect(isValue(undefined)).toBe(false);
 	});
+
 });
 
 /**
@@ -249,6 +251,7 @@ describe('Parts', () => {
 *
 * */
 describe('ESModule', () => {
+
 	it('Basic', () => {
 
 		const value = {
@@ -307,6 +310,7 @@ describe('ESModule', () => {
 		expect(AttrPath.is_valid('this.name')).toBe(false);
 
 	});
+
 	it('Classes', () => {
 
 		const value = {
@@ -367,6 +371,7 @@ describe('ESModule', () => {
 		expect(Traverse(value, '.children._jack$.$pet$[0].$name')).toBe("Dread");
 
 	});
+
 	it('Extends', () => {
 
 		class Klass {
@@ -403,6 +408,7 @@ describe('ESModule', () => {
 *
 * */
 describe('CommonJS', () => {
+
 	it('Basic', () => {
 
 		const {AttrPath} = require('./index');
@@ -466,6 +472,7 @@ describe('CommonJS', () => {
 		expect(AttrPath.is_valid('this.name')).toBe(false);
 
 	});
+
 	it('Classes', () => {
 
 		const {AttributeParser, ValueHandler, ParserStream} = require('./index');
@@ -523,6 +530,7 @@ describe('CommonJS', () => {
 		expect(isValid('XXXXX')).toBe(false);
 		expect(isValid('.expect(isValid(\'.children["john"].hobby[1].name\')).toBe(true);')).toBe(false);
 	});
+
 	it('Extends', () => {
 
 		const {AttrPath} = require('./index');
