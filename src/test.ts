@@ -6,7 +6,7 @@
 
 "use strict";
 
-import {isContainer, isNumber} from "./base";
+import {isContainer, isNumber, isValue} from "./base";
 import {AttributeParser, AttrPath, BaseHandler, FormulaParser, ParserStream, ValueHandler} from './index';
 
 describe('base', () => {
@@ -16,13 +16,16 @@ describe('base', () => {
 		expect(isContainer({a: 1})).toBe(true);
 		expect(isContainer([])).toBe(true);
 		expect(isContainer([1])).toBe(true);
+		expect(isValue({})).toBe(true);
+		expect(isValue(null)).toBe(false);
+		expect(isValue(undefined)).toBe(false);
 	});
 });
 
 /**
  * for test
  */
-describe('attrpath', () => {
+describe('Parts', () => {
 
 	it("ValueHandler", () => {
 
@@ -245,8 +248,8 @@ describe('attrpath', () => {
 * ESModules
 *
 * */
-describe('attrpath(ESModule)', () => {
-	it('ESModule', () => {
+describe('ESModule', () => {
+	it('Basic', () => {
 
 		const value = {
 			children: {
@@ -303,26 +306,8 @@ describe('attrpath(ESModule)', () => {
 		expect(AttrPath.is_valid('.children["john"].hobby["1"].name')).toBe(false);
 		expect(AttrPath.is_valid('this.name')).toBe(false);
 
-		class Klass {
-			member:string = "name";
-
-			Member(): any {
-				return AttrPath.traverse(this, '.member');
-			}
-		}
-
-		const klass = new Klass();
-		expect(klass.Member()).toBe("name");
 	});
-});
-
-/*
-*
-* ESModules
-*
-* */
-describe('attrpath(ESModule)', () => {
-	it('ESModule(2)', () => {
+	it('Classes', () => {
 
 		const value = {
 			children: {
@@ -382,15 +367,43 @@ describe('attrpath(ESModule)', () => {
 		expect(Traverse(value, '.children._jack$.$pet$[0].$name')).toBe("Dread");
 
 	});
+	it('Extends', () => {
+
+		class Klass {
+			member:string = "name";
+
+			Member(): any {
+				return AttrPath.traverse(this, '.member');
+			}
+		}
+
+		const klass = new Klass();
+		expect(klass.Member()).toBe("name");
+
+		class ParentKlass {
+			protected member:string = "name";
+		}
+
+		class SubKlass extends ParentKlass {
+			Member(): any {
+				return AttrPath.traverse(this, '.member');
+			}
+		}
+
+		const sub_klass = new SubKlass();
+		expect(sub_klass.Member()).toBe("name");
+
+	});
 });
+
 
 /*
 *
 * CommonJS
 *
 * */
-describe('attrpath(CommonJS)', () => {
-	it('CommonJS(1)', () => {
+describe('CommonJS', () => {
+	it('Basic', () => {
 
 		const {AttrPath} = require('./index');
 
@@ -452,26 +465,8 @@ describe('attrpath(CommonJS)', () => {
 		expect(AttrPath.is_valid('.children["john"].hobby["1"].name')).toBe(false);
 		expect(AttrPath.is_valid('this.name')).toBe(false);
 
-		class Klass {
-			member:string = "name";
-
-			Member(): any {
-				return AttrPath.traverse(this, '.member');
-			}
-		}
-
-		const klass = new Klass();
-		expect(klass.Member()).toBe("name");
 	});
-});
-
-/*
-*
-* CommonJS
-*
-* */
-describe('attrpath(CommonJS)', () => {
-	it('CommonJS(2)', () => {
+	it('Classes', () => {
 
 		const {AttributeParser, ValueHandler, ParserStream} = require('./index');
 
@@ -528,4 +523,34 @@ describe('attrpath(CommonJS)', () => {
 		expect(isValid('XXXXX')).toBe(false);
 		expect(isValid('.expect(isValid(\'.children["john"].hobby[1].name\')).toBe(true);')).toBe(false);
 	});
+	it('Extends', () => {
+
+		const {AttrPath} = require('./index');
+
+		class Klass {
+			member:string = "name";
+
+			Member(): any {
+				return AttrPath.traverse(this, '.member');
+			}
+		}
+
+		const klass = new Klass();
+		expect(klass.Member()).toBe("name");
+
+		class ParentKlass {
+			protected member:string = "name";
+		}
+
+		class SubKlass extends ParentKlass {
+			Member(): any {
+				return AttrPath.traverse(this, '.member');
+			}
+		}
+
+		const sub_klass = new SubKlass();
+		expect(sub_klass.Member()).toBe("name");
+
+	});
 });
+

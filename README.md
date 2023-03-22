@@ -158,8 +158,39 @@ console.log(AttrPath.is_valid('.children.john.hobby[0].name'))
 console.log(AttrPath.is_valid('.children.john.hobby[0]..name'))
 
 > false
-
 ```
+### more Example
+```js
+class Klass {
+	member = "name";
+
+	Member() {
+		return AttrPath.traverse(this, '.member');
+	}
+}
+
+const klass = new Klass();
+console.log(klass.Member());
+
+> "name"
+```
+```js
+class ParentKlass {
+	member = "name";
+}
+
+class SubKlass extends ParentKlass {
+	Member() {
+		return AttrPath.traverse(this, '.member');
+	}
+}
+
+const sub_klass = new SubKlass();
+console.log(sub_klass.Member());
+
+> "name"
+```
+
 ### Example Data
 ```js
     const value = {
