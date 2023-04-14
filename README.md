@@ -81,7 +81,7 @@ import {AttrPath} from 'attrpath';
 ### traverse value.
 
 ```js
-AttrPath.traverse(object, path [,default_value]);
+AttrPath.traverse(object, path [default_value]);
 ```
 
 #### params
@@ -180,7 +180,7 @@ class Klass {
 }
 
 const klass = new Klass();
-console.log(klass.Member());
+console.log(klass.Member())
 
 > "name"
 ```
@@ -196,7 +196,7 @@ class SubKlass extends ParentKlass {
 }
 
 const sub_klass = new SubKlass();
-console.log(sub_klass.Member());
+console.log(sub_klass.Member())
 
 > "name"
 ```
