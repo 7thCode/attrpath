@@ -86,12 +86,13 @@ AttrPath.traverse(object, path [,default_value]);
 
 #### params
 
-| params             | meaning                                                                                            |
-|--------------------|----------------------------------------------------------------------------------------------------|
-| object: any        | Target Object.                                                                                     |
-| path: string       | Traverse path.　The beginning of the path is "." or "[".                                            |
-| e.g.               | ".cat.eye.left",  ".dog['leg'][1].pad" , etc...                                                    |
-| default_value: any | The value to return if there is no corresponding value in the object path. default is "undefined". |
+| params                  | meaning                                                                                            |
+|-------------------------|----------------------------------------------------------------------------------------------------|
+| object: any             | Target Object.                                                                                     |
+| path: string            | Traverse path.　The beginning of the path is "." or "[".                                            |
+| e.g.                    | ".cat.eye.left",  ".dog['leg'][1].pad" , etc...                                                    |
+| default_value: any      | The value to return if there is no corresponding value in the object path. default is "undefined". |
+| default_value: function | If you give a function, give the traverse result to the first argument of the function.            |
 
 #### result
 
@@ -150,6 +151,15 @@ console.log(AttrPath.traverse(value, '.children.john.hobby[0].name'))
 console.log(AttrPath.traverse(value, '.children.john.hobby[1].name'))
 
 > undefined
+
+
+const Default = (n:any) => {
+	console.log(n);
+}
+
+AttrPath.traverse(value, '.children.john.hobby[0].name', Default)
+
+> "Max"
 
 console.log(AttrPath.is_valid('.children.john.hobby[0].name'))
 

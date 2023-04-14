@@ -33,13 +33,18 @@ export class AttrPath {
      */
     static traverse(obj: any, path: string, default_value: any = undefined): any {
         let result = default_value;
-        const _handler: ValueHandler = new ValueHandler(obj);
-        if (new AttributeParser(_handler, new ParserStream(path)).parse_path()) {
-            if (_handler.value) {
-                 result = _handler.value;
+        const handler: ValueHandler = new ValueHandler(obj);
+        if (new AttributeParser(handler, new ParserStream(path)).parse_path()) {
+            if (handler.value) {
+                 result = handler.value;
             }
         }
-        return result;
+        if (default_value && typeof default_value === 'function') {
+            default_value(result);
+            return null;
+        } else {
+            return result;
+        }
     }
 
     /**

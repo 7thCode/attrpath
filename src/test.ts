@@ -427,12 +427,36 @@ describe('CommonJS', () => {
 		};
 
 		expect(AttrPath.traverse(value, '.children')).toStrictEqual({"john": {"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]}, "tom": {"hobby": [{"name": "Squash"}], "pet": [{"type": "cat", "name": "Chloe"}]}});
+		expect(AttrPath.traverse(value, '.children')).toStrictEqual(value.children);
 		expect(AttrPath.traverse(value, '.children.john')).toStrictEqual({"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]});
+		expect(AttrPath.traverse(value, '.children.john')).toStrictEqual(value.children.john);
 		expect(AttrPath.traverse(value, '.children.john.hobby')).toStrictEqual([{"name": "Cycling"}, {"name": "Dance"}]);
+		expect(AttrPath.traverse(value, '.children.john.hobby')).toStrictEqual(value.children.john.hobby);
 		expect(AttrPath.traverse(value, '.children.john.hobby[0]')).toStrictEqual({"name": "Cycling"});
+		expect(AttrPath.traverse(value, '.children.john.hobby[0]')).toStrictEqual(value.children.john.hobby[0]);
 		expect(AttrPath.traverse(value, '.children.john.hobby[0].name')).toBe("Cycling");
+		expect(AttrPath.traverse(value, '.children.john.hobby[0].name')).toBe(value.children.john.hobby[0].name);
+		expect(AttrPath.traverse(value, '.children.john.hobby["0"].name')).toBeUndefined();
 		expect(AttrPath.traverse(value, '.children.john.hobby[0a].name')).toBeUndefined();
 		expect(AttrPath.traverse(value, '.children.john.hobby["0"].name', "no name")).toBe("no name");
+		expect(AttrPath.traverse(value, '.children.john.hobby[a].name', "no name")).toBe("no name");
+
+		const Default = (n:number) => {
+			return n;
+		}
+
+		expect(AttrPath.traverse(value, '.children.john.hobby["0"].name', Default(1))).toBe(1);
+		expect(AttrPath.traverse(value, '.children.john.hobby[a].name', Default(1))).toBe(1);
+
+		const Result = (param:any) => {
+			return (result: any):void => {
+				expect(result).toBe(param);
+			}
+		}
+
+		expect(AttrPath.traverse(value, '.children.john.hobby[1].name', Result("Dance"))).toBe(null);
+		expect(AttrPath.traverse(value, '.children.john.pet[0].type', Result("dog"))).toBe(null);
+
 		expect(AttrPath.traverse(value, '.children.john.hobby[1].name')).toBe("Dance");
 		expect(AttrPath.traverse(value, '.children.john.pet[0].type')).toBe("dog");
 		expect(AttrPath.traverse(value, '.children.john.pet[0].name')).toBe("Max");
