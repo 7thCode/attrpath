@@ -260,14 +260,14 @@ describe('ESModule', () => {
 					hobby: [{name: "Cycling"}, {name: "Dance"}],
 					pet: [{type: "dog", name: "Max"}]
 				},
-				tom: {
+				"花子": {
 					hobby: [{name: "Squash"}],
 					pet: [{type: "cat", name: "Chloe"}]
 				}
 			}
 		};
 
-		expect(AttrPath.traverse(value, '.children')).toStrictEqual({"john": {"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]}, "tom": {"hobby": [{"name": "Squash"}], "pet": [{"type": "cat", "name": "Chloe"}]}});
+		expect(AttrPath.traverse(value, '.children')).toStrictEqual({"john": {"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]}, "花子": {"hobby": [{"name": "Squash"}], "pet": [{"type": "cat", "name": "Chloe"}]}});
 		expect(AttrPath.traverse(value, '.children.john')).toStrictEqual({"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]});
 		expect(AttrPath.traverse(value, '.children.john.hobby')).toStrictEqual([{"name": "Cycling"}, {"name": "Dance"}]);
 		expect(AttrPath.traverse(value, '.children.john.hobby[0]')).toStrictEqual({"name": "Cycling"});
@@ -276,9 +276,9 @@ describe('ESModule', () => {
 		expect(AttrPath.traverse(value, '.children.john.hobby[1].name')).toBe("Dance");
 		expect(AttrPath.traverse(value, '.children.john.pet[0].type')).toBe("dog");
 		expect(AttrPath.traverse(value, '.children.john.pet[0].name')).toBe("Max");
-		expect(AttrPath.traverse(value, '.children.tom.hobby[0].name')).toBe("Squash");
-		expect(AttrPath.traverse(value, '.children.tom.pet[0].type')).toBe("cat");
-		expect(AttrPath.traverse(value, '.children.tom.pet[0].name')).toBe("Chloe");
+		expect(AttrPath.traverse(value, '.children.花子.hobby[0].name')).toBe("Squash");
+		expect(AttrPath.traverse(value, '.children.花子.pet[0].type')).toBe("cat");
+		expect(AttrPath.traverse(value, '.children.花子.pet[0].name')).toBe("Chloe");
 		expect(AttrPath.traverse(value, '.children.john.hobby["0"].name')).toBeUndefined();
 		expect(AttrPath.traverse(value, '.children.john.hobby["0"].name', "no name")).toBe("no name");
 		expect(AttrPath.traverse(value, '.children["john"].hobby[0].name')).toBe("Cycling");
@@ -319,7 +319,7 @@ describe('ESModule', () => {
 					hobby: [{name: "Cycling"}, {name: "Dance"}],
 					pet: [{type: "dog", name: "Max"}]
 				},
-				tom: {
+				"花子": {
 					hobby: [{name: "Squash"}],
 					pet: [{type: "cat", name: "Chloe"}]
 				},
@@ -343,7 +343,7 @@ describe('ESModule', () => {
 			return new AttributeParser(null, new ParserStream(path)).parse_path();
 		}
 
-		expect(Traverse(value, '.children')).toStrictEqual({"john": {"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]}, "tom": {"hobby": [{"name": "Squash"}], "pet": [{"type": "cat", "name": "Chloe"}]}, _jack$: {_hobby$: [{$name: "Fury"}], $pet$: [{type_: "bat", $name: "Dread"}]}});
+		expect(Traverse(value, '.children')).toStrictEqual({"john": {"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]}, "花子": {"hobby": [{"name": "Squash"}], "pet": [{"type": "cat", "name": "Chloe"}]}, _jack$: {_hobby$: [{$name: "Fury"}], $pet$: [{type_: "bat", $name: "Dread"}]}});
 		expect(Traverse(value, '.children.john')).toStrictEqual({"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]});
 		expect(Traverse(value, '.children.john.hobby')).toStrictEqual([{"name": "Cycling"}, {"name": "Dance"}]);
 		expect(Traverse(value, '.children.john.hobby[0]')).toStrictEqual({"name": "Cycling"});
@@ -352,9 +352,9 @@ describe('ESModule', () => {
 		expect(Traverse(value, '.children.john.hobby[1].name')).toBe("Dance");
 		expect(Traverse(value, '.children.john.pet[0].type')).toBe("dog");
 		expect(Traverse(value, '.children.john.pet[0].name')).toBe("Max");
-		expect(Traverse(value, '.children.tom.hobby[0].name')).toBe("Squash");
-		expect(Traverse(value, '.children.tom.pet[0].type')).toBe("cat");
-		expect(Traverse(value, '.children.tom.pet[0].name')).toBe("Chloe");
+		expect(Traverse(value, '.children.花子.hobby[0].name')).toBe("Squash");
+		expect(Traverse(value, '.children.花子.pet[0].type')).toBe("cat");
+		expect(Traverse(value, '.children.花子.pet[0].name')).toBe("Chloe");
 		expect(Traverse(value, '.children.john.hobby["0"].name')).toBeUndefined();
 		expect(Traverse(value, '.children["john"].hobby[0].name')).toBe("Cycling");
 		expect(Traverse(value, '.children["john"].hobby[0]["name"]')).toBe("Cycling");
@@ -419,14 +419,14 @@ describe('CommonJS', () => {
 					hobby: [{name: "Cycling"}, {name: "Dance"}],
 					pet: [{type: "dog", name: "Max"}]
 				},
-				tom: {
+				"花子": {
 					hobby: [{name: "Squash"}],
 					pet: [{type: "cat", name: "Chloe"}]
 				}
 			}
 		};
 
-		expect(AttrPath.traverse(value, '.children')).toStrictEqual({"john": {"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]}, "tom": {"hobby": [{"name": "Squash"}], "pet": [{"type": "cat", "name": "Chloe"}]}});
+		expect(AttrPath.traverse(value, '.children')).toStrictEqual({"john": {"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]}, "花子": {"hobby": [{"name": "Squash"}], "pet": [{"type": "cat", "name": "Chloe"}]}});
 		expect(AttrPath.traverse(value, '.children')).toStrictEqual(value.children);
 		expect(AttrPath.traverse(value, '.children.john')).toStrictEqual({"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]});
 		expect(AttrPath.traverse(value, '.children.john')).toStrictEqual(value.children.john);
@@ -460,9 +460,9 @@ describe('CommonJS', () => {
 		expect(AttrPath.traverse(value, '.children.john.hobby[1].name')).toBe("Dance");
 		expect(AttrPath.traverse(value, '.children.john.pet[0].type')).toBe("dog");
 		expect(AttrPath.traverse(value, '.children.john.pet[0].name')).toBe("Max");
-		expect(AttrPath.traverse(value, '.children.tom.hobby[0].name')).toBe("Squash");
-		expect(AttrPath.traverse(value, '.children.tom.pet[0].type')).toBe("cat");
-		expect(AttrPath.traverse(value, '.children.tom.pet[0].name')).toBe("Chloe")
+		expect(AttrPath.traverse(value, '.children.花子.hobby[0].name')).toBe("Squash");
+		expect(AttrPath.traverse(value, '.children.花子.pet[0].type')).toBe("cat");
+		expect(AttrPath.traverse(value, '.children.花子.pet[0].name')).toBe("Chloe")
 		expect(AttrPath.traverse(value, '.children.john.hobby["0"].name')).toBeUndefined();
 		expect(AttrPath.traverse(value, '.children["john"].hobby[0].name')).toBe("Cycling");
 		expect(AttrPath.traverse(value, '.children["john"].hobby[0]["name"]')).toBe("Cycling");
@@ -490,6 +490,37 @@ describe('CommonJS', () => {
 		expect(AttrPath.traverse({}, '.path', 1)).toBe(1);
 		expect(value?.children?.john?.hobby[10]?.name).toBeUndefined();
 
+		const value2 = [
+			{
+				john: {
+					"hobby": [{name: "Cycling"}, {name: "Dance"}],
+					pet: [{type: "dog", name: "Max"}]
+				},
+			}
+		];
+
+		expect(AttrPath.traverse(value2, '[0].john.hobby[1].name')).toBe("Dance");
+
+
+		const value3 = {
+				"john.data": {
+					hobby: [{name: "Cycling"}, {name: "Dance"}],
+					pet: [{type: "dog", name: "Max"}]
+			}
+		};
+
+	///	expect(AttrPath.traverse(value3, '["john.data"]')).toBe(value3["john.data"]);
+
+		const value4 = {
+			"漢字": {
+				hobby: [{name: "Cycling"}, {name: "Dance"}],
+				pet: [{type: "dog", name: "Max"}]
+			}
+		};
+
+		expect(AttrPath.traverse(value4, '["漢字"]')).toBe(value4["漢字"]);
+
+
 		expect(AttrPath.is_valid('.children["john"].hobby[1].name')).toBe(true);
 		expect(AttrPath.is_valid('.children["john"].hobby[1a].name')).toBe(false);
 		expect(AttrPath.is_valid('.children["john"].hobby["1"].name')).toBe(false);
@@ -507,7 +538,7 @@ describe('CommonJS', () => {
 					hobby: [{name: "Cycling"}, {name: "Dance"}],
 					pet: [{type: "dog", name: "Max"}]
 				},
-				tom: {
+				"花子": {
 					hobby: [{name: "Squash"}],
 					pet: [{type: "cat", name: "Chloe"}]
 				}
@@ -527,7 +558,7 @@ describe('CommonJS', () => {
 			return new AttributeParser(null, new ParserStream(path)).parse_path();
 		}
 
-		expect(Traverse(value, '.children')).toStrictEqual({"john": {"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]}, "tom": {"hobby": [{"name": "Squash"}], "pet": [{"type": "cat", "name": "Chloe"}]}});
+		expect(Traverse(value, '.children')).toStrictEqual({"john": {"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]}, "花子": {"hobby": [{"name": "Squash"}], "pet": [{"type": "cat", "name": "Chloe"}]}});
 		expect(Traverse(value, '.children.john')).toStrictEqual({"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]});
 		expect(Traverse(value, '.children.john.hobby')).toStrictEqual([{"name": "Cycling"}, {"name": "Dance"}]);
 		expect(Traverse(value, '.children.john.hobby[0]')).toStrictEqual({"name": "Cycling"});
@@ -536,9 +567,9 @@ describe('CommonJS', () => {
 		expect(Traverse(value, '.children.john.hobby[1].name')).toBe("Dance");
 		expect(Traverse(value, '.children.john.pet[0].type')).toBe("dog");
 		expect(Traverse(value, '.children.john.pet[0].name')).toBe("Max");
-		expect(Traverse(value, '.children.tom.hobby[0].name')).toBe("Squash");
-		expect(Traverse(value, '.children.tom.pet[0].type')).toBe("cat");
-		expect(Traverse(value, '.children.tom.pet[0].name')).toBe("Chloe")
+		expect(Traverse(value, '.children.花子.hobby[0].name')).toBe("Squash");
+		expect(Traverse(value, '.children.花子.pet[0].type')).toBe("cat");
+		expect(Traverse(value, '.children.花子.pet[0].name')).toBe("Chloe")
 		expect(Traverse(value, '.children.john.hobby["0"].name')).toBeUndefined();
 		expect(Traverse(value, '.children["john"].hobby[0].name')).toBe("Cycling");
 		expect(Traverse(value, '.children["john"].hobby[0]["name"]')).toBe("Cycling");

@@ -257,6 +257,20 @@ const {AttrPath} = require('attrpath');
     AttrPath.traverse([1], '.path');
     AttrPath.traverse({}, '.path');
 ```
+# Known Bug
+If the key contains "." as shown below, it will not work properly.
+```js
+    const value = {
+        "children.john": {
+                hobby: [{name: "Cycling"}, {name: "Dance"}],
+                pet: [{type: "dog", name: "Max"}]
+            }
+    };
+
+    NG:
+    AttrPath.traverse(value, ".'children.john'");
+```
+
 # Note
 See demo.md for unclear cases.
 # Author
