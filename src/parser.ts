@@ -297,15 +297,14 @@ export class AttributeParser extends FormulaParser {
     }
 
 
-
     /**
-     * is_reading
+     * is_subscript_reading
      *
      * @remarks
-     * attr_reading ::= ( alpha | "_" | "$" ) *
+     * subscript_reading ::= ( alpha | "_" | "$" ) *
      *
      */
-    protected is_attr_reading(): boolean {
+    protected is_subscript_reading(): boolean {
         const code: number = this.stream.charCode;
         return (((0x3040 <= code) && (code <= 0x2FFFF)) || //
             ((65 <= code) && (code <= 90)) || ((97 <= code) && (code <= 122)) || // Alphabet
@@ -313,19 +312,19 @@ export class AttributeParser extends FormulaParser {
     }
 
     /**
-     * is_trailing
+     * is_subscript_trailing
      *
      * @remarks
-     * attr_trailing ::= ( alpha | "_" | "$" | digit | "." ) *
+     * subscript_trailing ::= ( alpha | "_" | "$" | digit | "." ) *
      *
      */
-    protected is_attr_trailing(): boolean {
+    protected is_subscript_trailing(): boolean {
         const code: number = this.stream.charCode;
         return (((0x3040 <= code) && (code <= 0x2FFFF)) || //
             ((65 <= code) && (code <= 90)) || ((97 <= code) && (code <= 122)) || // Alphabet
             ((48 <= code) && (code <= 57)) || // Number
             (code === 95) || (code === 36) || // _ $
-            (code === 46)); // _ $
+            (code === 46)); // .
     }
 
     /**
@@ -353,19 +352,19 @@ export class AttributeParser extends FormulaParser {
     }
 
     /**
-     * parse_attr_name
+     * parse_subscript_name
      *
      * @remarks
-     * attr_name ::= attr_reading [ attr_trailing ]
+     * subscript_name ::= subscript_reading [ subscript_trailing ]
      *
      */
-    protected parse_attr_name(): boolean {
+    protected parse_subscript_name(): boolean {
         let result: boolean = false;
         this.stream.restore_point();
-        if (this.is_attr_reading()) {
+        if (this.is_subscript_reading()) {
             this.stream.next();
             result = true;
-            while (this.is_attr_trailing()) {
+            while (this.is_subscript_trailing()) {
                 this.stream.next();
                 result = true;
             }
@@ -381,14 +380,14 @@ export class AttributeParser extends FormulaParser {
      * parse_string
      *
      * @remarks
-     * string = "'" mame "'" | '"' mame '"'
+     * string = "'" mame "'" | '"' mame '"' | "'" subscript_mame "'" | '"' subscript_mame '"'
      *
      */
     protected parse_string(): boolean {
         let result: boolean = false;
         this.stream.restore_point();
         if (this.is_char("'") || this.is_char('"')) {
-            if (this.parse_attr_name()) {
+            if (this.parse_subscript_name()) {
                 if ((this.is_char("'") || this.is_char('"'))) {
                     result = true;
                 }
