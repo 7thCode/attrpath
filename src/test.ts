@@ -148,6 +148,10 @@ describe('Parts', () => {
 				return super.is_trailing();
 			}
 
+			public is_subscript_trailing(): boolean {
+				return super.is_subscript_trailing();
+			}
+
 			public parse_name(): boolean {
 				return super.parse_name();
 			}

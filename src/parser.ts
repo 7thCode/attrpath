@@ -296,21 +296,6 @@ export class AttributeParser extends FormulaParser {
 
     }
 
-
-    /**
-     * is_subscript_reading
-     *
-     * @remarks
-     * subscript_reading ::= ( alpha | "_" | "$" ) *
-     *
-     */
-    protected is_subscript_reading(): boolean {
-        const code: number = this.stream.charCode;
-        return (((0x3040 <= code) && (code <= 0x2FFFF)) || //
-            ((65 <= code) && (code <= 90)) || ((97 <= code) && (code <= 122)) || // Alphabet
-            (code === 95) || (code === 36)); // _ $
-    }
-
     /**
      * is_subscript_trailing
      *
@@ -361,7 +346,7 @@ export class AttributeParser extends FormulaParser {
     protected parse_subscript_name(): boolean {
         let result: boolean = false;
         this.stream.restore_point();
-        if (this.is_subscript_reading()) {
+        if (this.is_reading()) {
             this.stream.next();
             result = true;
             while (this.is_subscript_trailing()) {
