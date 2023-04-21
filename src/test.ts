@@ -27,7 +27,6 @@ describe('base', () => {
 /**
  * for test
  */
-
 describe('Parts', () => {
 
 	it("ValueHandler", () => {
@@ -255,7 +254,6 @@ describe('Parts', () => {
 * ESModules
 *
 * */
-
 describe('ESModule', () => {
 
 	it('Basic', () => {
@@ -437,8 +435,8 @@ describe('ESModule', () => {
 		expect(sub_klass.Member()).toBe("name");
 
 	});
-});
 
+});
 
 /*
 *
@@ -655,16 +653,7 @@ describe('CommonJS', () => {
 		expect(sub_klass.Member()).toBe("name");
 
 	});
-});
-
-describe('For Bugfix', () => {
-
-	it('Bugfix', () => {
-
-		const {AttrPath} = require('./index');
-
-
-	});
 
 });
+
 

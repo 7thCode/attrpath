@@ -25,26 +25,27 @@ export class AttrPath {
      * @remarks
      * Traverse an object's attributes to get its value.
      *
-     * @param obj - Object
+     * @param target - Object
      * @param path - ObjectPath e.g. ".x.Y.z[1]"
      * @param default_value - The value to return if there is no corresponding value in the object path. default is "undefined"
      * @returns The value at the position of the path.
      *
      */
-    static traverse(obj: any, path: string, default_value: any = undefined): any {
+    static traverse(target: any, path: string, default_value: any = undefined): any {
         let result = default_value;
-        const handler: ValueHandler = new ValueHandler(obj);
-        if (new AttributeParser(handler, new ParserStream(path)).parse_path()) {
-            if (handler.value) {
-                 result = handler.value;
+        if (target) {
+            const handler: ValueHandler = new ValueHandler(target);
+            if (new AttributeParser(handler, new ParserStream(path)).parse_path()) {
+                if (handler.value) {
+                    result = handler.value;
+                }
+            }
+            if (default_value && typeof default_value === 'function') {
+                default_value(result);
+                return null;
             }
         }
-        if (default_value && typeof default_value === 'function') {
-            default_value(result);
-            return null;
-        } else {
-            return result;
-        }
+        return result;
     }
 
     /**
