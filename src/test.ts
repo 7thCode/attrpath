@@ -27,6 +27,7 @@ describe('base', () => {
 /**
  * for test
  */
+
 describe('Parts', () => {
 
 	it("ValueHandler", () => {
@@ -250,6 +251,7 @@ describe('Parts', () => {
 * ESModules
 *
 * */
+
 describe('ESModule', () => {
 
 	it('Basic', () => {
@@ -303,6 +305,38 @@ describe('ESModule', () => {
 		expect(AttrPath.traverse("1", '.path')).toBeUndefined();
 		expect(AttrPath.traverse([1], '.path')).toBeUndefined();
 		expect(AttrPath.traverse({}, '.path')).toBeUndefined();
+
+		const value2 = [
+			{
+				john: {
+					"hobby": [{name: "Cycling"}, {name: "Dance"}],
+					pet: [{type: "dog", name: "Max"}]
+				},
+			}
+		];
+
+		expect(AttrPath.traverse(value2, '[0].john.hobby[1].name')).toBe("Dance");
+
+		const value3 = {
+			"john.data": {
+				hobby: [{name: "Cycling"}, {name: "Dance"}],
+				pet: [{type: "dog", name: "Max"}]
+			}
+		};
+
+		//	expect(value3["john.data"].hobby[0].name).toBe("Cycling");
+		expect(AttrPath.is_valid('["john.data"]')).toBe(true);
+		expect(AttrPath.traverse(value3, '["john.data"]')).toBe(value3["john.data"]);
+		expect(AttrPath.traverse(value3, '["john.data"]')).toStrictEqual({"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]});
+
+		const value4 = {
+			"漢字": {
+				hobby: [{name: "Cycling"}, {name: "Dance"}],
+				pet: [{type: "dog", name: "Max"}]
+			}
+		};
+
+		expect(AttrPath.traverse(value4, '["漢字"]')).toBe(value4["漢字"]);
 
 		expect(AttrPath.is_valid('.children["john"].hobby[1].name')).toBe(true);
 		expect(AttrPath.is_valid('.children["john"].hobby[1a].name')).toBe(false);
@@ -501,7 +535,6 @@ describe('CommonJS', () => {
 
 		expect(AttrPath.traverse(value2, '[0].john.hobby[1].name')).toBe("Dance");
 
-
 		const value3 = {
 				"john.data": {
 					hobby: [{name: "Cycling"}, {name: "Dance"}],
@@ -509,7 +542,10 @@ describe('CommonJS', () => {
 			}
 		};
 
-	///	expect(AttrPath.traverse(value3, '["john.data"]')).toBe(value3["john.data"]);
+		//	expect(value3["john.data"].hobby[0].name).toBe("Cycling");
+		expect(AttrPath.is_valid('["john.data"]')).toBe(true);
+		expect(AttrPath.traverse(value3, '["john.data"]')).toBe(value3["john.data"]);
+		expect(AttrPath.traverse(value3, '["john.data"]')).toStrictEqual({"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]});
 
 		const value4 = {
 			"漢字": {
@@ -615,5 +651,16 @@ describe('CommonJS', () => {
 		expect(sub_klass.Member()).toBe("name");
 
 	});
+});
+
+describe('For Bugfix', () => {
+
+	it('Bugfix', () => {
+
+		const {AttrPath} = require('./index');
+
+
+	});
+
 });
 

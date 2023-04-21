@@ -293,6 +293,39 @@ export class AttributeParser extends FormulaParser {
             ((65 <= code) && (code <= 90)) || ((97 <= code) && (code <= 122)) || // Alphabet
             ((48 <= code) && (code <= 57)) || // Number
             (code === 95) || (code === 36)); // _ $
+
+    }
+
+
+
+    /**
+     * is_reading
+     *
+     * @remarks
+     * attr_reading ::= ( alpha | "_" | "$" ) *
+     *
+     */
+    protected is_attr_reading(): boolean {
+        const code: number = this.stream.charCode;
+        return (((0x3040 <= code) && (code <= 0x2FFFF)) || //
+            ((65 <= code) && (code <= 90)) || ((97 <= code) && (code <= 122)) || // Alphabet
+            (code === 95) || (code === 36)); // _ $
+    }
+
+    /**
+     * is_trailing
+     *
+     * @remarks
+     * attr_trailing ::= ( alpha | "_" | "$" | digit | "." ) *
+     *
+     */
+    protected is_attr_trailing(): boolean {
+        const code: number = this.stream.charCode;
+        return (((0x3040 <= code) && (code <= 0x2FFFF)) || //
+            ((65 <= code) && (code <= 90)) || ((97 <= code) && (code <= 122)) || // Alphabet
+            ((48 <= code) && (code <= 57)) || // Number
+            (code === 95) || (code === 36) || // _ $
+            (code === 46)); // _ $
     }
 
     /**
@@ -320,6 +353,31 @@ export class AttributeParser extends FormulaParser {
     }
 
     /**
+     * parse_attr_name
+     *
+     * @remarks
+     * attr_name ::= attr_reading [ attr_trailing ]
+     *
+     */
+    protected parse_attr_name(): boolean {
+        let result: boolean = false;
+        this.stream.restore_point();
+        if (this.is_attr_reading()) {
+            this.stream.next();
+            result = true;
+            while (this.is_attr_trailing()) {
+                this.stream.next();
+                result = true;
+            }
+        }
+        if (this.handler) {
+            this.handler.symbol("name", this.stream.current);
+        }
+        return result;
+    }
+
+
+    /**
      * parse_string
      *
      * @remarks
@@ -330,7 +388,7 @@ export class AttributeParser extends FormulaParser {
         let result: boolean = false;
         this.stream.restore_point();
         if (this.is_char("'") || this.is_char('"')) {
-            if (this.parse_name()) {
+            if (this.parse_attr_name()) {
                 if ((this.is_char("'") || this.is_char('"'))) {
                     result = true;
                 }
@@ -349,9 +407,7 @@ export class AttributeParser extends FormulaParser {
     protected parse_attr(): boolean {
         let result: boolean = false;
         this.stream.restore_point();
-        if (this.is_char(".")) {
-            result = this.parse_name();
-        } else if (this.is_char("[")) {
+        if (this.is_char("[")) {
             if (this.parse_string()) {
                 result = this.is_char("]");
             } else if (this.parse_number()) {
@@ -363,6 +419,8 @@ export class AttributeParser extends FormulaParser {
                     result = true;
                 }
             }
+        } else if (this.is_char(".")) {
+            result = this.parse_name();
         }
         return result;
     }
