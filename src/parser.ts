@@ -298,7 +298,7 @@ export class AttributeParser extends FormulaParser {
 	 *
 	 * @remarks
 	 *
-	 */
+	*/
 	constructor(handler: BaseHandler | null, stream: ParserStream) {
 		super(handler, stream);
 	}
@@ -309,7 +309,7 @@ export class AttributeParser extends FormulaParser {
 	 * @remarks
 	 * reading ::= ( alpha | "_" | "$" ) *
 	 *
-	 */
+	*/
 	protected is_reading(): boolean {
 		const code: number = this.stream.charCode;
 		return (((0x3040 <= code) && (code <= 0x2FFFF)) || //
@@ -404,7 +404,7 @@ export class AttributeParser extends FormulaParser {
 	 * string = "'" mame "'" | '"' mame '"' | "'" subscript_mame "'" | '"' subscript_mame '"'
 	 *
 	 */
-	protected parse_string(): boolean {
+	protected parse_subscript_string(): boolean {
 		let result: boolean = false;
 		this.stream.restore_point();
 		if (this.is_char("'") || this.is_char('"')) {
@@ -428,7 +428,7 @@ export class AttributeParser extends FormulaParser {
 		let result: boolean = false;
 		this.stream.restore_point();
 		if (this.is_char("[")) {
-			if (this.parse_string()) {
+			if (this.parse_subscript_string()) {
 				result = this.is_char("]");
 			} else if (this.parse_number()) {
 				const word = this.stream.current;

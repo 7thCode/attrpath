@@ -48,6 +48,19 @@ export class AttrPath {
         return result;
     }
 
+    static update(target: any, path: string, value:any): any {
+        let result: any;
+        if (target) {
+            const handler: ValueHandler = new ValueHandler(target);
+            if (new AttributeParser(handler, new ParserStream(path)).parse_path()) {
+                if (handler.value) {
+                    result = handler.value;
+                }
+            }
+        }
+        return result;
+    }
+
     /**
      * is_valid
      *

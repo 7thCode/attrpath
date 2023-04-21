@@ -155,8 +155,8 @@ describe('Parts', () => {
 				return super.parse_name();
 			}
 
-			public parse_string(): boolean {
-				return super.parse_string();
+			public parse_subscript_string(): boolean {
+				return super.parse_subscript_string();
 			}
 
 			public parse_attr(): boolean {
@@ -205,8 +205,8 @@ describe('Parts', () => {
 		expect(new TestParser(null, new ParserStream("$")).is_trailing()).toBe(true);
 		expect(new TestParser(null, new ParserStream("ABCDE")).parse_name()).toBe(true);
 		expect(new TestParser(null, new ParserStream("1BCDE")).parse_name()).toBe(false);
-		expect(new TestParser(null, new ParserStream("'ABCDE'")).parse_string()).toBe(true);
-		expect(new TestParser(null, new ParserStream('"ABCDE"')).parse_string()).toBe(true);
+		expect(new TestParser(null, new ParserStream("'ABCDE'")).parse_subscript_string()).toBe(true);
+		expect(new TestParser(null, new ParserStream('"ABCDE"')).parse_subscript_string()).toBe(true);
 		expect(new TestParser(null, new ParserStream(".ABCDE")).parse_attr()).toBe(true);
 		expect(new TestParser(null, new ParserStream("[0]")).parse_attr()).toBe(true);
 		expect(new TestParser(null, new ParserStream("['ABC']")).parse_attr()).toBe(true);
@@ -545,7 +545,7 @@ describe('CommonJS', () => {
 		};
 
 		//	expect(value3["john.data"].hobby[0].name).toBe("Cycling");
-		expect(AttrPath.is_valid('["john.data"]')).toBe(true);
+
 		expect(AttrPath.traverse(value3, '["john.data"]')).toBe(value3["john.data"]);
 		expect(AttrPath.traverse(value3, '["john.data"]')).toStrictEqual({"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]});
 
@@ -557,8 +557,12 @@ describe('CommonJS', () => {
 		};
 
 		expect(AttrPath.traverse(value4, '["漢字"]')).toBe(value4["漢字"]);
+		expect(AttrPath.traverse(value4, '["漢字"].hobby[0].name')).toBe(value4["漢字"].hobby[0].name);
 
 
+	//	expect(AttrPath.update(value4, '["漢字"].hobby[0].name',"自転車")).toBe(value4["漢字"].hobby[0].name);
+
+		expect(AttrPath.is_valid('["john.data"]')).toBe(true);
 		expect(AttrPath.is_valid('.children["john"].hobby[1].name')).toBe(true);
 		expect(AttrPath.is_valid('.children["john"].hobby[1a].name')).toBe(false);
 		expect(AttrPath.is_valid('.children["john"].hobby["1"].name')).toBe(false);
@@ -651,6 +655,9 @@ describe('CommonJS', () => {
 
 		const sub_klass = new SubKlass();
 		expect(sub_klass.Member()).toBe("name");
+
+
+
 
 	});
 
