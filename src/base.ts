@@ -23,10 +23,10 @@ export function isNumber(value: unknown): boolean {
  * isValue
  *
  * @remarks
- * 値がnull,undef以外
+ * Value is not null or undef
  *
- * @param value - 値
- * @returns null,undef以外
+ * @param value
+ * @returns  not null or undef
  */
 export function isValue(value: unknown): boolean {
     return ((value !== null) && (typeof value !== 'undefined'));

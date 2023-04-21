@@ -53,7 +53,7 @@ export class ValueHandler extends BaseHandler {
      * Executed when Parser recognizes Token.
      *
      * @param type - Symbol Type
-     * @param word - 単語
+     * @param word
      * @returns void
      *
      */
