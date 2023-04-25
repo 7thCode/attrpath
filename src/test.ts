@@ -546,6 +546,7 @@ describe('CommonJS', () => {
 
 		//	expect(value3["john.data"].hobby[0].name).toBe("Cycling");
 
+
 		expect(AttrPath.traverse(value3, '["john.data"]')).toBe(value3["john.data"]);
 		expect(AttrPath.traverse(value3, '["john.data"]')).toStrictEqual({"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]});
 
