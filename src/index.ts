@@ -8,7 +8,7 @@
 
 import {AttributeParser, FormulaParser} from './parser';
 import {ParserStream} from './stream';
-import {BaseHandler, ValueHandler} from './handler';
+import {BaseHandler, Updater, ValueHandler} from './handler';
 
 export {AttributeParser, FormulaParser, ParserStream, BaseHandler, ValueHandler};
 
@@ -51,11 +51,9 @@ export class AttrPath {
     static update(target: any, path: string, value:any): any {
         let result: any;
         if (target) {
-            const handler: ValueHandler = new ValueHandler(target);
-            if (new AttributeParser(handler, new ParserStream(path)).parse_path()) {
-                if (handler.value) {
-                    result = handler.value;
-                }
+            const updater: Updater = new Updater(target, value);
+            if (new AttributeParser(updater, new ParserStream(path)).parse_path()) {
+                result = target;
             }
         }
         return result;

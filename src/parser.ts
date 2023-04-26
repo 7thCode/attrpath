@@ -22,7 +22,7 @@ export abstract class BaseParser {
 	 *
 	 * @remarks
 	 */
-	constructor(handler: BaseHandler | null, stream: ParserStream) {
+	protected constructor(handler: BaseHandler | null, stream: ParserStream) {
 		this.stream = stream;
 		this.handler = handler;
 	}
@@ -178,7 +178,7 @@ export abstract class BaseParser {
 		}
 
 		if (this.handler) {
-			this.handler.symbol("number", this.stream.current);
+			this.handler.symbol("number", this.stream.current, this.is_terminal());
 		}
 
 		return result;
@@ -210,7 +210,7 @@ export class FormulaParser extends BaseParser {
 				const char = this.stream.char;
 				if (this.is_char("+") || this.is_char("-")) {
 					if (this.handler) {
-						this.handler.symbol("operator", char);
+						this.handler.symbol("operator", char, this.is_terminal());
 					}
 					if (this.is_term()) {
 						result = true;
@@ -241,7 +241,7 @@ export class FormulaParser extends BaseParser {
 				const char = this.stream.char;
 				if (this.is_char("*") || this.is_char("/")) {
 					if (this.handler) {
-						this.handler.symbol("operator", char);
+						this.handler.symbol("operator", char, this.is_terminal());
 					}
 					if (this.is_factor()) {
 						result = true;
@@ -268,13 +268,13 @@ export class FormulaParser extends BaseParser {
 		const char = this.stream.char;
 		if (this.is_char("(")) {
 			if (this.handler) {
-				this.handler.symbol("operator", char);
+				this.handler.symbol("operator", char, this.is_terminal());
 			}
 			if (this.is_expr()) {
 				const char = this.stream.char;
 				if (this.is_char(")")) {
 					if (this.handler) {
-						this.handler.symbol("operator", char);
+						this.handler.symbol("operator", char, this.is_terminal());
 					}
 					this.parse_s();
 					result = true;
@@ -330,7 +330,6 @@ export class AttributeParser extends FormulaParser {
 			((65 <= code) && (code <= 90)) || ((97 <= code) && (code <= 122)) || // Alphabet
 			((48 <= code) && (code <= 57)) || // Number
 			(code === 95) || (code === 36)); // _ $
-
 	}
 
 	/**
@@ -368,7 +367,7 @@ export class AttributeParser extends FormulaParser {
 			}
 		}
 		if (this.handler) {
-			this.handler.symbol("name", this.stream.current);
+			this.handler.symbol("name", this.stream.current, this.is_terminal());
 		}
 		return result;
 	}
@@ -392,7 +391,7 @@ export class AttributeParser extends FormulaParser {
 			}
 		}
 		if (this.handler) {
-			this.handler.symbol("name", this.stream.current);
+			this.handler.symbol("name", this.stream.current, this.is_terminal());
 		}
 		return result;
 	}
@@ -434,7 +433,7 @@ export class AttributeParser extends FormulaParser {
 				const word = this.stream.current;
 				if (this.is_char("]")) {
 					if (this.handler) {
-						this.handler.symbol("index", word);
+						this.handler.symbol("index", word, this.is_terminal());
 					}
 					result = true;
 				}

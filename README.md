@@ -257,6 +257,15 @@ const {AttrPath} = require('attrpath');
     AttrPath.traverse([1], '.path');
     AttrPath.traverse({}, '.path');
 ```
+# Tips
+Note that the result object is just the argument object, so mutating the result object has the side effect of modifying the argument object. This side effect can actually be useful.
+```js
+const before = [{name: "Dance"}];
+AttrPath.traverse(before, '[0]').name = "Breaking";
+console.log(before);
+		
+[{name: "Breaking"}]
+```
 # Hostory
 ## v0.5.2
 #### Bug Fix
@@ -271,9 +280,13 @@ Fixed to work correctly when the key contains ".".
 
     AttrPath.traverse(value, "['children.john']");
 ```
-
 # Note
+
+The results of using objects, arrays, and symbols as keys are unknown.
+
 See demo.md for unclear cases.
+
+
 # Author
 info@seventh-code.com
 # License
