@@ -7,6 +7,7 @@
 "use strict";
 
 import {isContainer} from "./base";
+import {TokenType} from "./parser";
 
 /**
  * BaseHandler
@@ -15,11 +16,13 @@ import {isContainer} from "./base";
  *
  */
 export abstract class BaseHandler {
-	abstract symbol(type: string, word: string, term:boolean): void;
+	abstract token(type: TokenType, word: string, term:boolean): void;
 }
 
 /**
  * ValueHandler
+ *　
+ * actually traverse the object.
  *
  * @remarks
  *
@@ -58,18 +61,18 @@ export class ValueHandler extends BaseHandler {
 	 * @returns void
 	 *
 	 */
-	public symbol(type: string, word: string, term:boolean): void {
+	public token(type: TokenType, word: string, term:boolean): void {
 		switch (type) {
-			case "operator":
+			case TokenType.operator:
 				//           console.log("operator " + word);
 				break;
-			case "number":
+			case TokenType.number:
 				//            console.log("number " + word);
 				break;
-			case "index":
+			case TokenType.index:
 				this.current_value = ValueHandler.sibling(this.current_value, word);
 				break;
-			case "name":
+			case TokenType.name:
 				this.current_value = ValueHandler.child(this.current_value, word);
 				break;
 		}
@@ -120,6 +123,8 @@ export class ValueHandler extends BaseHandler {
 /**
  * Updater
  *
+ * It actually traverses and updates objects.
+ *
  * @remarks
  *
  */
@@ -148,25 +153,19 @@ export class Updater extends ValueHandler {
 	 * @returns void
 	 *
 	 */
-	public symbol(type: string, word: string, term:boolean): void {
+	public token(type: TokenType, word: string, term:boolean): void {
 		switch (type) {
-			case "operator":
-				//           console.log("operator " + word);
-				break;
-			case "number":
-				//            console.log("number " + word);
-				break;
-			case "index": {
+			case TokenType.index: {
 				if (term) {
 					if (this.current_value.length > word) {
-						this.current_value[word] = this.new_value; // todo: Array elements need to be filled?
+						this.current_value[word] = this.new_value;
 					}
 				} else {
 					this.current_value = Updater.sibling(this.current_value, word);
 				}
 			}
 				break;
-			case "name": {
+			case TokenType.name: {
 				if (term) {
 					this.current_value[word] = this.new_value;
 				} else {

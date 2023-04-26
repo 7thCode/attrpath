@@ -9,6 +9,14 @@
 import {BaseHandler} from './handler';
 import {ParserStream} from './stream';
 
+
+export enum TokenType {
+	operator,
+	number,
+	name,
+	index
+}
+
 /**
  * BaseParser
  * @remarks
@@ -103,7 +111,7 @@ export abstract class BaseParser {
 				result = true;
 				break;
 			default: // '%&"()*+,-./'    ":;<=>?"    "{|}~"
-				if (this.between(code,37,47) || this.between(code,58,63) || this.between(code,123,126)) {
+				if (this.between(code, 37, 47) || this.between(code, 58, 63) || this.between(code, 123, 126)) {
 					this.stream.next();
 					result = true;
 				}
@@ -113,56 +121,12 @@ export abstract class BaseParser {
 	}
 
 	/**
-	 * is_symbol
-	 * @remarks
-	 */
-	/*
-	protected is_symbol(): boolean {
-		let result: boolean = false;
-		const char: string = this.stream.char;
-		switch (char) {
-			case ".":
-			case "[":
-			case "]":
-			case "'":
-			case '"':
-			case "+":
-			case "-":
-			case "*":
-			case "/":
-			case "%":
-			case "~":
-			case "&":
-			case "|":
-			case "^":
-			case ">":
-			case "<":
-			case "!":
-			case "=":
-			case "`":
-			case "(":
-			case ")":
-			case "{":
-			case "}":
-			case "?":
-			case ":":
-			case ";":
-			case ",":
-				this.stream.next();
-				result = true;
-				break;
-		}
-		return result;
-	}
-*/
-
-	/**
 	 * is_digit
 	 * digit ::= ( 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 )
 	 */
 	protected is_digit(): boolean {
 		const code: number = this.stream.charCode;
-		return this.between(code,48,57);
+		return this.between(code, 48, 57);
 	}
 
 	/**
@@ -178,7 +142,7 @@ export abstract class BaseParser {
 		}
 
 		if (this.handler) {
-			this.handler.symbol("number", this.stream.current, this.is_terminal());
+			this.handler.token(TokenType.number, this.stream.current, this.is_terminal());
 		}
 
 		return result;
@@ -210,7 +174,7 @@ export class FormulaParser extends BaseParser {
 				const char = this.stream.char;
 				if (this.is_char("+") || this.is_char("-")) {
 					if (this.handler) {
-						this.handler.symbol("operator", char, this.is_terminal());
+						this.handler.token(TokenType.operator, char, this.is_terminal());
 					}
 					if (this.is_term()) {
 						result = true;
@@ -241,7 +205,7 @@ export class FormulaParser extends BaseParser {
 				const char = this.stream.char;
 				if (this.is_char("*") || this.is_char("/")) {
 					if (this.handler) {
-						this.handler.symbol("operator", char, this.is_terminal());
+						this.handler.token(TokenType.operator, char, this.is_terminal());
 					}
 					if (this.is_factor()) {
 						result = true;
@@ -268,13 +232,13 @@ export class FormulaParser extends BaseParser {
 		const char = this.stream.char;
 		if (this.is_char("(")) {
 			if (this.handler) {
-				this.handler.symbol("operator", char, this.is_terminal());
+				this.handler.token(TokenType.operator, char, this.is_terminal());
 			}
 			if (this.is_expr()) {
 				const char = this.stream.char;
 				if (this.is_char(")")) {
 					if (this.handler) {
-						this.handler.symbol("operator", char, this.is_terminal());
+						this.handler.token(TokenType.operator, char, this.is_terminal());
 					}
 					this.parse_s();
 					result = true;
@@ -291,6 +255,8 @@ export class FormulaParser extends BaseParser {
 }
 
 /**
+ * Parse semantic strings of object references in JavaScript.
+ *
  */
 export class AttributeParser extends FormulaParser {
 
@@ -298,7 +264,7 @@ export class AttributeParser extends FormulaParser {
 	 *
 	 * @remarks
 	 *
-	*/
+	 */
 	constructor(handler: BaseHandler | null, stream: ParserStream) {
 		super(handler, stream);
 	}
@@ -309,7 +275,7 @@ export class AttributeParser extends FormulaParser {
 	 * @remarks
 	 * reading ::= ( alpha | "_" | "$" ) *
 	 *
-	*/
+	 */
 	protected is_reading(): boolean {
 		const code: number = this.stream.charCode;
 		return (((0x3040 <= code) && (code <= 0x2FFFF)) || //
@@ -367,7 +333,7 @@ export class AttributeParser extends FormulaParser {
 			}
 		}
 		if (this.handler) {
-			this.handler.symbol("name", this.stream.current, this.is_terminal());
+			this.handler.token(TokenType.name, this.stream.current, this.is_terminal());
 		}
 		return result;
 	}
@@ -391,7 +357,7 @@ export class AttributeParser extends FormulaParser {
 			}
 		}
 		if (this.handler) {
-			this.handler.symbol("name", this.stream.current, this.is_terminal());
+			this.handler.token(TokenType.name, this.stream.current, this.is_terminal());
 		}
 		return result;
 	}
@@ -433,7 +399,7 @@ export class AttributeParser extends FormulaParser {
 				const word = this.stream.current;
 				if (this.is_char("]")) {
 					if (this.handler) {
-						this.handler.symbol("index", word, this.is_terminal());
+						this.handler.token(TokenType.index, word, this.is_terminal());
 					}
 					result = true;
 				}

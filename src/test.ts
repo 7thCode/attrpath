@@ -8,6 +8,7 @@
 
 import {isContainer, isNumber, isValue} from "./base";
 import {AttributeParser, AttrPath, BaseHandler, FormulaParser, ParserStream, ValueHandler} from './index';
+import {Updater} from "./handler";
 
 describe('base', () => {
 
@@ -717,9 +718,20 @@ describe('CommonJS', () => {
 
 		function CustomTraverse(obj: any, path: string): any {
 			let result = undefined;
-			const handler = new ValueHandler(obj);
+			const handler: ValueHandler = new ValueHandler(obj);
 			if (new AttributeParser(handler, new ParserStream(path)).parse_path()) {
 				result = handler.value;
+			}
+			return result;
+		}
+
+		function CustomUpdate(target: any, path: string, value:any): any {
+			let result: any;
+			if (target) {
+				const updater: Updater = new Updater(target, value);
+				if (new AttributeParser(updater, new ParserStream(path)).parse_path()) {
+					result = target;
+				}
 			}
 			return result;
 		}

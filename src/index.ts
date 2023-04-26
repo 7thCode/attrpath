@@ -14,8 +14,6 @@ export {AttributeParser, FormulaParser, ParserStream, BaseHandler, ValueHandler}
 
 /**
  * AttrPath
- *
- *
  */
 export class AttrPath {
 
