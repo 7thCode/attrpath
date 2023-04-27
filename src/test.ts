@@ -488,10 +488,10 @@ describe('ESModule', () => {
 			},
 		};
 
-		expect(AttrPath.update(before, '.children.花子', {hobby: [{name: "Squash"}], pet: [{type: "cat", name: "Chloe"}]})).toStrictEqual(before);
-		expect(AttrPath.update(before, '.children.花子.hobby[0]', {name: "Tennis"})).toStrictEqual(after);
-		expect(AttrPath.update(before, '.children.花子.hobby[1]', {name: "Swimming"})).toStrictEqual(after);
-
+		expect(AttrPath.update(before, '.children.花子', {hobby: [{name: "Squash"}], pet: [{type: "cat", name: "Chloe"}]})).toBeTruthy();
+		expect(AttrPath.update(before, '.children.花子.hobby[0]', {name: "Tennis"})).toBeTruthy();
+		expect(AttrPath.update(before, '.children.花子.hobby[1]', {name: "Swimming"})).toBeTruthy();
+		expect(AttrPath.update(before, '.there.is.nothing', {name: "Do Nothing"})).toBeFalsy();
 		// under constuction.
 
 	});

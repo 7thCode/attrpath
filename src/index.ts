@@ -46,12 +46,23 @@ export class AttrPath {
 		return result;
 	}
 
-	static update(target: any, path: string, value: any): any {
-		let result: any;
+	/*
+	* update
+	*
+	* @remarks
+	*
+	* @param target - Object
+	* @param path - ObjectPath e.g. ".x.Y.z[1]"
+	* @param value - value to update.
+	* @returns - update successful
+	*
+	* */
+	static update(target: any, path: string, value: any): boolean {
+		let result: boolean = false;
 		if (target) {
 			const updater: Updater = new Updater(target, value);
 			if (new AttributeParser(updater, new ParserStream(path)).parse_path()) {
-				result = target;
+				result = (updater.value);
 			}
 		}
 		return result;

@@ -63,19 +63,19 @@ export class ValueHandler extends BaseHandler {
 	 */
 	public token(type: TokenType, word: string, term: boolean): void {
 		switch (type) {
-			case TokenType.operator:
-				//           console.log("operator " + word);
-				break;
-			case TokenType.number:
-				//            console.log("number " + word);
-				break;
-			case TokenType.index:
-				this.current_value = ValueHandler.sibling(this.current_value, word);
-				break;
-			case TokenType.name:
-				this.current_value = ValueHandler.child(this.current_value, word);
-				break;
-		}
+				case TokenType.operator:
+					//           console.log("operator " + word);
+					break;
+				case TokenType.number:
+					//            console.log("number " + word);
+					break;
+				case TokenType.index:
+					this.current_value = ValueHandler.sibling(this.current_value, word);
+					break;
+				case TokenType.name:
+					this.current_value = ValueHandler.child(this.current_value, word);
+					break;
+			}
 	}
 
 	/**
@@ -154,25 +154,27 @@ export class Updater extends ValueHandler {
 	 *
 	 */
 	public token(type: TokenType, word: string, term: boolean): void {
-		switch (type) {
-			case TokenType.index: {
-				if (term) {
-					if (this.current_value.length > word) {
-						this.current_value[word] = this.new_value;
+		if (this.current_value) {
+			switch (type) {
+				case TokenType.index: {
+					if (term) {
+						if (this.current_value.length > word) {
+							this.current_value[word] = this.new_value;
+						}
+					} else {
+						this.current_value = Updater.sibling(this.current_value, word);
 					}
-				} else {
-					this.current_value = Updater.sibling(this.current_value, word);
 				}
-			}
-				break;
-			case TokenType.name: {
-				if (term) {
-					this.current_value[word] = this.new_value;
-				} else {
-					this.current_value = Updater.child(this.current_value, word);
+					break;
+				case TokenType.name: {
+					if (term) {
+						this.current_value[word] = this.new_value;
+					} else {
+						this.current_value = Updater.child(this.current_value, word);
+					}
 				}
+					break;
 			}
-				break;
 		}
 	}
 

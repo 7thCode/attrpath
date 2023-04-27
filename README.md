@@ -72,20 +72,18 @@ npm install atttrpath
 ```
 No modules depend on it.
 # Usage
-### API
+## Import
 ```js
 const {AttrPath}: any = require("attrpath");
 // or
 import {AttrPath} from 'attrpath';
 ```
-### traverse value.
+## traverse value.
 
 ```js
-AttrPath.traverse(object, path [default_value]);
+result = AttrPath.traverse(object, path [default_value]);
 ```
-
 #### params
-
 | params                  | meaning                                                                                            |
 |-------------------------|----------------------------------------------------------------------------------------------------|
 | object: any             | Target Object.                                                                                     |
@@ -93,32 +91,40 @@ AttrPath.traverse(object, path [default_value]);
 | e.g.                    | ".cat.eye.left",  ".dog['leg'][1].pad" , etc...                                                    |
 | default_value: any      | The value to return if there is no corresponding value in the object path. default is "undefined". |
 | default_value: function | If you give a function, give the traverse result to the first argument of the function.            |
-
 #### result
-
 | result      | meaning                                   |
 |-------------|-------------------------------------------|
 | result: any | Objects obtained as a result of traverse. |
 
-### path is grammatically valid?
+## Update the value if possible.
 
 ```js
-AttrPath.is_valid(path);
+result = AttrPath.update(object, path , value);
 ```
-
 #### params
+| params             | meaning                                                                                           |
+|--------------------|---------------------------------------------------------------------------------------------------|
+| object: any        | Target Object.                                                                                    |
+| path: string       | Traverse path.　The beginning of the path is "." or "[".                                           |
+| e.g.               | ".cat.eye.left",  ".dog['leg'][1].pad" , etc...                                                   |
+| value: any         | The value to update if the path exists.|
+#### result
+| result          | meaning        |
+|-----------------|----------------|
+| result: boolean | Has an update. |
 
+## path is grammatically valid?
+```js
+result = AttrPath.is_valid(path);
+```
+#### params
 | params       | meaning        |
 |--------------|----------------|
 | path: string | Traverse path. |
-
 #### result
-
 | result          | meaning                         |
 |-----------------|---------------------------------|
 | result: boolean | path is grammatically correct?  |
-
-
 ### Default Value
 If the result is Undefined, the default value is returned.
 ```js
@@ -126,8 +132,7 @@ const {AttrPath} = require('attrpath');
 
     AttrPath.traverse({}, '.path', 1);
 ```
-
-### Example
+## Example
 ```js
 const {AttrPath}: any = require("attrpath");
 
@@ -169,7 +174,7 @@ console.log(AttrPath.is_valid('.children.john.hobby[0]..name'))
 
 > false
 ```
-### more Example
+## more Example
 ```js
 class Klass {
 	member = "name";
@@ -257,6 +262,7 @@ const {AttrPath} = require('attrpath');
     AttrPath.traverse([1], '.path');
     AttrPath.traverse({}, '.path');
 ```
+
 # Tips
 Note that the result object is just the argument object, so mutating the result object has the side effect of modifying the argument object. This side effect can actually be useful.
 ```js
