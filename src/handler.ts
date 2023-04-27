@@ -16,7 +16,7 @@ import {TokenType} from "./parser";
  *
  */
 export abstract class BaseHandler {
-	abstract token(type: TokenType, word: string, term:boolean): void;
+	abstract token(type: TokenType, word: string, term: boolean): void;
 }
 
 /**
@@ -61,7 +61,7 @@ export class ValueHandler extends BaseHandler {
 	 * @returns void
 	 *
 	 */
-	public token(type: TokenType, word: string, term:boolean): void {
+	public token(type: TokenType, word: string, term: boolean): void {
 		switch (type) {
 			case TokenType.operator:
 				//           console.log("operator " + word);
@@ -153,7 +153,7 @@ export class Updater extends ValueHandler {
 	 * @returns void
 	 *
 	 */
-	public token(type: TokenType, word: string, term:boolean): void {
+	public token(type: TokenType, word: string, term: boolean): void {
 		switch (type) {
 			case TokenType.index: {
 				if (term) {

@@ -9,7 +9,6 @@
 import {BaseHandler} from './handler';
 import {ParserStream} from './stream';
 
-
 export enum TokenType {
 	operator,
 	number,
@@ -97,6 +96,8 @@ export abstract class BaseParser {
 	 * symbol ::= "." | "[" | "]" | "'" | '"' | "+" | "-" | "*" | "/" | "%" | "~" | "&" | "|" | "^" | ">" | "<" | "!" | "=" | "`" | "(" | ")" | "{" | "}" | "?" | ":" | ";" | ","
 	 * @remarks
 	 */
+
+	/*
 	protected is_symbol(): boolean {
 		let result: boolean = false;
 		const code: number = this.stream.charCode;
@@ -119,6 +120,7 @@ export abstract class BaseParser {
 		}
 		return result;
 	}
+	*/
 
 	/**
 	 * is_digit
@@ -363,10 +365,10 @@ export class AttributeParser extends FormulaParser {
 	}
 
 	/**
-	 * parse_string
+	 * parse_subscript_string
 	 *
 	 * @remarks
-	 * string = "'" mame "'" | '"' mame '"' | "'" subscript_mame "'" | '"' subscript_mame '"'
+	 * subscript_string = "'" subscript_mame "'" | '"' subscript_mame '"'
 	 *
 	 */
 	protected parse_subscript_string(): boolean {
@@ -386,7 +388,7 @@ export class AttributeParser extends FormulaParser {
 	 * parse_attr
 	 *
 	 * @remarks
-	 * attr ::= "." name | '[' string | number ']'
+	 * attr ::= "." name | '[' subscript_string | number ']'
 	 *
 	 */
 	protected parse_attr(): boolean {
