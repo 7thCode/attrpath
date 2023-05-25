@@ -60,26 +60,30 @@ const {AttrPath}: any = require("attrpath");
 
 var answer = AttrPath.traverse(value, ".children.john.hobby[1].name");
 ```
-
+---
 # Features
 Safely traverse the object path using the given path string.
 Also, an array may be included in the middle of the path.
 
+---
 # Installation
 
 ```bash
 npm install atttrpath
 ```
 No modules depend on it.
+
+---
 # Usage
+
 ## Import
 ```js
 const {AttrPath}: any = require("attrpath");
 // or
 import {AttrPath} from 'attrpath';
 ```
+---
 ## traverse value.
-
 ```js
 result = AttrPath.traverse(object, path [default_value]);
 ```
@@ -96,6 +100,7 @@ result = AttrPath.traverse(object, path [default_value]);
 |-------------|-------------------------------------------|
 | result: any | Objects obtained as a result of traverse. |
 
+---
 ## Update the value if possible.
 
 ```js
@@ -113,6 +118,7 @@ result = AttrPath.update(object, path , value);
 |-----------------|----------------|
 | result: boolean | Has an update. |
 
+---
 ## path is grammatically valid?
 ```js
 result = AttrPath.is_valid(path);
@@ -132,6 +138,7 @@ const {AttrPath} = require('attrpath');
 
     AttrPath.traverse({}, '.path', 1);
 ```
+---
 ## Example
 ```js
 const {AttrPath}: any = require("attrpath");
@@ -174,6 +181,7 @@ console.log(AttrPath.is_valid('.children.john.hobby[0]..name'))
 
 > false
 ```
+---
 ## more Example
 ```js
 class Klass {
@@ -205,8 +213,8 @@ console.log(sub_klass.Member())
 
 > "name"
 ```
-
-### Example Data
+---
+## Example Data
 ```js
     const value = {
         children: {
@@ -221,30 +229,32 @@ console.log(sub_klass.Member())
         }
     };
 ```
-### ESModule
+---
+## ESModule
 ```js
 import {AttrPath} from 'attrpath';
 
     AttrPath.traverse(value, '.children')
     AttrPath.is_valid('.children["john"].hobby[1].name')
 ```
-### CommonJS
+---
+## CommonJS
 ```js
 const {AttrPath} = require('attrpath');
 
     AttrPath.traverse(value, '.children');
     AttrPath.is_valid('.children["john"].hobby[1].name')
 ```
-
-### Array
+---
+## Array
 The original value can be an array.
 ```js
 const {AttrPath} = require('attrpath');
 
     AttrPath.traverse([1], '[0]');
 ```
-
-### Undefined
+---
+## Undefined
 Returns Undefined if the original value is not an object.
 ```js
 const {AttrPath} = require('attrpath');
@@ -262,7 +272,7 @@ const {AttrPath} = require('attrpath');
     AttrPath.traverse([1], '.path');
     AttrPath.traverse({}, '.path');
 ```
-
+---
 # Tips
 Note that the result object is just the argument object, so mutating the result object has the side effect of modifying the argument object. This side effect can actually be useful.
 ```js
@@ -272,7 +282,11 @@ console.log(before);
 		
 [{name: "Breaking"}]
 ```
+---
 # Hostory
+## v0.5.5
+#### update Method.
+update Method impl.
 ## v0.5.2
 #### Bug Fix
 Fixed to work correctly when the key contains ".".
@@ -286,6 +300,7 @@ Fixed to work correctly when the key contains ".".
 
     AttrPath.traverse(value, "['children.john']");
 ```
+---
 # Note
 
 The results of using objects, arrays, and symbols as keys are unknown.
