@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__serena__list_dir",
+      "mcp__serena__activate_project",
+      "mcp__serena__read_file",
+      "mcp__serena__get_symbols_overview",
+      "Bash(npm test)",
+      "mcp__serena__find_symbol",
+      "mcp__serena__search_for_pattern",
+      "mcp__serena__insert_before_symbol",
+      "mcp__serena__replace_regex",
+      "mcp__serena__insert_after_symbol"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

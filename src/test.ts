@@ -221,6 +221,57 @@ describe('Parts', () => {
 
 		const _handler: ValueHandler = new ValueHandler({});
 
+		// is_term メソッドを公開してテスト用に利用
+		class TermParser extends AttributeParser {
+			constructor(handler: BaseHandler | null, stream: ParserStream) {
+				super(handler, stream);
+			}
+
+			public is_term(): boolean {
+				return super.is_term();
+			}
+
+			public is_factor(): boolean {
+				return super.is_factor();
+			}
+		}
+
+		// is_expr メソッドも公開してより詳細なテスト
+		class ExprParser extends AttributeParser {
+			constructor(handler: BaseHandler | null, stream: ParserStream) {
+				super(handler, stream);
+			}
+
+			public is_expr(): boolean {
+				return super.is_expr();
+			}
+
+			public is_term(): boolean {
+				return super.is_term();
+			}
+
+			public is_factor(): boolean {
+				return super.is_factor();
+			}
+		}
+
+		// parser.ts:213-214の確実なカバレッジ: is_factor()がfalseを返すケース
+		// 重要: 演算子の後にis_factor()がfalseになるが、すでにresult=trueのケース
+		const testCases = [
+			"3*", "4/", "5*xyz", "6/xyz",  // xyzは無効なfactor
+			"7* ", "8/ ", "9*!", "10/!"    // スペースや記号は無効なfactor
+		];
+		testCases.forEach(testCase => {
+			expect(new ExprParser(_handler, new ParserStream(testCase)).is_expr()).toBe(true);
+		});
+
+		// 未カバー箇所のテスト: 乗算・除算演算子の後にfactorが続かない場合
+		// parser.ts:213-214の完全カバレッジのため、is_factor()がfalseになるケースをテスト
+		expect(new TermParser(_handler, new ParserStream("1*(")).is_term()).toBe(true); // (で始まるが不完全
+		expect(new TermParser(_handler, new ParserStream("1/+")).is_term()).toBe(true); // +は無効なfactor開始
+		expect(new TermParser(_handler, new ParserStream("1* ")).is_term()).toBe(true); // スペースの後に何もない
+		expect(new TermParser(_handler, new ParserStream("1/  ")).is_term()).toBe(true); // 複数スペースの後に何もない
+
 		class FormParser extends AttributeParser {
 
 			constructor(handler: BaseHandler | null, stream: ParserStream) {
@@ -316,6 +367,73 @@ describe('ESModule', () => {
 		expect(AttrPath.traverse("1", '.path')).toBeUndefined();
 		expect(AttrPath.traverse([1], '.path')).toBeUndefined();
 		expect(AttrPath.traverse({}, '.path')).toBeUndefined();
+	});
+
+	it('Performance', () => {
+
+		const value = {
+			children: {
+				john: {
+					hobby: [{name: "Cycling"}, {name: "Dance"}],
+					pet: [{type: "dog", name: "Max"}]
+				},
+				"花子": {
+					hobby: [{name: "Squash"}],
+					pet: [{type: "cat", name: "Chloe"}]
+				}
+			}
+		};
+
+		const start = process.hrtime();
+		AttrPath.traverse(value, '.children')
+		AttrPath.traverse(value, '.children.john')
+		AttrPath.traverse(value, '.children.john.hobby')
+		AttrPath.traverse(value, '.children.john.hobby[0]')
+		AttrPath.traverse(value, '.children.john.hobby[0].name')
+		AttrPath.traverse(value, '.children.john.hobby[0a].name')
+		AttrPath.traverse(value, '.children.john.hobby[1].name')
+		AttrPath.traverse(value, '.children.john.pet[0].type')
+		AttrPath.traverse(value, '.children.john.pet[0].name')
+		AttrPath.traverse(value, '.children.花子.hobby[0].name')
+		AttrPath.traverse(value, '.children.花子.pet[0].type')
+		AttrPath.traverse(value, '.children.花子.pet[0].name')
+		AttrPath.traverse(value, '.children.john.hobby["0"].name')
+		AttrPath.traverse(value, '.children.john.hobby["0"].name', "no name")
+		AttrPath.traverse(value, '.children["john"].hobby[0].name')
+		AttrPath.traverse(value, '.children["john"].hobby[0]["name"]')
+		AttrPath.traverse(value, '["children"]["john"].hobby[0].name')
+		AttrPath.traverse(value, '.children["john"].hobby[0].name')
+		AttrPath.traverse(value, '["children"]["john"]["hobby"][0]["name"]')
+		AttrPath.traverse(value, '["children"]["john"]["hobby"][0].["name"]')
+		AttrPath.traverse(value, '["children"]["john"]["hobby"][0]["name"]')
+		AttrPath.traverse(value, '.children["john"].hobby[1].name')
+
+		AttrPath.traverse([1], '[0]')
+		AttrPath.traverse(AttrPath.traverse(value, '.children.john'), '.hobby')
+		AttrPath.traverse(null, '.path')
+		AttrPath.traverse(null, '.path.path')
+		AttrPath.traverse(null, '["path"]')
+		AttrPath.traverse(null, '.path["path"]')
+		AttrPath.traverse(null, '["0"]')
+		AttrPath.traverse(null, '[0]')
+		AttrPath.traverse([1, 2, 3], '[3]')
+
+		AttrPath.traverse(undefined, '.path')
+
+		AttrPath.traverse(false, '.path')
+		AttrPath.traverse(true, '.path')
+		AttrPath.traverse(NaN, '.path')
+		AttrPath.traverse(Infinity, '.path')
+		AttrPath.traverse(0, '.path')
+		AttrPath.traverse(-1, '.path')
+		AttrPath.traverse("", '.path')
+		AttrPath.traverse("1", '.path')
+		AttrPath.traverse([1], '.path')
+
+		AttrPath.traverse({}, '.path')
+
+		const end = process.hrtime(start);
+		console.log((end[1] / 1000000) + "ms");
 	});
 
 	it('Key', () => {
@@ -497,14 +615,12 @@ describe('ESModule', () => {
 	});
 
 	it('Valid', () => {
-
 		expect(AttrPath.is_valid('[1]')).toBe(true);
 		expect(AttrPath.is_valid('["john"]')).toBe(true);
 		expect(AttrPath.is_valid('.children["john"].hobby[1].name')).toBe(true);
 		expect(AttrPath.is_valid('.children["john"].hobby[1a].name')).toBe(false);
 		expect(AttrPath.is_valid('.children["john"].hobby["1"].name')).toBe(false);
 		expect(AttrPath.is_valid('this.name')).toBe(false);
-
 	});
 
 	it('Classes', () => {
@@ -538,6 +654,7 @@ describe('ESModule', () => {
 		function isValid(path: string): any {
 			return new AttributeParser(null, new ParserStream(path)).parse_path();
 		}
+
 
 		expect(Traverse(value, '.children')).toStrictEqual({"john": {"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]}, "花子": {"hobby": [{"name": "Squash"}], "pet": [{"type": "cat", "name": "Chloe"}]}, _jack$: {_hobby$: [{$name: "Fury"}], $pet$: [{type_: "bat", $name: "Dread"}]}});
 		expect(Traverse(value, '.children.john')).toStrictEqual({"hobby": [{"name": "Cycling"}, {"name": "Dance"}], "pet": [{"type": "dog", "name": "Max"}]});
