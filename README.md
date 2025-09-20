@@ -300,6 +300,86 @@ Fixed to work correctly when the key contains ".".
 
     AttrPath.traverse(value, "['children.john']");
 ```
+# Development
+
+## Commands
+
+### Build
+```bash
+npm run build          # Build both CommonJS and ESM modules
+npm run build:common   # Build CommonJS module only  
+npm run build:esm      # Build ESM module only
+```
+
+### Testing
+```bash
+npm test              # Run all tests with Jest
+npm run test          # Same as above
+```
+
+### Documentation
+```bash
+npm run doc           # Generate TypeDoc documentation in docs/typedoc/
+```
+
+### Development Workflow
+```bash
+npm run prepare       # Automatically runs build (executed on npm install)
+```
+
+## Project Architecture
+
+AttrPath is a TypeScript library for safely traversing JavaScript object attribute paths using string notation. The core architecture consists of:
+
+### Core Components
+
+**AttrPath (src/index.ts)** - Main API class with static methods:
+- `traverse(target, path, default_value?)` - Safely navigate object paths
+- `update(target, path, value)` - Update values at specific paths
+- `is_valid(path)` - Validate path syntax
+
+**Parser System (src/parser.ts)**:
+- `AttributeParser` - Main parser for attribute path strings
+- `FormulaParser` - Extended parser for formula expressions
+- `BaseParser` - Shared parsing functionality
+- `TokenType` - Enum defining token types for parsing
+
+**Handler System (src/handler.ts)**:
+- `ValueHandler` - Extracts values during path traversal
+- `Updater` - Updates values during path traversal
+- `BaseHandler` - Abstract base for handler implementations
+
+**Stream Processing (src/stream.ts)**:
+- `ParserStream` - Character stream processing for path parsing
+
+**Utilities (src/base.ts)**:
+- Type checking utilities (`isNumber`, `isContainer`, `isValue`)
+
+### Path Syntax
+
+The library supports complex path expressions:
+- Object properties: `.property` or `['property']`
+- Array indices: `[0]` or `[index]`
+- Mixed paths: `.children.john.hobby[1].name`
+- Keys with dots: `['children.john']`
+
+### Build System
+
+Dual module support:
+- **CommonJS**: Built to `dist/` using `tsconfig.json`
+- **ESM**: Built to `dist/esm/` using `tsconfig.esm.json`
+
+Both builds include TypeScript declarations and source maps.
+
+### Testing
+
+- **Framework**: Jest with ts-jest transformer
+- **Coverage**: Enabled with output to `docs/coverage/`
+- **Test Files**: Located in `src/test.ts`
+- **Configuration**: `jest.config.ts`
+
+The test suite covers the core API, parsing logic, and edge cases for safe traversal.
+
 ---
 # Note
 
